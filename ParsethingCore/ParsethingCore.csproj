@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseLibrary\DatabaseLibrary.csproj" />
+    <ProjectReference Include="..\ParsingLibrary\ParsingLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="DatabaseLibrary" />
+    <Using Include="DatabaseLibrary.Entities" />
+    <Using Include="ParsingLibrary" />
+    <Using Include="System.Windows" />
+  </ItemGroup>
+
+</Project>
