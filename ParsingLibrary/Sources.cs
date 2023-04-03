@@ -1,4 +1,6 @@
-﻿namespace ParsingLibrary;
+﻿using System.Windows;
+
+namespace ParsingLibrary;
 
 public class Sources : List<Source>
 {
@@ -17,7 +19,6 @@ public class Sources : List<Source>
         {
             try
             {
-
                 string url = $"https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString={tag.Keyword}&morphology=on&search-filter=%D0%94%D0%B0%D1%82%D0%B5+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F&pageNumber=1&sortDirection=false&recordsPerPage=50&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&fz223=on&af=on&currencyIdGeneral=-1";
                 Driver.Navigate().GoToUrl(url);
                 Thread.Sleep(10000);

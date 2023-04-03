@@ -9,8 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Mustica Pro.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DatabaseLibrary\DatabaseLibrary.csproj" />
     <ProjectReference Include="..\ParsingLibrary\ParsingLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\Mustica Pro.otf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +26,7 @@
     <Using Include="DatabaseLibrary.Entities" />
     <Using Include="ParsingLibrary" />
     <Using Include="System.Windows" />
+    <Using Include="System.Windows.Input" />
   </ItemGroup>
 
 </Project>

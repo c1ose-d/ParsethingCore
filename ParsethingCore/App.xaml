@@ -1,9 +1,13 @@
-﻿<Application x:Class="ParsethingCore.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ParsethingCore"
-             StartupUri="MainWindow.xaml">
+﻿<Application x:Class="ParsethingCore.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StartupUri="/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Brushes.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/ButtonTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/LabelTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/TreeViewItemTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/WindowTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
