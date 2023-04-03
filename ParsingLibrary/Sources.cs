@@ -46,7 +46,7 @@ public class Sources : List<Source>
                             for (int j = 0; j < procurementCards.Count; j++)
                             {
                                 elements[j].Click();
-                                Thread.Sleep(2000);
+                                Thread.Sleep(5000);
                                 Add(new(procurementCards[j].Value));
                                 ReadOnlyCollection<string> tabs = Driver.WindowHandles;
                                 if (tabs.Count > 1)
@@ -55,7 +55,7 @@ public class Sources : List<Source>
                                     Driver.Close();
                                     _ = Driver.SwitchTo().Window(tabs[0]);
                                 }
-                                Thread.Sleep(2000);
+                                Thread.Sleep(5000);
                             }
                         }
                         try
