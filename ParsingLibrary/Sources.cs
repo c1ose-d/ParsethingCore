@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿using DatabaseLibrary.Queries;
+using System.Windows;
 
 namespace ParsingLibrary;
 
 public class Sources : List<Source>
 {
-    private static EdgeDriver Driver { get; set; } = null!;
-    private static IWebElement Element { get; set; } = null!;
+    private EdgeDriver Driver { get; set; } = null!;
+    private IWebElement Element { get; set; } = null!;
     private string Input { get; set; } = string.Empty;
     private static RegexOptions RegexOptions { get; } = RegexOptions.Compiled | RegexOptions.Singleline;
     private Regex UrlRegex { get; set; } = new(@"pageNumber=\d*", RegexOptions);
@@ -13,67 +14,83 @@ public class Sources : List<Source>
 
     public void Enable()
     {
-        InitializeDriver();
-        using ParsethingContext db = new();
-        foreach (Tag tag in db.Tags)
+        try
         {
-            try
+            InitializeDriver();
+            using ParsethingContext db = new();
+            while (true)
             {
-                string url = $"https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString={tag.Keyword}&morphology=on&search-filter=%D0%94%D0%B0%D1%82%D0%B5+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F&pageNumber=1&sortDirection=false&recordsPerPage=50&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&fz223=on&af=on&currencyIdGeneral=-1";
-                Driver.Navigate().GoToUrl(url);
-                Thread.Sleep(10000);
-
-                for (int i = 1; i <= 20; i++)
+                foreach (Tag tag in db.Tags)
                 {
                     try
                     {
-                        GetRequest request = new(UrlRegex.Replace(url, $"pageNumber={i}"));
-                        Input = request.Input;
+                        string url = $"https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString={tag.Keyword}&morphology=on&search-filter=Дате+размещения&pageNumber=1&sortDirection=false&recordsPerPage=_10&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&fz223=on&af=on&priceFromGeneral=200000&priceToGeneral=9000000&currencyIdGeneral=-1&publishDateFrom={DateTime.Now.ToShortDateString()}";
+                        Driver.Navigate().GoToUrl(url);
+                        Thread.Sleep(10000);
 
-                        try
+                        for (int i = 1; i <= 20; i++)
                         {
-                            Element = Driver.FindElement(By.ClassName("btn-close"));
-                            Element.Click();
-                            Thread.Sleep(5000);
-                        }
-                        catch { }
-
-                        ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__header-mid__number"));
-
-                        if (Input != null)
-                        {
-                            MatchCollection procurementCards = Regex.Matches(Input);
-                            for (int j = 0; j < procurementCards.Count; j++)
+                            try
                             {
-                                elements[j].Click();
-                                Thread.Sleep(5000);
-                                Add(new(procurementCards[j].Value));
-                                ReadOnlyCollection<string> tabs = Driver.WindowHandles;
-                                if (tabs.Count > 1)
+                                GetRequest request = new(UrlRegex.Replace(url, $"pageNumber={i}"));
+                                Input = request.Input;
+
+                                try
                                 {
-                                    _ = Driver.SwitchTo().Window(tabs[1]);
-                                    Driver.Close();
-                                    _ = Driver.SwitchTo().Window(tabs[0]);
+                                    Element = Driver.FindElement(By.ClassName("btn-close"));
+                                    Element.Click();
+                                    Thread.Sleep(5000);
                                 }
-                                Thread.Sleep(5000);
+                                catch { }
+
+                                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__header-mid__number"));
+
+                                if (Input != null)
+                                {
+                                    MatchCollection procurementCards = Regex.Matches(Input);
+                                    for (int j = 0; j < procurementCards.Count; j++)
+                                    {
+                                        elements[j].Click();
+                                        Thread.Sleep(5000);
+                                        Source source = new(procurementCards[j].Value);
+                                        PUT.Procurement(source, source.IsGetted);
+                                        ReadOnlyCollection<string> tabs = Driver.WindowHandles;
+                                        if (tabs.Count > 1)
+                                        {
+                                            _ = Driver.SwitchTo().Window(tabs[1]);
+                                            Driver.Close();
+                                            _ = Driver.SwitchTo().Window(tabs[0]);
+                                        }
+                                        Thread.Sleep(5000);
+                                    }
+                                }
+
+                                try
+                                {
+                                    Element = Driver.FindElement(By.ClassName("paginator-button"));
+                                    Element.Click();
+                                    Thread.Sleep(5000);
+                                }
+                                catch
+                                {
+                                    break;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, ex.Source);
+                                Disable();
                             }
                         }
-                        try
-                        {
-                            Element = Driver.FindElement(By.ClassName("paginator-button"));
-                            Element.Click();
-                            Thread.Sleep(5000);
-                        }
-                        catch { }
                     }
                     catch { }
                 }
             }
-            catch { }
         }
+        catch { }
     }
 
-    private static void InitializeDriver()
+    private void InitializeDriver()
     {
         try
         {
@@ -84,7 +101,7 @@ public class Sources : List<Source>
         catch { }
     }
 
-    public static void Disable()
+    public void Disable()
     {
         try
         {
