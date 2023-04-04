@@ -28,11 +28,13 @@
   <ItemGroup>
     <Using Include="DatabaseLibrary" />
     <Using Include="DatabaseLibrary.Entities" />
+    <Using Include="DatabaseLibrary.Queries" />
     <Using Include="OpenQA.Selenium" />
     <Using Include="OpenQA.Selenium.Edge" />
     <Using Include="System.Collections.ObjectModel" />
     <Using Include="System.Net.Http" />
     <Using Include="System.Text.RegularExpressions" />
+    <Using Include="System.Windows" />
   </ItemGroup>
 
 </Project>

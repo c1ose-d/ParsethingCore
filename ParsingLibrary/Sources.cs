@@ -1,9 +1,6 @@
-﻿using DatabaseLibrary.Queries;
-using System.Windows;
+﻿namespace ParsingLibrary;
 
-namespace ParsingLibrary;
-
-public class Sources : List<Source>
+public class Sources
 {
     private EdgeDriver Driver { get; set; } = null!;
     private IWebElement Element { get; set; } = null!;
@@ -50,18 +47,22 @@ public class Sources : List<Source>
                                     MatchCollection procurementCards = Regex.Matches(Input);
                                     for (int j = 0; j < procurementCards.Count; j++)
                                     {
-                                        elements[j].Click();
-                                        Thread.Sleep(5000);
-                                        Source source = new(procurementCards[j].Value);
-                                        PUT.Procurement(source, source.IsGetted);
-                                        ReadOnlyCollection<string> tabs = Driver.WindowHandles;
-                                        if (tabs.Count > 1)
+                                        try
                                         {
-                                            _ = Driver.SwitchTo().Window(tabs[1]);
-                                            Driver.Close();
-                                            _ = Driver.SwitchTo().Window(tabs[0]);
+                                            elements[j].Click();
+                                            Thread.Sleep(5000);
+                                            Source source = new(procurementCards[j].Value);
+                                            _ = PUT.Procurement(source, source.IsGetted);
+                                            ReadOnlyCollection<string> tabs = Driver.WindowHandles;
+                                            if (tabs.Count > 1)
+                                            {
+                                                _ = Driver.SwitchTo().Window(tabs[1]);
+                                                Driver.Close();
+                                                _ = Driver.SwitchTo().Window(tabs[0]);
+                                            }
+                                            Thread.Sleep(5000);
                                         }
-                                        Thread.Sleep(5000);
+                                        catch { }
                                     }
                                 }
 
@@ -78,7 +79,7 @@ public class Sources : List<Source>
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show(ex.Message, ex.Source);
+                                _ = MessageBox.Show(ex.Message, ex.Source);
                                 Disable();
                             }
                         }

@@ -21,6 +21,7 @@
         <Setter Property="Height" Value="900"/>
         <Setter Property="MinWidth" Value="1366"/>
         <Setter Property="MinHeight" Value="768"/>
+        <Setter Property="Padding" Value="8"/>
         <Setter Property="WindowState" Value="Maximized"/>
     </Style>
 </ResourceDictionary>
