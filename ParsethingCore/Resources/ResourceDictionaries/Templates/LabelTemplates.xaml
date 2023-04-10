@@ -3,12 +3,19 @@
         <Setter Property="Padding" Value="0"/>
         <Setter Property="FontFamily" Value="../../Fonts/#Mustica Pro"/>
     </Style>
-    <SolidColorBrush x:Key="Title.Foreground" Color="#000"/>
+    <SolidColorBrush x:Key="WindowTitle.Foreground" Color="#000"/>
     <Style x:Key="WindowTitle" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelBase}">
-        <Setter Property="Foreground" Value="{StaticResource Title.Foreground}"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowTitle.Foreground}"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Margin" Value="8,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+    <SolidColorBrush x:Key="Title.Foreground" Color="#BD1414"/>
+    <Style x:Key="Title" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelBase}">
+        <Setter Property="Foreground" Value="{StaticResource Title.Foreground}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="16"/>
     </Style>
 </ResourceDictionary>

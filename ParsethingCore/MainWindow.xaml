@@ -1,13 +1,17 @@
-﻿<Window x:Class="ParsethingCore.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="ParsethingCore" Style="{DynamicResource Main}" SizeChanged="Window_SizeChanged" ResizeMode="CanResizeWithGrip">
+﻿<Window x:Class="ParsethingCore.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="ParsethingCore" Style="{DynamicResource Main}" SizeChanged="Window_SizeChanged">
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="16"/>
     </WindowChrome.WindowChrome>
+    <Window.Effect>
+        <DropShadowEffect RenderingBias="Quality"/>
+    </Window.Effect>
     <Border x:Name="WindowPresenter" Background="{DynamicResource WindowPresenter.Background}" CornerRadius="16">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Border x:Name="TitleBar" Background="{DynamicResource TitleBar.Background}" Padding="8,0" CornerRadius="16,16,0,0" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <DockPanel>
@@ -21,19 +25,24 @@
             </Border>
             <Border x:Name="ToolBar" BorderBrush="{DynamicResource ToolBar.BorderBrush}" Grid.Row="1" Padding="8,4" BorderThickness="0,1">
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Button x:Name="Add" Content="&#xE710;" Style="{DynamicResource ToolBarAction}" Click="Add_Click"/>
+                    <Button x:Name="Edit" Content="&#xE70F;" Style="{DynamicResource ToolBarAction}" Click="Edit_Click"/>
+                    <Button x:Name="Delete" Content="&#xE74D;" Style="{DynamicResource ToolBarAction}" Click="Delete_Click"/>
+                    <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
                     <Button x:Name="Run" Content="&#xE768;" Style="{DynamicResource ToolBarAction}" Click="Run_Click"/>
                     <Button x:Name="Stop" Content="&#xE71A;" Style="{DynamicResource ToolBarAction}" Click="Stop_Click"/>
                 </StackPanel>
             </Border>
-            <Grid Grid.Row="2">
+            <Grid x:Name="Container" Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition MinWidth="128"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TreeView>
+                <TreeView Background="{x:Null}" BorderBrush="{x:Null}">
                     <TreeViewItem Style="{DynamicResource TreeViewItem}" Header="Справочники" IsExpanded="False">
-                        <TreeViewItem Header="Справочник комплектующих"/>
-                        <TreeViewItem Header="Спарвочник сотрудников"/>
+                        <Button Content="Справочник комплектующих"/>
+                        <TreeViewItem Header="Спарвочник сотрудников" GotFocus="TreeViewItem_GotFocus"/>
                         <TreeViewItem Header="Спарвочник регионов"/>
                     </TreeViewItem>
                     <TreeViewItem Header="Перечисления">
@@ -56,7 +65,16 @@
                         </TreeViewItem>
                     </TreeViewItem>
                 </TreeView>
+                <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
             </Grid>
+            <StatusBar BorderBrush="Black" Grid.Row="3" BorderThickness="0,1,0,0">
+                <StatusBarItem>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Количество записей в контейнере"/>
+                        <Label x:Name="EntriesCount"/>
+                    </StackPanel>
+                </StatusBarItem>
+            </StatusBar>
         </Grid>
     </Border>
 </Window>

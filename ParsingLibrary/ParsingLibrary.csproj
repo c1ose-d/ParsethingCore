@@ -18,17 +18,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
     <PackageReference Include="Selenium.WebDriver" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseLibrary\DatabaseLibrary.csproj" />
+    <ProjectReference Include="..\LogWriterLibrary\LogWriterLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="DatabaseLibrary" />
-    <Using Include="DatabaseLibrary.Entities" />
-    <Using Include="DatabaseLibrary.Queries" />
+    <Reference Include="DatabaseLibrary">
+      <HintPath>..\Solution Items\DatabaseLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="DatabaseLibrary.Entities.NoRelationship" />
+    <Using Include="DatabaseLibrary.Entities.ProcurementProperties" />
+    <Using Include="DatabaseLibrary.Functions" />
+    <Using Include="LogWriterLibrary" />
     <Using Include="OpenQA.Selenium" />
     <Using Include="OpenQA.Selenium.Edge" />
     <Using Include="System.Collections.ObjectModel" />

@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,8 +15,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseLibrary\DatabaseLibrary.csproj" />
+    <Content Include="bin\Debug\net6.0-windows\Log.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LogWriterLibrary\LogWriterLibrary.csproj" />
     <ProjectReference Include="..\ParsingLibrary\ParsingLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DatabaseLibrary">
+      <HintPath>..\Solution Items\DatabaseLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -26,9 +42,35 @@
   <ItemGroup>
     <Using Include="DatabaseLibrary" />
     <Using Include="DatabaseLibrary.Entities" />
+    <Using Include="DatabaseLibrary.Entities.EmployeeMuchToMany" />
+    <Using Include="DatabaseLibrary.Functions" />
+    <Using Include="LogWriterLibrary" />
+    <Using Include="ParsethingCore.Interfaces" />
+    <Using Include="ParsethingCore.Windows" />
     <Using Include="ParsingLibrary" />
+    <Using Include="System.Collections.ObjectModel" />
     <Using Include="System.Windows" />
+    <Using Include="System.Windows.Controls" />
     <Using Include="System.Windows.Input" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Windows\AddConfirmation\" />
   </ItemGroup>
 
 </Project>

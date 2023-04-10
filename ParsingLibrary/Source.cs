@@ -15,54 +15,66 @@ public class Source : Procurement
     private void Initialize()
     {
         RequestUri = $"https://zakupki.gov.ru/epz/order/notice{new GetRequestUri().Result}";
-        Number = new GetNumber().Result;
-        Law = new() { Number = new GetLawNumber().Result };
-        Object = new GetObject().Result;
-        InitialPrice = Convert.ToDecimal(new GetInitialPrice().Result);
-        Organization = new() { Name = new GetOrganizationName().Result };
+
+        string? number = new GetNumber().Result;
+        if (number != null)
+            Number ??= number;
+
+        string? lawnumber = new GetLawNumber().Result;
+        if (lawnumber != null)
+            Law = new() { Number = lawnumber };
+
+        string? obj = new GetLawNumber().Result;
+        if (obj != null)
+            Object = obj;
+
+        if (decimal.TryParse(new GetInitialPrice().Result, out decimal initialPrice))
+            InitialPrice = initialPrice;
+        else InitialPrice = 0;
+
+        string? organizationName = new GetOrganizationName().Result;
+        if (organizationName != null)
+            Organization = new() { Name = organizationName };
 
         GetInput();
         if (Input != string.Empty)
         {
-            Method = new() { Text = new GetMethodText().Result };
-            Platform = new() { Name = new GetPlatformName().Result, Address = new GetPlatformAddress().Result };
+            string? methodText = new GetMethodText().Result;
+            if (methodText != null)
+                Method = new() { Text = methodText };
+
+            string? platformName = new GetPlatformName().Result;
+            string? platformAddress = new GetPlatformAddress().Result;
+            if (platformName != null && platformAddress != null)
+                Platform = new()
+                {
+                    Name = platformName,
+                    Address = platformAddress
+                };
+
             if (Organization != null)
-            {
-                Organization.PostalAddress = new GetOrganizationPostalAddress().Result;
-            }
+                Organization.PostalAddress = new GetOrganizationName().Result;
+
             Location = new GetLocation().Result;
-            try
-            {
-                StartDate = Convert.ToDateTime(new GetStartDate().Result);
-            }
-            catch
-            {
-                StartDate = null;
-            }
-            try
-            {
-                Deadline = Convert.ToDateTime(new GetDeadline().Result);
-            }
-            catch
-            {
-                StartDate = null;
-            }
-            TimeZone = new() { Offset = new GetTimeZoneOffset().Result };
+
+            if (DateTime.TryParse(new GetStartDate().Result, out DateTime startDate))
+                StartDate = startDate;
+            else StartDate = null;
+
+            if (DateTime.TryParse(new GetDeadline().Result, out DateTime deadline))
+                Deadline = deadline;
+            else Deadline = null;
+
+            string? timeZoneOffset = new GetTimeZoneOffset().Result;
+            if (timeZoneOffset != null)
+                TimeZone = new() { Offset = timeZoneOffset };
+
             Securing = new GetSecuring().Result;
-            if (Securing == "")
-            {
-                Securing = null;
-            }
+
             Enforcement = new GetEnforcement().Result;
-            if (Enforcement == "")
-            {
-                Enforcement = null;
-            }
+
             Warranty = new GetWarranty().Result;
-            if (Warranty == "")
-            {
-                Warranty = null;
-            }
+
             IsGetted = true;
             SetNullableForeignKeys();
         }

@@ -13,10 +13,7 @@ public class GetRequest
 
     private async Task GetRequestAsync()
     {
-        using HttpClient httpClient = new()
-        {
-            Timeout = TimeSpan.FromSeconds(5)
-        };
+        using HttpClient httpClient = new() { Timeout = TimeSpan.FromSeconds(5) };
         using HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(RequestUri);
         using HttpContent httpContent = httpResponseMessage.Content;
         Input = await httpContent.ReadAsStringAsync();
