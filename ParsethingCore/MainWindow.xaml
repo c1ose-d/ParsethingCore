@@ -30,7 +30,7 @@
                     <Button x:Name="Delete" Content="&#xE74D;" Style="{DynamicResource ToolBarAction}" Click="Delete_Click"/>
                     <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
                     <Button x:Name="Run" Content="&#xE768;" Style="{DynamicResource ToolBarAction}" Click="Run_Click"/>
-                    <Button x:Name="Stop" Content="&#xE71A;" Style="{DynamicResource ToolBarAction}" Click="Stop_Click"/>
+                    <Button x:Name="Stop" Content="&#xE71A;" IsEnabled="False" Style="{DynamicResource ToolBarAction}" Click="Stop_Click"/>
                 </StackPanel>
             </Border>
             <Grid x:Name="Container" Grid.Row="2">
@@ -70,7 +70,7 @@
             <StatusBar BorderBrush="Black" Grid.Row="3" BorderThickness="0,1,0,0">
                 <StatusBarItem>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Количество записей в контейнере"/>
+                        <Label Content="Количество записей"/>
                         <Label x:Name="EntriesCount"/>
                     </StackPanel>
                 </StatusBarItem>

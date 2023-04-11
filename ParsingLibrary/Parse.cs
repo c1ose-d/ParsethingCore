@@ -16,7 +16,7 @@ public class Parse
                     break;
                 }
             }
-            catch (Exception ex) { LogWriter.Write(ex); }
+            catch { }
     }
 
     public string? Result { get; set; } = null;

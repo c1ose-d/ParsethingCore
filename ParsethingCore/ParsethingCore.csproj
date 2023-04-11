@@ -43,12 +43,13 @@
     <Using Include="DatabaseLibrary" />
     <Using Include="DatabaseLibrary.Entities" />
     <Using Include="DatabaseLibrary.Entities.EmployeeMuchToMany" />
-    <Using Include="DatabaseLibrary.Functions" />
+    <Using Include="DatabaseLibrary.Queries" />
     <Using Include="LogWriterLibrary" />
     <Using Include="ParsethingCore.Interfaces" />
     <Using Include="ParsethingCore.Windows" />
     <Using Include="ParsingLibrary" />
     <Using Include="System.Collections.ObjectModel" />
+    <Using Include="System.Diagnostics" />
     <Using Include="System.Windows" />
     <Using Include="System.Windows.Controls" />
     <Using Include="System.Windows.Input" />

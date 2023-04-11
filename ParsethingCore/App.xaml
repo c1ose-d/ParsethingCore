@@ -4,8 +4,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Brushes.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/ButtonTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridCellTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridColumnHeaderTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridRowTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/LabelTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/TreeViewItemTemplates.xaml"/>

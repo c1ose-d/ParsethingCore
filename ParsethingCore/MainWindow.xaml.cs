@@ -4,8 +4,8 @@ public partial class MainWindow : Window
 {
     public MainWindow()
     {
-        LogWriter.Initialize();
         InitializeComponent();
+        LogWriter.Initialize();
     }
 
     private Sources Sources { get; set; } = null!;
@@ -49,21 +49,25 @@ public partial class MainWindow : Window
 
     private void CloseAction_Click(object sender, RoutedEventArgs e)
     {
-        if (Sources != null)
-            SourceCallerRun(Sources.Disable);
-        Application.Current.Shutdown();
+        try { SourceCallerRun(Sources.Disable); }
+        catch { }
+        Process.GetCurrentProcess().Kill();
     }
 
     private void Run_Click(object sender, RoutedEventArgs e)
     {
+        Run.IsEnabled = false;
+        Stop.IsEnabled = true;
         Sources = new();
         SourceCallerRun(Sources.Enable);
     }
 
     private void Stop_Click(object sender, RoutedEventArgs e)
     {
-        if (Sources != null)
-            SourceCallerRun(Sources.Disable);
+        Run.IsEnabled = true;
+        Stop.IsEnabled = false;
+        try { SourceCallerRun(Sources.Disable); }
+        catch { }
     }
 
     private void SourceCallerRun(ThreadStart start)
@@ -80,7 +84,7 @@ public partial class MainWindow : Window
     {
         Container.Children.Remove(DataGrid);
         DataGrid = new EmployeesDataGrid();
-        IEnumerable<object>? objects = GET.Employees()?.Cast<object>();
+        IEnumerable<object>? objects = GET.View.Employees()?.Cast<object>();
         ((IView)DataGrid).Objects = objects;
         EntriesCount.Content = objects?.Count();
         Grid.SetColumn(DataGrid, 2);

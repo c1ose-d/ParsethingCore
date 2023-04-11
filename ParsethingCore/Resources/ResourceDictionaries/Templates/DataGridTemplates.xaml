@@ -4,9 +4,9 @@
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
+        <!--<Setter Property="CellStyle" Value="{DynamicResource DataGridCellBase}"/>-->
         <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridColumnHeaderBase}"/>
         <Setter Property="CanUserReorderColumns" Value="False"/>
-        <Setter Property="RowStyle" Value="{DynamicResource DataGridRowBase}"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="CanUserAddRows" Value="False"/>
         <Setter Property="CanUserDeleteRows" Value="False"/>

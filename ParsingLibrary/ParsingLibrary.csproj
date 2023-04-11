@@ -35,14 +35,19 @@
   <ItemGroup>
     <Using Include="DatabaseLibrary.Entities.NoRelationship" />
     <Using Include="DatabaseLibrary.Entities.ProcurementProperties" />
-    <Using Include="DatabaseLibrary.Functions" />
+    <Using Include="DatabaseLibrary.Entities.ProcurementProperties.Platform">
+      <Alias>Platform</Alias>
+    </Using>
+    <Using Include="DatabaseLibrary.Entities.ProcurementProperties.TimeZone">
+      <Alias>TimeZone</Alias>
+    </Using>
+    <Using Include="DatabaseLibrary.Queries" />
     <Using Include="LogWriterLibrary" />
     <Using Include="OpenQA.Selenium" />
     <Using Include="OpenQA.Selenium.Edge" />
     <Using Include="System.Collections.ObjectModel" />
     <Using Include="System.Net.Http" />
     <Using Include="System.Text.RegularExpressions" />
-    <Using Include="System.Windows" />
   </ItemGroup>
 
 </Project>

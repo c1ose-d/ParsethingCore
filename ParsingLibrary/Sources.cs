@@ -14,7 +14,7 @@ public class Sources
         InitializeDriver();
         while (true)
         {
-            List<Tag>? tags = GET.Tags();
+            List<Tag>? tags = GET.View.Tags();
 
             if (tags != null)
                 foreach (Tag tag in tags)
@@ -63,7 +63,7 @@ public class Sources
                                             if (!PUT.ProcurementSource(source, source.IsGetted))
                                                 throw new Exception();
                                         }
-                                        catch (Exception ex) { LogWriter.Write(ex); }
+                                        catch { }
                                     }
                                 }
 
@@ -73,18 +73,13 @@ public class Sources
                                     Element.Click();
                                     Thread.Sleep(5000);
                                 }
-                                catch (Exception ex)
-                                {
-                                    LogWriter.Write(ex);
-                                    break;
-                                }
+                                catch { break; }
                             }
-                            catch (Exception ex) { LogWriter.Write(ex); }
+                            catch { }
                     }
                     catch (Exception ex)
                     {
                         Disable();
-                        InitializeDriver();
                         LogWriter.Write(ex);
                     }
         }
