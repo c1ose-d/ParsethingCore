@@ -5,6 +5,6 @@ public partial class DeleteConfirmation : Window
     public DeleteConfirmation() =>
         InitializeComponent();
 
-    private void Button_Click(object sender, RoutedEventArgs e) =>
+    private void Approve_Click(object sender, RoutedEventArgs e) =>
         DialogResult = true;
 }

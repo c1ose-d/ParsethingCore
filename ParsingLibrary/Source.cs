@@ -113,7 +113,7 @@ public class Source : Procurement
                     timeZone = GET.Entry.TimeZone(timeZoneOffset);
                 }
                 if (timeZone != null)
-                    PlatformId = timeZone.Id;
+                    TimeZoneId = timeZone.Id;
             }
 
             Securing = new GetSecuring().Result;

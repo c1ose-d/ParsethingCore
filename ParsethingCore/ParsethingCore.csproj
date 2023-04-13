@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -45,14 +46,17 @@
     <Using Include="DatabaseLibrary.Entities.EmployeeMuchToMany" />
     <Using Include="DatabaseLibrary.Queries" />
     <Using Include="LogWriterLibrary" />
+    <Using Include="Microsoft.Win32" />
     <Using Include="ParsethingCore.Interfaces" />
     <Using Include="ParsethingCore.Windows" />
     <Using Include="ParsingLibrary" />
     <Using Include="System.Collections.ObjectModel" />
     <Using Include="System.Diagnostics" />
+    <Using Include="System.IO" />
     <Using Include="System.Windows" />
     <Using Include="System.Windows.Controls" />
     <Using Include="System.Windows.Input" />
+    <Using Include="System.Windows.Media.Imaging" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,10 +72,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Windows\AddConfirmation\" />
   </ItemGroup>
 
 </Project>

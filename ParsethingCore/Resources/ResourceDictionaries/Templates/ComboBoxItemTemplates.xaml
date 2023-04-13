@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="ComboBoxItemBase.Static.Background" Color="#FFF"/>
+    <SolidColorBrush x:Key="ComboBoxItemBase.Static.BorderBrush" Color="#000"/>
+    <SolidColorBrush x:Key="ComboBoxItemBase.Static.Foreground" Color="#000"/>
+    <SolidColorBrush x:Key="ComboBoxItemBase.Disabled.Foreground" Color="#000"/>
+    <SolidColorBrush x:Key="ComboBoxItemBase.Selected.BorderBrush" Color="#BD1414"/>
+    <SolidColorBrush x:Key="ComboBoxItemBase.Selected.Foreground" Color="#BD1414"/>
+    <Style x:Key="ComboBoxItemBase" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Background" Value="{StaticResource ComboBoxItemBase.Static.Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ComboBoxItemBase.Static.BorderBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ComboBoxItemBase.Static.Foreground}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0,1"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="8" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="CP" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{StaticResource ComboBoxItemBase.Disabled.Foreground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ComboBoxItemBase.Selected.BorderBrush}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{StaticResource ComboBoxItemBase.Selected.BorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ComboBoxItemBase.Selected.BorderBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

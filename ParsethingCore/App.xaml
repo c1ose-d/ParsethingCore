@@ -4,10 +4,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Brushes.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/ButtonTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/ComboBoxItemTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/ComboBoxTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridCellTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridColumnHeaderTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/LabelTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/TextBoxTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/TreeViewItemTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/WindowTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>

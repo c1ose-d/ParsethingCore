@@ -17,6 +17,8 @@ public class Parse
                 }
             }
             catch { }
+        if (Result == string.Empty)
+            Result = null;
     }
 
     public string? Result { get; set; } = null;

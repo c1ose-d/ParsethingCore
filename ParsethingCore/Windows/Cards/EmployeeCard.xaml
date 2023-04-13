@@ -1,0 +1,60 @@
+﻿<Window x:Class="ParsethingCore.Windows.Cards.EmployeeCard" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Карточка сотрудника" WindowStartupLocation="CenterScreen" Style="{DynamicResource Card}">
+    <Border x:Name="WindowPresenter" Background="{DynamicResource WindowPresenter.Background}" BorderBrush="{DynamicResource WindowPresenter.BorderBrush}" Padding="8" BorderThickness="1" CornerRadius="8">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="Карточка сотрудника" Style="{DynamicResource Title}"/>
+            <StackPanel Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0,0,4,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="Photo" Content="&#xE91B;" Style="{DynamicResource Image}" Click="Photo_Click"/>
+                        <Button x:Name="Clear" Grid.Row="1" Content="Очистить" Style="{DynamicResource CardAction}" Click="Clear_Click"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="ФИО" Style="{DynamicResource Header.1}"/>
+                        <TextBox x:Name="FullName" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
+                        <Label Content="Должность" Grid.Row="1" Style="{DynamicResource Header.1}"/>
+                        <ComboBox x:Name="Position" Grid.Row="1" Grid.Column="1" IsEditable="True" StaysOpenOnEdit="True" DisplayMemberPath="Kind" Style="{DynamicResource ComboBoxBase}"/>
+                    </Grid>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Имя пользователя" Style="{DynamicResource Header.1}"/>
+                    <TextBox x:Name="UserName" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
+                    <Label Content="Пароль" Grid.Row="1" Style="{DynamicResource Header.1}"/>
+                    <TextBox x:Name="Password" Grid.Row="1" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="Approve" Content="Подтвердить" IsDefault="True" Style="{DynamicResource ConfirmationAction}" Click="Approve_Click"/>
+                <Button Content="Отменить" IsCancel="True" Style="{DynamicResource ConfirmationAction}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

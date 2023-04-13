@@ -37,7 +37,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="128"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition MinWidth="128"/>
                 </Grid.ColumnDefinitions>
                 <TreeView Background="{x:Null}" BorderBrush="{x:Null}">
                     <TreeViewItem Style="{DynamicResource TreeViewItem}" Header="Справочники" IsExpanded="False">
@@ -72,6 +72,12 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Количество записей"/>
                         <Label x:Name="EntriesCount"/>
+                    </StackPanel>
+                </StatusBarItem>
+                <StatusBarItem>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Текущий Id"/>
+                        <Label x:Name="CurrentId"/>
                     </StackPanel>
                 </StatusBarItem>
             </StatusBar>

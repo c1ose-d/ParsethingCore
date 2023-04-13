@@ -16,7 +16,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="Delete" TargetType="{x:Type Window}" BasedOn="{StaticResource WindowBase}">
+    <Style x:Key="Card" TargetType="{x:Type Window}" BasedOn="{StaticResource WindowBase}">
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="SizeToContent" Value="WidthAndHeight"/>
     </Style>

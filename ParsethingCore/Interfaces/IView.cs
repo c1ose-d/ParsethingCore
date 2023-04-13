@@ -2,7 +2,7 @@
 
 public interface IView
 {
-    public IEnumerable<object>? Objects { get; set; }
+    public int Count { get; }
 
     public void Add();
     public void Edit();

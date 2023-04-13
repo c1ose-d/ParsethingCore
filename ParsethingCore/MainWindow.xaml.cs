@@ -82,23 +82,24 @@ public partial class MainWindow : Window
 
     private void TreeViewItem_GotFocus(object sender, RoutedEventArgs e)
     {
-        Container.Children.Remove(DataGrid);
+        if (DataGrid != null)
+            Container.Children.Remove(DataGrid);
         DataGrid = new EmployeesDataGrid();
-        IEnumerable<object>? objects = GET.View.Employees()?.Cast<object>();
-        ((IView)DataGrid).Objects = objects;
-        EntriesCount.Content = objects?.Count();
         Grid.SetColumn(DataGrid, 2);
         Container.Children.Add(DataGrid);
+        EntriesCount.Content = ((IView)DataGrid).Count;
     }
 
     private void Add_Click(object sender, RoutedEventArgs e)
     {
-
+        if (DataGrid != null)
+            ((IView)DataGrid).Add();
     }
 
     private void Edit_Click(object sender, RoutedEventArgs e)
     {
-
+        if (DataGrid != null)
+            ((IView)DataGrid).Edit();
     }
 
     private void Delete_Click(object sender, RoutedEventArgs e)
