@@ -29,6 +29,7 @@ public partial class EmployeeCard : Window
                 Image.StreamSource = new MemoryStream(Bytes);
                 Image.EndInit();
                 Photo.Content = new Image { Source = Image };
+                String = Convert.ToBase64String(Bytes);
             }
         }
     }
@@ -60,12 +61,6 @@ public partial class EmployeeCard : Window
         Photo.Content = "";
         String = null;
     }
-
-    private void TextBox_TextChanged(object sender, TextChangedEventArgs e) =>
-        ((TextBox)sender).DataContext = true;
-
-    private void Position_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
-        Position.DataContext = true;
 
     private void Approve_Click(object sender, RoutedEventArgs e)
     {

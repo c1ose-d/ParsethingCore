@@ -2,9 +2,6 @@
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="16"/>
     </WindowChrome.WindowChrome>
-    <Window.Effect>
-        <DropShadowEffect RenderingBias="Quality"/>
-    </Window.Effect>
     <Border x:Name="WindowPresenter" Background="{DynamicResource WindowPresenter.Background}" CornerRadius="16">
         <Grid>
             <Grid.RowDefinitions>
@@ -29,6 +26,10 @@
                     <Button x:Name="Edit" Content="&#xE70F;" Style="{DynamicResource ToolBarAction}" Click="Edit_Click"/>
                     <Button x:Name="Delete" Content="&#xE74D;" Style="{DynamicResource ToolBarAction}" Click="Delete_Click"/>
                     <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
+                    <Button x:Name="Refresh" Content="&#xE72C;" Style="{DynamicResource ToolBarAction}" Click="Refresh_Click"/>
+                    <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
+                    <Button x:Name="Export" Content="&#xEDE1;" Style="{DynamicResource ToolBarAction}" Click="Export_Click"/>
+                    <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
                     <Button x:Name="Run" Content="&#xE768;" Style="{DynamicResource ToolBarAction}" Click="Run_Click"/>
                     <Button x:Name="Stop" Content="&#xE71A;" IsEnabled="False" Style="{DynamicResource ToolBarAction}" Click="Stop_Click"/>
                 </StackPanel>
@@ -39,17 +40,17 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition MinWidth="128"/>
                 </Grid.ColumnDefinitions>
-                <TreeView Background="{x:Null}" BorderBrush="{x:Null}">
-                    <TreeViewItem Style="{DynamicResource TreeViewItem}" Header="Справочники" IsExpanded="False">
-                        <Button Content="Справочник комплектующих"/>
-                        <TreeViewItem Header="Спарвочник сотрудников" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeView ItemContainerStyle="{DynamicResource TreeViewItemBase}" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <TreeViewItem Header="Справочники">
+                        <TreeViewItem Header="Справочник комплектующих"/>
+                        <TreeViewItem x:Name="Employees" Header="Спарвочник сотрудников" GotFocus="Employees_GotFocus"/>
                         <TreeViewItem Header="Спарвочник регионов"/>
                     </TreeViewItem>
                     <TreeViewItem Header="Перечисления">
                         <TreeViewItem Header="По комплектующим">
-                            <TreeViewItem Header="Состояния комплектующих"/>
-                            <TreeViewItem Header="Типы комплектующих"/>
-                            <TreeViewItem Header="Производители"/>
+                            <TreeViewItem x:Name="ComponentStates" Header="Состояния комплектующих" GotFocus="ComponentStates_GotFocus"/>
+                            <TreeViewItem x:Name="ComponentTypes" Header="Типы комплектующих" GotFocus="ComponentTypes_GotFocus"/>
+                            <TreeViewItem x:Name="Manufacturers" Header="Производители" GotFocus="Manufacturers_GotFocus"/>
                             <TreeViewItem Header="Поставщики"/>
                         </TreeViewItem>
                         <TreeViewItem Header="По заукпкам">
@@ -58,29 +59,34 @@
                             <TreeViewItem Header="Миноптторг"/>
                             <TreeViewItem Header="Преференции"/>
                             <TreeViewItem Header="Состояния закупок"/>
-                            <TreeViewItem Header="Тэги"/>
+                            <TreeViewItem x:Name="Tags" Header="Тэги" GotFocus="Tags_GotFocus"/>
                         </TreeViewItem>
                         <TreeViewItem Header="По сотрудникам">
-                            <TreeViewItem Header="Должности"/>
+                            <TreeViewItem x:Name="Positions" Header="Должности" GotFocus="Positions_GotFocus"/>
                         </TreeViewItem>
                     </TreeViewItem>
                 </TreeView>
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
             </Grid>
-            <StatusBar BorderBrush="Black" Grid.Row="3" BorderThickness="0,1,0,0">
-                <StatusBarItem>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Количество записей"/>
-                        <Label x:Name="EntriesCount"/>
-                    </StackPanel>
-                </StatusBarItem>
-                <StatusBarItem>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Текущий Id"/>
-                        <Label x:Name="CurrentId"/>
-                    </StackPanel>
-                </StatusBarItem>
-            </StatusBar>
+            <Border x:Name="StatusBar" BorderBrush="{DynamicResource StatusBar.BorderBrush}" Grid.Row="3" BorderThickness="0,1,0,0" CornerRadius="0,0,16,16">
+                <StatusBar Background="{x:Null}">
+                    <StatusBarItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Количество записей"/>
+                            <Label x:Name="EntriesCount"/>
+                        </StackPanel>
+                    </StatusBarItem>
+                    <StatusBarItem VerticalContentAlignment="Stretch">
+                        <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Текущий Id"/>
+                            <Label x:Name="CurrentId"/>
+                        </StackPanel>
+                    </StatusBarItem>
+                </StatusBar>
+            </Border>
         </Grid>
     </Border>
 </Window>

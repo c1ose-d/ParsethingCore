@@ -1,6 +1,7 @@
-﻿using ParsethingCore.Windows.Cards;
+﻿using DatabaseLibrary.Entities.ComponentCalculationProperties;
+using ExportLibrary;
 
-namespace ParsethingCore;
+namespace ParsethingCore.UserControls.DataGridControls;
 
 public partial class EmployeesDataGrid : UserControl, IView
 {
@@ -10,16 +11,20 @@ public partial class EmployeesDataGrid : UserControl, IView
         InitializeComponent();
     }
 
-    private List<Employee>? Employees;
-    public int Count { get; private set; }
+    private List<Employee>? Employees { get; set; }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e) =>
         GetView();
 
     private void View_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        EmployeeCard card = new((Employee)View.SelectedItem);
-        card.ShowDialog();
+        try
+        {
+            EmployeeCard card = new((Employee)View.SelectedItem);
+            card.ShowDialog();
+        }
+        catch { }
+        GetView();
     }
 
     private void View_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -35,13 +40,14 @@ public partial class EmployeesDataGrid : UserControl, IView
     {
         Employees = GET.View.Employees();
         if (Employees != null)
-            Count = Employees.Count;
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Employees.Count;
     }
 
-    private void GetView()
+    public void GetView()
     {
         GetEmployees();
         View.ItemsSource = Employees;
+        ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
     }
 
     public void Add()
@@ -53,12 +59,11 @@ public partial class EmployeesDataGrid : UserControl, IView
 
     public void Edit()
     {
-        try
+        if ((Employee)View.SelectedItem != null)
         {
             EmployeeCard card = new((Employee)View.SelectedItem);
             card.ShowDialog();
         }
-        catch { }
         GetView();
     }
 
@@ -77,4 +82,7 @@ public partial class EmployeesDataGrid : UserControl, IView
         catch { }
         GetView();
     }
+
+    public void Export() =>
+        ExportInstance.Run(View);
 }

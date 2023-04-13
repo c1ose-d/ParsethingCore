@@ -20,10 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExportLibrary\ExportLibrary.csproj" />
     <ProjectReference Include="..\LogWriterLibrary\LogWriterLibrary.csproj" />
     <ProjectReference Include="..\ParsingLibrary\ParsingLibrary.csproj" />
   </ItemGroup>
@@ -32,6 +33,12 @@
     <Reference Include="DatabaseLibrary">
       <HintPath>..\Solution Items\DatabaseLibrary.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Vbe.Interop">
+      <HintPath>..\..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Vbe.Interop\15.0.0.0__71e9bce111e9429c\Microsoft.Vbe.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="office">
+      <HintPath>..\..\..\..\..\..\Windows\assembly\GAC_MSIL\office\15.0.0.0__71e9bce111e9429c\OFFICE.DLL</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -43,12 +50,17 @@
   <ItemGroup>
     <Using Include="DatabaseLibrary" />
     <Using Include="DatabaseLibrary.Entities" />
+    <Using Include="DatabaseLibrary.Entities.ComponentCalculationProperties" />
     <Using Include="DatabaseLibrary.Entities.EmployeeMuchToMany" />
+    <Using Include="DatabaseLibrary.Entities.NoRelationship" />
     <Using Include="DatabaseLibrary.Queries" />
+    <Using Include="ExportLibrary" />
     <Using Include="LogWriterLibrary" />
     <Using Include="Microsoft.Win32" />
     <Using Include="ParsethingCore.Interfaces" />
+    <Using Include="ParsethingCore.UserControls.DataGridControls" />
     <Using Include="ParsethingCore.Windows" />
+    <Using Include="ParsethingCore.Windows.Cards" />
     <Using Include="ParsingLibrary" />
     <Using Include="System.Collections.ObjectModel" />
     <Using Include="System.Diagnostics" />

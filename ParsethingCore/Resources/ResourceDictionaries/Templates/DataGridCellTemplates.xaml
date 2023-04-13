@@ -5,6 +5,7 @@
     <Style x:Key="DataGridCellBase" TargetType="{x:Type DataGridCell}">
         <Setter Property="Background" Value="{StaticResource DataGridCellBase.Static.Background}"/>
         <Setter Property="BorderBrush" Value="{StaticResource DataGridCellBase.Static.BorderBrush}"/>
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
         <Setter Property="Focusable" Value="False"/>

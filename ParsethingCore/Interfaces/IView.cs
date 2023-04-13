@@ -2,9 +2,9 @@
 
 public interface IView
 {
-    public int Count { get; }
-
+    public void GetView();
     public void Add();
     public void Edit();
     public void Delete();
+    public void Export();
 }
