@@ -59,5 +59,15 @@ namespace ParsethingCore.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ParsethingCore {
+            get {
+                object obj = ResourceManager.GetObject("ParsethingCore", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

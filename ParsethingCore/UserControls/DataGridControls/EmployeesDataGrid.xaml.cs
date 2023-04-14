@@ -1,7 +1,4 @@
-﻿using DatabaseLibrary.Entities.ComponentCalculationProperties;
-using ExportLibrary;
-
-namespace ParsethingCore.UserControls.DataGridControls;
+﻿namespace ParsethingCore.UserControls.DataGridControls;
 
 public partial class EmployeesDataGrid : UserControl, IView
 {
@@ -41,6 +38,7 @@ public partial class EmployeesDataGrid : UserControl, IView
         Employees = GET.View.Employees();
         if (Employees != null)
             ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Employees.Count;
+        else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
     }
 
     public void GetView()
@@ -48,6 +46,7 @@ public partial class EmployeesDataGrid : UserControl, IView
         GetEmployees();
         View.ItemsSource = Employees;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
+        ((TextBox)Application.Current.MainWindow.FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
@@ -85,4 +84,18 @@ public partial class EmployeesDataGrid : UserControl, IView
 
     public void Export() =>
         ExportInstance.Run(View);
+
+    public void Search(string searchString)
+    {
+        List<Employee>? results = Employees?
+            .Where(e => e.FullName.ToLower().Contains(searchString.ToLower())
+            || e.UserName.ToLower().Contains(searchString.ToLower())
+            || (e.Position != null && e.Position.Kind.ToLower().Contains(searchString.ToLower())))
+            .ToList();
+        View.ItemsSource = results;
+        ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
+        if (results != null)
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = results.Count;
+        else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
+    }
 }

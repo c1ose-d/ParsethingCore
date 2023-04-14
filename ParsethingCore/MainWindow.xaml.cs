@@ -110,8 +110,20 @@ public partial class MainWindow : Window
         catch (Exception ex) { LogWriter.Write(ex); }
     }
 
+    private void Search_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (DataGrid != null)
+            ((IView)DataGrid).Search(Search.Text);
+    }
+
+    private void Components_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new ComponentsDataGrid());
+
     private void Employees_GotFocus(object sender, RoutedEventArgs e) =>
         SetDataGrid(new EmployeesDataGrid());
+
+    private void Regions_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new RegionsDataGrid());
 
     private void ComponentStates_GotFocus(object sender, RoutedEventArgs e) =>
         SetDataGrid(new ComponentStatesDataGrid());
@@ -119,14 +131,17 @@ public partial class MainWindow : Window
     private void ComponentTypes_GotFocus(object sender, RoutedEventArgs e) =>
         SetDataGrid(new ComponentTypesDataGrid());
 
+    private void Manufacturers_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new ManufacturersDataGrid());
+
+    private void Sellers_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new SellersDataGrid());
+
     private void Tags_GotFocus(object sender, RoutedEventArgs e) =>
         SetDataGrid(new TagsDataGrid());
 
     private void Positions_GotFocus(object sender, RoutedEventArgs e) =>
         SetDataGrid(new PositionsDataGrid());
-
-    private void Manufacturers_GotFocus(object sender, RoutedEventArgs e) =>
-        SetDataGrid(new ManufacturersDataGrid());
 
     private void SetDataGrid(UserControl view)
     {

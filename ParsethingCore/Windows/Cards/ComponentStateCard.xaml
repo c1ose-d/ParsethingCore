@@ -8,7 +8,7 @@
             </Grid.RowDefinitions>
             <Label Content="Карточка состояния комплектующих" Style="{DynamicResource Title}"/>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Label Content="Значение" Style="{DynamicResource Header.1}"/>
+                <Label Content="Значение" Style="{DynamicResource Header}"/>
                 <TextBox x:Name="Kind" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">

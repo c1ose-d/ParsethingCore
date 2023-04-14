@@ -1,0 +1,33 @@
+﻿<Window x:Class="ParsethingCore.Windows.Cards.ComponentCard" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Карточка комплектующего" WindowStartupLocation="CenterScreen" Style="{DynamicResource Card}">
+    <Border x:Name="WindowPresenter" Background="{DynamicResource WindowPresenter.Background}" BorderBrush="{DynamicResource WindowPresenter.BorderBrush}" Padding="8" BorderThickness="1" CornerRadius="8">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="Карточка комплектующего" Style="{DynamicResource Title}"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Наименование" Style="{DynamicResource Header}"/>
+                <TextBox x:Name="ComponentTitle" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
+                <Label Content="Производитель" Grid.Row="1" Style="{DynamicResource Header}"/>
+                <ComboBox x:Name="Manufacturer" Grid.Row="1" Grid.Column="1" IsEditable="True" StaysOpenOnEdit="True" DisplayMemberPath="Name" Style="{DynamicResource ComboBoxBase}"/>
+                <Label Content="Тип" Grid.Row="2" Style="{DynamicResource Header}"/>
+                <ComboBox x:Name="ComponentType" Grid.Row="2" Grid.Column="1" IsEditable="True" StaysOpenOnEdit="True" DisplayMemberPath="Kind" Style="{DynamicResource ComboBoxBase}"/>
+            </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="Approve" Content="Подтвердить" IsDefault="True" Style="{DynamicResource ConfirmationAction}" Click="Approve_Click"/>
+                <Button Content="Отменить" IsCancel="True" Style="{DynamicResource ConfirmationAction}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

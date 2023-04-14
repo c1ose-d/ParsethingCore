@@ -9,7 +9,7 @@ public partial class ManufacturerCard : Window
         InitializeComponent();
 
         if (Manufacturer != null)
-            Name.Text = Manufacturer.Name;
+            ManufacturerName.Text = Manufacturer.Name;
     }
 
     private Manufacturer? Manufacturer { get; set; }
@@ -18,13 +18,13 @@ public partial class ManufacturerCard : Window
     {
         if (Manufacturer == null)
         {
-            Manufacturer = new() { Name = Name.Text };
+            Manufacturer = new() { Name = ManufacturerName.Text };
             if (PUT.Manufacturer(Manufacturer))
                 DialogResult = true;
         }
         else
         {
-            Manufacturer.Name = Name.Text;
+            Manufacturer.Name = ManufacturerName.Text;
             if (PULL.Manufacturer(Manufacturer))
                 DialogResult = true;
         }

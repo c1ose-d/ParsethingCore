@@ -8,15 +8,18 @@
     <UseWPF>true</UseWPF>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <UseWindowsForms>False</UseWindowsForms>
+    <ApplicationIcon>ParsethingCore.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Fonts\Mustica Pro.otf" />
     <None Remove="Resources\Fonts\Segoe Fluent Icons.ttf" />
+    <None Remove="Resources\Images\ParsethingCore.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="bin\Debug\net6.0-windows\Log.txt" />
+    <Content Include="ParsethingCore.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +48,7 @@
   <ItemGroup>
     <Resource Include="Resources\Fonts\Mustica Pro.otf" />
     <Resource Include="Resources\Fonts\Segoe Fluent Icons.ttf" />
+    <Resource Include="Resources\Images\ParsethingCore.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +57,7 @@
     <Using Include="DatabaseLibrary.Entities.ComponentCalculationProperties" />
     <Using Include="DatabaseLibrary.Entities.EmployeeMuchToMany" />
     <Using Include="DatabaseLibrary.Entities.NoRelationship" />
+    <Using Include="DatabaseLibrary.Entities.ProcurementProperties" />
     <Using Include="DatabaseLibrary.Queries" />
     <Using Include="ExportLibrary" />
     <Using Include="LogWriterLibrary" />

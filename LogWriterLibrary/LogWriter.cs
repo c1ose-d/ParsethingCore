@@ -14,9 +14,7 @@ public static class LogWriter
     {
         string value = $"{DateTime.Now}\n{exception.Source}\n{exception.Message}\n";
         if (exception.InnerException != null)
-        {
             value += $"{exception.InnerException}\n";
-        }
         Trace.WriteLine(value);
     }
 }

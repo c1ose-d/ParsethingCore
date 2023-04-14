@@ -3,18 +3,19 @@
     <SolidColorBrush x:Key="TextBoxBase.Static.BorderBrush" Color="#0000"/>
     <SolidColorBrush x:Key="TextBoxBase.Static.CaretBrush" Color="#BD1414"/>
     <SolidColorBrush x:Key="TextBoxBase.Static.Foreground" Color="#000"/>
+    <SolidColorBrush x:Key="TextBoxBase.Static.SelectionBrush" Color="#BD1414"/>
     <SolidColorBrush x:Key="TextBoxBase.Focused.BorderBrush" Color="#BD1414"/>
     <Style x:Key="TextBoxBase" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{DynamicResource TextBoxBase.Static.Background}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxBase.Static.BorderBrush}"/>
         <Setter Property="CaretBrush" Value="{StaticResource TextBoxBase.Static.CaretBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextBoxBase.Static.Foreground}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxBase.Static.SelectionBrush}"/>
         <Setter Property="Width" Value="0"/>
         <Setter Property="MinWidth" Value="256"/>
         <Setter Property="Margin" Value="0,4"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="8,4"/>
         <Setter Property="FontFamily" Value="../Fonts/#Mustica Pro"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -36,6 +37,11 @@
         </Setter>
     </Style>
     <Style x:Key="NoWrapInput" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBase}">
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+    <Style x:Key="SearchInput" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBase}">
+        <Setter Property="Padding" Value="8,4,40,4"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
     </Style>
 </ResourceDictionary>

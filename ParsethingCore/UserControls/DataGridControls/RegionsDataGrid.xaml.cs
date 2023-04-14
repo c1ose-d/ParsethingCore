@@ -1,16 +1,14 @@
-﻿using DatabaseLibrary.Entities.ComponentCalculationProperties;
+﻿namespace ParsethingCore.UserControls.DataGridControls;
 
-namespace ParsethingCore.UserControls.DataGridControls;
-
-public partial class PositionsDataGrid : UserControl, IView
+public partial class RegionsDataGrid : UserControl, IView
 {
-    public PositionsDataGrid()
+    public RegionsDataGrid()
     {
-        GetPositions();
+        GetRegions();
         InitializeComponent();
     }
 
-    private List<Position>? Positions { get; set; }
+    private List<Region>? Regions { get; set; }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e) =>
         GetView();
@@ -19,7 +17,7 @@ public partial class PositionsDataGrid : UserControl, IView
     {
         try
         {
-            ComponentTypeCard card = new((ComponentType)View.SelectedItem);
+            RegionCard card = new((Region)View.SelectedItem);
             card.ShowDialog();
         }
         catch { }
@@ -28,41 +26,41 @@ public partial class PositionsDataGrid : UserControl, IView
 
     private void View_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        try { ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = ((Position)View.SelectedItem).Id; }
+        try { ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = ((Region)View.SelectedItem).Id; }
         catch { }
     }
 
     private void View_SizeChanged(object sender, SizeChangedEventArgs e) =>
         View.MinColumnWidth = View.ActualWidth / View.Columns.Count;
 
-    private void GetPositions()
+    private void GetRegions()
     {
-        Positions = GET.View.Positions();
-        if (Positions != null)
-            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Positions.Count;
+        Regions = GET.View.Regions();
+        if (Regions != null)
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Regions.Count;
         else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
     }
 
     public void GetView()
     {
-        GetPositions();
-        View.ItemsSource = Positions;
+        GetRegions();
+        View.ItemsSource = Regions;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
         ((TextBox)Application.Current.MainWindow.FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
     {
-        PositionCard card = new();
+        RegionCard card = new();
         card.ShowDialog();
         GetView();
     }
 
     public void Edit()
     {
-        if ((Position)View.SelectedItem != null)
+        if ((Region)View.SelectedItem != null)
         {
-            PositionCard card = new((Position)View.SelectedItem);
+            RegionCard card = new((Region)View.SelectedItem);
             card.ShowDialog();
         }
         GetView();
@@ -72,12 +70,12 @@ public partial class PositionsDataGrid : UserControl, IView
     {
         try
         {
-            Position position = (Position)View.SelectedItem;
-            if (position != null)
+            Region region = (Region)View.SelectedItem;
+            if (region != null)
             {
                 DeleteConfirmation confirmation = new();
                 if (confirmation.ShowDialog() == true)
-                    DELETE.Position(position);
+                    DELETE.Region(region);
             }
         }
         catch { }
@@ -89,8 +87,8 @@ public partial class PositionsDataGrid : UserControl, IView
 
     public void Search(string searchString)
     {
-        List<Position>? results = Positions?
-            .Where(p => p.Kind.ToLower().Contains(searchString.ToLower()))
+        List<Region>? results = Regions?
+            .Where(c => c.Title.ToLower().Contains(searchString.ToLower()))
             .ToList();
         View.ItemsSource = results;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;

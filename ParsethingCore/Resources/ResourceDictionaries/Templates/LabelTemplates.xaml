@@ -2,6 +2,21 @@
     <Style x:Key="LabelBase" TargetType="{x:Type Label}">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="FontFamily" Value="../../Fonts/#Mustica Pro"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+    <SolidColorBrush x:Key="LabelBase.Icon.Foreground" Color="#000"/>
+    <Style x:Key="LabelBase.Icon" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="{StaticResource LabelBase.Icon.Foreground}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Margin" Value="4,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontFamily" Value="../../Fonts/#Segoe Fluent Icons"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Bold"/>
     </Style>
     <SolidColorBrush x:Key="WindowTitle.Foreground" Color="#000"/>
     <Style x:Key="WindowTitle" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelBase}">
@@ -9,20 +24,17 @@
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Margin" Value="8,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="16"/>
     </Style>
     <SolidColorBrush x:Key="Title.Foreground" Color="#BD1414"/>
     <Style x:Key="Title" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelBase}">
         <Setter Property="Foreground" Value="{StaticResource Title.Foreground}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="16"/>
     </Style>
-    <SolidColorBrush x:Key="Header.1.Foreground" Color="#000"/>
-    <Style x:Key="Header.1" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelBase}">
-        <Setter Property="Foreground" Value="{StaticResource Header.1.Foreground}"/>
+    <SolidColorBrush x:Key="Header.Foreground" Color="#000"/>
+    <Style x:Key="Header" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelBase}">
+        <Setter Property="Foreground" Value="{StaticResource Header.Foreground}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="0,4,4,4"/>
-        <Setter Property="FontSize" Value="16"/>
     </Style>
 </ResourceDictionary>

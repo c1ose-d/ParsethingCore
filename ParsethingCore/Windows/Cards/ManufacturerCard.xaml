@@ -8,8 +8,8 @@
             </Grid.RowDefinitions>
             <Label Content="Карточка производителя" Style="{DynamicResource Title}"/>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Label Content="Название" Style="{DynamicResource Header.1}"/>
-                <TextBox x:Name="Name" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
+                <Label Content="Название" Style="{DynamicResource Header}"/>
+                <TextBox x:Name="ManufacturerName" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="Approve" Content="Подтвердить" IsDefault="True" Style="{DynamicResource ConfirmationAction}" Click="Approve_Click"/>

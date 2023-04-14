@@ -1,16 +1,14 @@
-﻿using DatabaseLibrary.Entities.ComponentCalculationProperties;
+﻿namespace ParsethingCore.UserControls.DataGridControls;
 
-namespace ParsethingCore.UserControls.DataGridControls;
-
-public partial class PositionsDataGrid : UserControl, IView
+public partial class SellersDataGrid : UserControl, IView
 {
-    public PositionsDataGrid()
+    public SellersDataGrid()
     {
-        GetPositions();
+        GetSellers();
         InitializeComponent();
     }
 
-    private List<Position>? Positions { get; set; }
+    private List<Seller>? Sellers { get; set; }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e) =>
         GetView();
@@ -19,7 +17,7 @@ public partial class PositionsDataGrid : UserControl, IView
     {
         try
         {
-            ComponentTypeCard card = new((ComponentType)View.SelectedItem);
+            SellerCard card = new((Seller)View.SelectedItem);
             card.ShowDialog();
         }
         catch { }
@@ -28,41 +26,41 @@ public partial class PositionsDataGrid : UserControl, IView
 
     private void View_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        try { ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = ((Position)View.SelectedItem).Id; }
+        try { ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = ((Seller)View.SelectedItem).Id; }
         catch { }
     }
 
     private void View_SizeChanged(object sender, SizeChangedEventArgs e) =>
         View.MinColumnWidth = View.ActualWidth / View.Columns.Count;
 
-    private void GetPositions()
+    private void GetSellers()
     {
-        Positions = GET.View.Positions();
-        if (Positions != null)
-            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Positions.Count;
+        Sellers = GET.View.Sellers();
+        if (Sellers != null)
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Sellers.Count;
         else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
     }
 
     public void GetView()
     {
-        GetPositions();
-        View.ItemsSource = Positions;
+        GetSellers();
+        View.ItemsSource = Sellers;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
         ((TextBox)Application.Current.MainWindow.FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
     {
-        PositionCard card = new();
+        SellerCard card = new();
         card.ShowDialog();
         GetView();
     }
 
     public void Edit()
     {
-        if ((Position)View.SelectedItem != null)
+        if ((Seller)View.SelectedItem != null)
         {
-            PositionCard card = new((Position)View.SelectedItem);
+            SellerCard card = new((Seller)View.SelectedItem);
             card.ShowDialog();
         }
         GetView();
@@ -72,12 +70,12 @@ public partial class PositionsDataGrid : UserControl, IView
     {
         try
         {
-            Position position = (Position)View.SelectedItem;
-            if (position != null)
+            Seller seller = (Seller)View.SelectedItem;
+            if (seller != null)
             {
                 DeleteConfirmation confirmation = new();
                 if (confirmation.ShowDialog() == true)
-                    DELETE.Position(position);
+                    DELETE.Seller(seller);
             }
         }
         catch { }
@@ -89,8 +87,8 @@ public partial class PositionsDataGrid : UserControl, IView
 
     public void Search(string searchString)
     {
-        List<Position>? results = Positions?
-            .Where(p => p.Kind.ToLower().Contains(searchString.ToLower()))
+        List<Seller>? results = Sellers?
+            .Where(m => m.Name.ToLower().Contains(searchString.ToLower()))
             .ToList();
         View.ItemsSource = results;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;

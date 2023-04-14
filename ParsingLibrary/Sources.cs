@@ -1,4 +1,6 @@
-﻿namespace ParsingLibrary;
+﻿using DatabaseLibrary.Entities.EmployeeMuchToMany;
+
+namespace ParsingLibrary;
 
 public class Sources
 {
@@ -51,6 +53,25 @@ public class Sources
 
                                             Source source = new(procurementCards[j].Value);
 
+                                            if (PUT.ProcurementSource(source, source.IsGetted))
+                                            {
+                                                Employee? parsethingCore = GET.Entry.Employee("PC", "PC");
+                                                Procurement? entry = GET.Entry.Procurement(source.Number);
+
+                                                if (parsethingCore != null && entry != null)
+                                                {
+                                                    PUT.History(new()
+                                                    {
+                                                        EmployeeId = parsethingCore.Id,
+                                                        Date = DateTime.Now,
+                                                        EntityType = "Procurement",
+                                                        EntryId = entry.Id,
+                                                        Text = "Parsed."
+                                                    });
+                                                }
+                                            }
+                                            else throw new Exception();
+
                                             ReadOnlyCollection<string> tabs = Driver.WindowHandles;
                                             if (tabs.Count > 1)
                                             {
@@ -59,9 +80,6 @@ public class Sources
                                                 _ = Driver.SwitchTo().Window(tabs[0]);
                                             }
                                             Thread.Sleep(5000);
-
-                                            if (!PUT.ProcurementSource(source, source.IsGetted))
-                                                throw new Exception();
                                         }
                                         catch { }
                                     }

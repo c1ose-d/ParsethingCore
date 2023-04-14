@@ -21,18 +21,24 @@
                 </DockPanel>
             </Border>
             <Border x:Name="ToolBar" BorderBrush="{DynamicResource ToolBar.BorderBrush}" Grid.Row="1" Padding="8,4" BorderThickness="0,1">
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <Button x:Name="Add" Content="&#xE710;" Style="{DynamicResource ToolBarAction}" Click="Add_Click"/>
-                    <Button x:Name="Edit" Content="&#xE70F;" Style="{DynamicResource ToolBarAction}" Click="Edit_Click"/>
-                    <Button x:Name="Delete" Content="&#xE74D;" Style="{DynamicResource ToolBarAction}" Click="Delete_Click"/>
-                    <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
-                    <Button x:Name="Refresh" Content="&#xE72C;" Style="{DynamicResource ToolBarAction}" Click="Refresh_Click"/>
-                    <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
-                    <Button x:Name="Export" Content="&#xEDE1;" Style="{DynamicResource ToolBarAction}" Click="Export_Click"/>
-                    <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
-                    <Button x:Name="Run" Content="&#xE768;" Style="{DynamicResource ToolBarAction}" Click="Run_Click"/>
-                    <Button x:Name="Stop" Content="&#xE71A;" IsEnabled="False" Style="{DynamicResource ToolBarAction}" Click="Stop_Click"/>
-                </StackPanel>
+                <DockPanel Grid.Row="1" LastChildFill="False">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="Add" Content="&#xE710;" Style="{DynamicResource ToolBarAction}" Click="Add_Click"/>
+                        <Button x:Name="Edit" Content="&#xE70F;" Style="{DynamicResource ToolBarAction}" Click="Edit_Click"/>
+                        <Button x:Name="Delete" Content="&#xE74D;" Style="{DynamicResource ToolBarAction}" Click="Delete_Click"/>
+                        <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
+                        <Button x:Name="Refresh" Content="&#xE72C;" Style="{DynamicResource ToolBarAction}" Click="Refresh_Click"/>
+                        <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
+                        <Button x:Name="Export" Content="&#xEDE1;" Style="{DynamicResource ToolBarAction}" Click="Export_Click"/>
+                        <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
+                        <Button x:Name="Run" Content="&#xE768;" Style="{DynamicResource ToolBarAction}" Click="Run_Click"/>
+                        <Button x:Name="Stop" Content="&#xE71A;" IsEnabled="False" Style="{DynamicResource ToolBarAction}" Click="Stop_Click"/>
+                    </StackPanel>
+                    <Grid DockPanel.Dock="Right">
+                        <TextBox x:Name="Search" Style="{DynamicResource SearchInput}" TextChanged="Search_TextChanged"/>
+                        <Label Content="&#xE721;" Style="{DynamicResource LabelBase.Icon}"/>
+                    </Grid>
+                </DockPanel>
             </Border>
             <Grid x:Name="Container" Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -42,16 +48,16 @@
                 </Grid.ColumnDefinitions>
                 <TreeView ItemContainerStyle="{DynamicResource TreeViewItemBase}" Background="{x:Null}" BorderBrush="{x:Null}">
                     <TreeViewItem Header="Справочники">
-                        <TreeViewItem Header="Справочник комплектующих"/>
-                        <TreeViewItem x:Name="Employees" Header="Спарвочник сотрудников" GotFocus="Employees_GotFocus"/>
-                        <TreeViewItem Header="Спарвочник регионов"/>
+                        <TreeViewItem x:Name="Components" Header="Справочник комплектующих" GotFocus="Components_GotFocus"/>
+                        <TreeViewItem x:Name="Employees" Header="Справочник сотрудников" GotFocus="Employees_GotFocus"/>
+                        <TreeViewItem x:Name="Regions" Header="Справочник регионов" GotFocus="Regions_GotFocus"/>
                     </TreeViewItem>
                     <TreeViewItem Header="Перечисления">
                         <TreeViewItem Header="По комплектующим">
                             <TreeViewItem x:Name="ComponentStates" Header="Состояния комплектующих" GotFocus="ComponentStates_GotFocus"/>
                             <TreeViewItem x:Name="ComponentTypes" Header="Типы комплектующих" GotFocus="ComponentTypes_GotFocus"/>
                             <TreeViewItem x:Name="Manufacturers" Header="Производители" GotFocus="Manufacturers_GotFocus"/>
-                            <TreeViewItem Header="Поставщики"/>
+                            <TreeViewItem x:Name="Sellers" Header="Поставщики" GotFocus="Sellers_GotFocus"/>
                         </TreeViewItem>
                         <TreeViewItem Header="По заукпкам">
                             <TreeViewItem Header="Документы"/>
@@ -72,8 +78,8 @@
                 <StatusBar Background="{x:Null}">
                     <StatusBarItem>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Количество записей"/>
-                            <Label x:Name="EntriesCount"/>
+                            <Label Content="Количество записей" Style="{DynamicResource Header}"/>
+                            <Label x:Name="EntriesCount" Style="{DynamicResource Header}"/>
                         </StackPanel>
                     </StatusBarItem>
                     <StatusBarItem VerticalContentAlignment="Stretch">
@@ -81,8 +87,8 @@
                     </StatusBarItem>
                     <StatusBarItem>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Текущий Id"/>
-                            <Label x:Name="CurrentId"/>
+                            <Label Content="Текущий Id" Style="{DynamicResource Header}"/>
+                            <Label x:Name="CurrentId" Style="{DynamicResource Header}"/>
                         </StackPanel>
                     </StatusBarItem>
                 </StatusBar>

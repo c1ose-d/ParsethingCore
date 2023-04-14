@@ -1,8 +1,4 @@
-﻿using DatabaseLibrary.Entities.ProcurementProperties;
-using DatabaseLibrary.Queries;
-using OpenQA.Selenium;
-
-namespace ParsingLibrary;
+﻿namespace ParsingLibrary;
 
 public class Source : Procurement
 {
@@ -30,7 +26,7 @@ public class Source : Procurement
             Law? law = GET.Entry.Law(lawNumber);
             if (law == null)
             {
-                PUT.Law(new() { Number = lawNumber});
+                PUT.Law(new() { Number = lawNumber });
                 law = GET.Entry.Law(lawNumber);
             }
             if (law != null)
@@ -50,7 +46,7 @@ public class Source : Procurement
         GetInput();
         if (Input != string.Empty)
         {
-            string? methodText = new GetLawNumber().Result;
+            string? methodText = new GetMethodText().Result;
             if (methodText != null)
             {
                 Method? method = GET.Entry.Method(methodText);
@@ -134,109 +130,120 @@ public class Source : Procurement
 
     private class GetRequestUri : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"<a target=""_blank"" href=""/epz/order/notice(?<val>.*?)"">", RegexOptions) };
         public GetRequestUri() : base(ProcurementCard) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"<a target=""_blank"" href=""/epz/order/notice(?<val>.*?)"">", RegexOptions) };
     }
 
     private class GetNumber : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"<a target=""_blank"" href=""/epz/order/notice(?<space>.*?)"">\n *№ (?<val>.*?)\n", RegexOptions) };
         public GetNumber() : base(ProcurementCard) { }
-    }
 
-    private class GetSourceState : Parse
-    {
-        public override List<Regex> Regexes { get; } = new() { new(@"<div class=""registry-entry__header-mid__title text-normal"">(?<val>.*?)</div>", RegexOptions) };
-        public GetSourceState() : base(ProcurementCard) { }
+        public override List<Regex> Regexes { get; } = new() { new(@"<a target=""_blank"" href=""/epz/order/notice(?<space>.*?)"">\n *№ (?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetLawNumber : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"<div class=""col-9 p-0 registry-entry__header-top__title text-truncate""(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
         public GetLawNumber() : base(ProcurementCard) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"<div class=""col-9 p-0 registry-entry__header-top__title text-truncate""(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetObject : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Объект закупки</(?<space>.*?)>\n(?<space>.*?)>(?<val>.*?)</div>", RegexOptions) };
         public GetObject() : base(ProcurementCard) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Объект закупки</(?<space>.*?)>\n(?<space>.*?)>(?<val>.*?)</div>", RegexOptions) };
     }
 
     private class GetInitialPrice : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Начальная цена(?<space>.*?)value"">(?<val>.*,..?) ", RegexOptions) };
         public GetInitialPrice() : base(ProcurementCard) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Начальная цена(?<space>.*?)value"">(?<val>.*,..?) ", RegexOptions) };
     }
 
     private class GetOrganizationName : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"href=""/epz/organization/view(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
         public GetOrganizationName() : base(ProcurementCard) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"href=""/epz/organization/view(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetMethodText : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Способ определения поставщика \(подрядчика, исполнителя\)</(?<space>.*?)>\n *(?<space>.*?)>(?<val>.*?)<", RegexOptions), new(@"Способ осуществления закупки</(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
         public GetMethodText() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Способ определения поставщика \(подрядчика, исполнителя\)</(?<space>.*?)>\n *(?<space>.*?)>(?<val>.*?)<", RegexOptions), new(@"Способ осуществления закупки</(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetPlatformName : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Наименование электронной площадки(?<space>.*?)>\n(?<space>.*?)info"">(?<val>.*?)</", RegexOptions), new(@"Наименование электронной площадки(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
         public GetPlatformName() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Наименование электронной площадки(?<space>.*?)>\n(?<space>.*?)info"">(?<val>.*?)</", RegexOptions), new(@"Наименование электронной площадки(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetPlatformAddress : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Адрес электронной площадки(?<space>.*?)</span>(?<space>.*?)href=""(?<val>.*?)""", RegexOptions), new(@"Адрес электронной площадки(?<space>.*?)>\n(?<space>.*?)>\n(?<space>.*?)href=""(?<val>.*?)""", RegexOptions) };
         public GetPlatformAddress() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Адрес электронной площадки(?<space>.*?)</span>(?<space>.*?)href=""(?<val>.*?)""", RegexOptions), new(@"Адрес электронной площадки(?<space>.*?)>\n(?<space>.*?)>\n(?<space>.*?)href=""(?<val>.*?)""", RegexOptions) };
     }
 
     private class GetOrganizationPostalAddress : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Почтовый адрес(?<space>.*?)>\n(?<space>.*?)\n *(?<val>.*?)\n", RegexOptions) };
         public GetOrganizationPostalAddress() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Почтовый адрес(?<space>.*?)>\n(?<space>.*?)\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetLocation : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Место нахождения(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
         public GetLocation() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Место нахождения(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetStartDate : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"начала(?<space>.*?)>\n(?<space>.*?)\n *(?<val>..\...\..... ..:..)", RegexOptions) };
         public GetStartDate() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"начала(?<space>.*?)>\n(?<space>.*?)\n *(?<val>..\...\..... ..:..)", RegexOptions) };
     }
 
     private class GetDeadline : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"окончания(?<space>.*?)>\n(?<space>.*?)\n *(?<val>..\...\..... ..:..)", RegexOptions) };
         public GetDeadline() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"окончания(?<space>.*?)>\n(?<space>.*?)\n *(?<val>..\...\..... ..:..)", RegexOptions) };
     }
 
     private class GetTimeZoneOffset : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@" (?<val>МСК.*?) ", RegexOptions) };
         public GetTimeZoneOffset() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@" (?<val>МСК.*?) ", RegexOptions) };
     }
 
     private class GetSecuring : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения заявки</(?<space>.*?)>\n *<(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
         public GetSecuring() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения заявки</(?<space>.*?)>\n *<(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetEnforcement : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения исполнения контракта</(?<space>.*?)>\s*<(?<space>.*?)>\n(?<val>.*?)</(?<space>.*?)>", RegexOptions) };
         public GetEnforcement() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения исполнения контракта</(?<space>.*?)>\s*<(?<space>.*?)>\n(?<val>.*?)</(?<space>.*?)>", RegexOptions) };
     }
 
     private class GetWarranty : Parse
     {
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения гарантийных обязательств</(?<space>.*?)>\n *<(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
         public GetWarranty() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения гарантийных обязательств</(?<space>.*?)>\n *<(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 }

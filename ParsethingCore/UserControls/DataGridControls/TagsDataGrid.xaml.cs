@@ -1,6 +1,4 @@
-﻿using DatabaseLibrary.Entities.ComponentCalculationProperties;
-
-namespace ParsethingCore.UserControls.DataGridControls;
+﻿namespace ParsethingCore.UserControls.DataGridControls;
 
 public partial class TagsDataGrid : UserControl, IView
 {
@@ -40,6 +38,7 @@ public partial class TagsDataGrid : UserControl, IView
         Tags = GET.View.Tags();
         if (Tags != null)
             ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Tags.Count;
+        else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
     }
 
     public void GetView()
@@ -47,6 +46,7 @@ public partial class TagsDataGrid : UserControl, IView
         GetTags();
         View.ItemsSource = Tags;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
+        ((TextBox)Application.Current.MainWindow.FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
@@ -84,4 +84,16 @@ public partial class TagsDataGrid : UserControl, IView
 
     public void Export() =>
         ExportInstance.Run(View);
+
+    public void Search(string searchString)
+    {
+        List<Tag>? results = Tags?
+            .Where(t => t.Keyword.ToLower().Contains(searchString.ToLower()))
+            .ToList();
+        View.ItemsSource = results;
+        ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
+        if (results != null)
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = results.Count;
+        else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
+    }
 }

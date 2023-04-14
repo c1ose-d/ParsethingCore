@@ -38,6 +38,7 @@ public partial class ManufacturersDataGrid : UserControl, IView
         Manufacturers = GET.View.Manufacturers();
         if (Manufacturers != null)
             ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Manufacturers.Count;
+        else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
     }
 
     public void GetView()
@@ -45,6 +46,7 @@ public partial class ManufacturersDataGrid : UserControl, IView
         GetManufacturers();
         View.ItemsSource = Manufacturers;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
+        ((TextBox)Application.Current.MainWindow.FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
@@ -82,4 +84,16 @@ public partial class ManufacturersDataGrid : UserControl, IView
 
     public void Export() =>
         ExportInstance.Run(View);
+
+    public void Search(string searchString)
+    {
+        List<Manufacturer>? results = Manufacturers?
+            .Where(m => m.Name.ToLower().Contains(searchString.ToLower()))
+            .ToList();
+        View.ItemsSource = results;
+        ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
+        if (results != null)
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = results.Count;
+        else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
+    }
 }

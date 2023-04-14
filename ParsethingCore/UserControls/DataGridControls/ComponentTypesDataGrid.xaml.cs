@@ -1,4 +1,6 @@
-﻿namespace ParsethingCore.UserControls.DataGridControls;
+﻿using DatabaseLibrary.Entities.ComponentCalculationProperties;
+
+namespace ParsethingCore.UserControls.DataGridControls;
 
 public partial class ComponentTypesDataGrid : UserControl, IView
 {
@@ -39,6 +41,7 @@ public partial class ComponentTypesDataGrid : UserControl, IView
         ComponentTypes = GET.View.ComponentTypes();
         if (ComponentTypes != null)
             ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = ComponentTypes.Count;
+        else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
     }
 
     public void GetView()
@@ -46,6 +49,7 @@ public partial class ComponentTypesDataGrid : UserControl, IView
         GetComponentTypes();
         View.ItemsSource = ComponentTypes;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
+        ((TextBox)Application.Current.MainWindow.FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
@@ -83,4 +87,16 @@ public partial class ComponentTypesDataGrid : UserControl, IView
 
     public void Export() =>
         ExportInstance.Run(View);
+
+    public void Search(string searchString)
+    {
+        List<ComponentType>? results = ComponentTypes?
+            .Where(ct => ct.Kind.ToLower().Contains(searchString.ToLower()))
+            .ToList();
+        View.ItemsSource = results;
+        ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
+        if (results != null)
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = results.Count;
+        else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
+    }
 }
