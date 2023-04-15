@@ -72,7 +72,7 @@
                         </TreeViewItem>
                     </TreeViewItem>
                 </TreeView>
-                <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+                <GridSplitter Background="#000" Grid.Column="1" Width="2" HorizontalAlignment="Stretch"/>
             </Grid>
             <Border x:Name="StatusBar" BorderBrush="{DynamicResource StatusBar.BorderBrush}" Grid.Row="3" BorderThickness="0,1,0,0" CornerRadius="0,0,16,16">
                 <StatusBar Background="{x:Null}">
