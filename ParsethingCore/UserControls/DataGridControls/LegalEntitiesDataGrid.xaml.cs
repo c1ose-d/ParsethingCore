@@ -1,14 +1,14 @@
 ﻿namespace ParsethingCore.UserControls.DataGridControls;
 
-public partial class PositionsDataGrid : UserControl, IView
+public partial class LegalEntitiesDataGrid : UserControl, IView
 {
-    public PositionsDataGrid()
+    public LegalEntitiesDataGrid()
     {
-        GetPositions();
+        GetLegalEntities();
         InitializeComponent();
     }
 
-    private List<Position>? Positions { get; set; }
+    private List<LegalEntity>? LegalEntities { get; set; }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e) =>
         GetView();
@@ -17,7 +17,7 @@ public partial class PositionsDataGrid : UserControl, IView
     {
         try
         {
-            PositionCard card = new((Position)View.SelectedItem);
+            LegalEntityCard card = new((LegalEntity)View.SelectedItem);
             card.ShowDialog();
         }
         catch { }
@@ -26,41 +26,41 @@ public partial class PositionsDataGrid : UserControl, IView
 
     private void View_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        try { ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = ((Position)View.SelectedItem).Id; }
+        try { ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = ((LegalEntity)View.SelectedItem).Id; }
         catch { }
     }
 
     private void View_SizeChanged(object sender, SizeChangedEventArgs e) =>
         View.MinColumnWidth = View.ActualWidth / View.Columns.Count;
 
-    private void GetPositions()
+    private void GetLegalEntities()
     {
-        Positions = GET.View.Positions();
-        if (Positions != null)
-            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Positions.Count;
+        LegalEntities = GET.View.LegalEntities();
+        if (LegalEntities != null)
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = LegalEntities.Count;
         else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
     }
 
     public void GetView()
     {
-        GetPositions();
-        View.ItemsSource = Positions;
+        GetLegalEntities();
+        View.ItemsSource = LegalEntities;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
         ((TextBox)Application.Current.MainWindow.FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
     {
-        PositionCard card = new();
+        LegalEntityCard card = new();
         card.ShowDialog();
         GetView();
     }
 
     public void Edit()
     {
-        if ((Position)View.SelectedItem != null)
+        if ((LegalEntity)View.SelectedItem != null)
         {
-            PositionCard card = new((Position)View.SelectedItem);
+            LegalEntityCard card = new((LegalEntity)View.SelectedItem);
             card.ShowDialog();
         }
         GetView();
@@ -70,12 +70,12 @@ public partial class PositionsDataGrid : UserControl, IView
     {
         try
         {
-            Position position = (Position)View.SelectedItem;
-            if (position != null)
+            LegalEntity legalEntity = (LegalEntity)View.SelectedItem;
+            if (legalEntity != null)
             {
                 DeleteConfirmation confirmation = new();
                 if (confirmation.ShowDialog() == true)
-                    DELETE.Position(position);
+                    DELETE.LegalEntity(legalEntity);
             }
         }
         catch { }
@@ -87,8 +87,8 @@ public partial class PositionsDataGrid : UserControl, IView
 
     public void Search(string searchString)
     {
-        List<Position>? results = Positions?
-            .Where(p => p.Kind.ToLower().Contains(searchString.ToLower()))
+        List<LegalEntity>? results = LegalEntities?
+            .Where(m => m.Name.ToLower().Contains(searchString.ToLower()))
             .ToList();
         View.ItemsSource = results;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;

@@ -55,8 +55,10 @@
     <Using Include="DatabaseLibrary" />
     <Using Include="DatabaseLibrary.Entities" />
     <Using Include="DatabaseLibrary.Entities.ComponentCalculationProperties" />
+    <Using Include="DatabaseLibrary.Entities.DocumentMuchToMany" />
     <Using Include="DatabaseLibrary.Entities.EmployeeMuchToMany" />
     <Using Include="DatabaseLibrary.Entities.NoRelationship" />
+    <Using Include="DatabaseLibrary.Entities.PreferenceMuchToMany" />
     <Using Include="DatabaseLibrary.Entities.ProcurementProperties" />
     <Using Include="DatabaseLibrary.Queries" />
     <Using Include="ExportLibrary" />

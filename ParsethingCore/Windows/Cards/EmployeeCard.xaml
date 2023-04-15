@@ -30,9 +30,9 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Label Content="ФИО" Style="{DynamicResource Header.1}"/>
+                        <Label Content="ФИО" Style="{DynamicResource Header}"/>
                         <TextBox x:Name="FullName" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
-                        <Label Content="Должность" Grid.Row="1" Style="{DynamicResource Header.1}"/>
+                        <Label Content="Должность" Grid.Row="1" Style="{DynamicResource Header}"/>
                         <ComboBox x:Name="Position" Grid.Row="1" Grid.Column="1" IsEditable="True" StaysOpenOnEdit="True" DisplayMemberPath="Kind" Style="{DynamicResource ComboBoxBase}"/>
                     </Grid>
                 </Grid>
@@ -45,9 +45,9 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Content="Имя пользователя" Style="{DynamicResource Header.1}"/>
+                    <Label Content="Имя пользователя" Style="{DynamicResource Header}"/>
                     <TextBox x:Name="UserName" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
-                    <Label Content="Пароль" Grid.Row="1" Style="{DynamicResource Header.1}"/>
+                    <Label Content="Пароль" Grid.Row="1" Style="{DynamicResource Header}"/>
                     <TextBox x:Name="Password" Grid.Row="1" Grid.Column="1" Style="{DynamicResource NoWrapInput}"/>
                 </Grid>
             </StackPanel>

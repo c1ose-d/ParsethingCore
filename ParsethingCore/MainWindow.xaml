@@ -60,11 +60,11 @@
                             <TreeViewItem x:Name="Sellers" Header="Поставщики" GotFocus="Sellers_GotFocus"/>
                         </TreeViewItem>
                         <TreeViewItem Header="По заукпкам">
-                            <TreeViewItem Header="Документы"/>
-                            <TreeViewItem Header="Юридические лица"/>
-                            <TreeViewItem Header="Миноптторг"/>
-                            <TreeViewItem Header="Преференции"/>
-                            <TreeViewItem Header="Состояния закупок"/>
+                            <TreeViewItem x:Name="Documents" Header="Документы" GotFocus="Documents_GotFocus"/>
+                            <TreeViewItem x:Name="LegalEntities" Header="Юридические лица" GotFocus="LegalEntities_GotFocus"/>
+                            <TreeViewItem x:Name="Minopttorgs" Header="Миноптторги" GotFocus="Minopttorgs_GotFocus"/>
+                            <TreeViewItem x:Name="Preferences" Header="Преференции" GotFocus="Preferences_GotFocus"/>
+                            <TreeViewItem x:Name="ProcurementStates" Header="Состояния закупок" GotFocus="ProcurementStates_GotFocus"/>
                             <TreeViewItem x:Name="Tags" Header="Тэги" GotFocus="Tags_GotFocus"/>
                         </TreeViewItem>
                         <TreeViewItem Header="По сотрудникам">

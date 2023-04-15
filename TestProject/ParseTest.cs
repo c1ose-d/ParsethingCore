@@ -3,7 +3,7 @@ namespace TestProject;
 [TestClass]
 public class ParseTest
 {
-    static string Input { get; set; } = new GetRequest("https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0356500002623000104").Input;
+    static string Input { get; set; } = new GetRequest("https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?noticeInfoId=15158506").Input;
 
     [TestMethod]
     public void GetMethodTextTest()

@@ -1,14 +1,14 @@
 ﻿namespace ParsethingCore.UserControls.DataGridControls;
 
-public partial class PositionsDataGrid : UserControl, IView
+public partial class PreferencesDataGrid : UserControl, IView
 {
-    public PositionsDataGrid()
+    public PreferencesDataGrid()
     {
-        GetPositions();
+        GetPreferences();
         InitializeComponent();
     }
 
-    private List<Position>? Positions { get; set; }
+    private List<Preference>? Preferences { get; set; }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e) =>
         GetView();
@@ -17,7 +17,7 @@ public partial class PositionsDataGrid : UserControl, IView
     {
         try
         {
-            PositionCard card = new((Position)View.SelectedItem);
+            PreferenceCard card = new((Preference)View.SelectedItem);
             card.ShowDialog();
         }
         catch { }
@@ -26,41 +26,41 @@ public partial class PositionsDataGrid : UserControl, IView
 
     private void View_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        try { ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = ((Position)View.SelectedItem).Id; }
+        try { ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = ((Preference)View.SelectedItem).Id; }
         catch { }
     }
 
     private void View_SizeChanged(object sender, SizeChangedEventArgs e) =>
         View.MinColumnWidth = View.ActualWidth / View.Columns.Count;
 
-    private void GetPositions()
+    private void GetPreferences()
     {
-        Positions = GET.View.Positions();
-        if (Positions != null)
-            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Positions.Count;
+        Preferences = GET.View.Preferences();
+        if (Preferences != null)
+            ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = Preferences.Count;
         else ((Label)Application.Current.MainWindow.FindName("EntriesCount")).Content = string.Empty;
     }
 
     public void GetView()
     {
-        GetPositions();
-        View.ItemsSource = Positions;
+        GetPreferences();
+        View.ItemsSource = Preferences;
         ((Label)Application.Current.MainWindow.FindName("CurrentId")).Content = string.Empty;
         ((TextBox)Application.Current.MainWindow.FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
     {
-        PositionCard card = new();
+        PreferenceCard card = new();
         card.ShowDialog();
         GetView();
     }
 
     public void Edit()
     {
-        if ((Position)View.SelectedItem != null)
+        if ((Preference)View.SelectedItem != null)
         {
-            PositionCard card = new((Position)View.SelectedItem);
+            PreferenceCard card = new((Preference)View.SelectedItem);
             card.ShowDialog();
         }
         GetView();
@@ -70,12 +70,12 @@ public partial class PositionsDataGrid : UserControl, IView
     {
         try
         {
-            Position position = (Position)View.SelectedItem;
-            if (position != null)
+            Preference preference = (Preference)View.SelectedItem;
+            if (preference != null)
             {
                 DeleteConfirmation confirmation = new();
                 if (confirmation.ShowDialog() == true)
-                    DELETE.Position(position);
+                    DELETE.Preference(preference);
             }
         }
         catch { }
@@ -87,7 +87,7 @@ public partial class PositionsDataGrid : UserControl, IView
 
     public void Search(string searchString)
     {
-        List<Position>? results = Positions?
+        List<Preference>? results = Preferences?
             .Where(p => p.Kind.ToLower().Contains(searchString.ToLower()))
             .ToList();
         View.ItemsSource = results;

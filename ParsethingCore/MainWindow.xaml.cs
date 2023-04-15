@@ -137,6 +137,21 @@ public partial class MainWindow : Window
     private void Sellers_GotFocus(object sender, RoutedEventArgs e) =>
         SetDataGrid(new SellersDataGrid());
 
+    private void Documents_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new DocumentsDataGrid());
+
+    private void LegalEntities_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new LegalEntitiesDataGrid());
+
+    private void Minopttorgs_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new MinopttorgsDataGrid());
+
+    private void Preferences_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new PreferencesDataGrid());
+
+    private void ProcurementStates_GotFocus(object sender, RoutedEventArgs e) =>
+        SetDataGrid(new ProcurementStatesDataGrid());
+
     private void Tags_GotFocus(object sender, RoutedEventArgs e) =>
         SetDataGrid(new TagsDataGrid());
 
