@@ -6,7 +6,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border>
-                        <Label x:Name="TreeFolder" Foreground="{StaticResource TreeViewItemBase.TreeFolder.Static.Foreground}" FontFamily="Segoe Fluent Icons" FontSize="16" FontWeight="Bold" Content="&#xED41;"/>
+                        <Label x:Name="TreeFolder" Foreground="{StaticResource TreeViewItemBase.TreeFolder.Static.Foreground}" FontFamily="../../Fonts/#Segoe Fluent Icons" FontSize="16" FontWeight="Bold" Content="&#xED41;"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">

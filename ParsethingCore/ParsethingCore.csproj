@@ -12,13 +12,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+    <Page Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\Fonts\Mustica Pro.otf" />
     <None Remove="Resources\Fonts\Segoe Fluent Icons.ttf" />
     <None Remove="Resources\Images\ParsethingCore.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="bin\Debug\net6.0-windows\Log.txt" />
     <Content Include="ParsethingCore.ico" />
   </ItemGroup>
 
