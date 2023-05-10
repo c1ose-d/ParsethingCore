@@ -22,16 +22,19 @@ public partial class ProcurementsList : UserControl, IView
         ((TextBox)((TitleBar)Application.Current.MainWindow.FindName("TitleBar")).FindName("Search")).Text = string.Empty;
     }
 
-    public void Add() =>
-        new MessageFlyout("Предупреждение", "В данный контейнер нельзя добавлять элементы.").ShowDialog();
+    public void Add()
+    {
+        if (View.SelectedIndex != -1 && new ApprovalFlyout(((Procurement)View.SelectedItem).Number).ShowDialog() == true)
+        {
+            PULL.Procurement_ProcurementState((Procurement)View.SelectedItem, 21);
+            GetView();
+        }
+    }
 
     public void Edit()
     {
         if (View.SelectedIndex != -1)
-        {
-            new ProcurementCard((Procurement)View.SelectedItem).ShowDialog();
-            GetView();
-        }
+            new ProcurementCard((Procurement)View.SelectedItem).ShowDialog(); 
     }
 
     public void Delete()
@@ -65,9 +68,6 @@ public partial class ProcurementsList : UserControl, IView
     private void View_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (View.SelectedIndex != -1)
-        {
             new ProcurementCard((Procurement)View.SelectedItem).ShowDialog();
-            GetView();
-        }
     }
 }
