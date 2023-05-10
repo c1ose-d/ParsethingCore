@@ -9,24 +9,59 @@ public partial class ManufacturerCard : Window
         InitializeComponent();
 
         if (Manufacturer != null)
-            ManufacturerName.Text = Manufacturer.Name;
+        {
+            Subtitle.Visibility = Visibility.Visible;
+            Subtitle.Text = Manufacturer.Name;
+            Manufacturer_Name.Text = Manufacturer.Name;
+
+            System_Id.Text = Manufacturer.Id.ToString();
+            System_Name.Text = Manufacturer.Name;
+        }
+        else SystemFields.Visibility = Visibility.Collapsed;
     }
 
     private Manufacturer? Manufacturer { get; set; }
 
-    private void Approve_Click(object sender, RoutedEventArgs e)
+    private void SideNav_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (Manufacturer == null)
+        try
         {
-            Manufacturer = new() { Name = ManufacturerName.Text };
-            if (PUT.Manufacturer(Manufacturer))
-                DialogResult = true;
+            foreach (Grid grid in CardView.Children)
+                grid.Visibility = Visibility.Collapsed;
+            CardView.Children[SideNav.SelectedIndex].Visibility = Visibility.Visible;
         }
-        else
+        catch { }
+    }
+
+    private void Manufacturer_Name_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (Manufacturer_Name.Text == string.Empty)
+            Manufacturer_Name_Clear.Visibility = Visibility.Collapsed;
+        else Manufacturer_Name_Clear.Visibility = Visibility.Visible;
+
+        Subtitle.Text = Manufacturer_Name.Text;
+    }
+
+    private void Manufacturer_Name_Clear_Click(object sender, RoutedEventArgs e) =>
+        Manufacturer_Name.Text = string.Empty;
+
+    private void Confirm_Click(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            Manufacturer.Name = ManufacturerName.Text;
-            if (PULL.Manufacturer(Manufacturer))
-                DialogResult = true;
+            if (Manufacturer == null)
+            {
+                Manufacturer = new() { Name = Manufacturer_Name.Text };
+                if (PUT.Manufacturer(Manufacturer))
+                    DialogResult = true;
+            }
+            else
+            {
+                Manufacturer.Name = Manufacturer_Name.Text;
+                if (PULL.Manufacturer(Manufacturer))
+                    DialogResult = true;
+            }
         }
+        catch { }
     }
 }

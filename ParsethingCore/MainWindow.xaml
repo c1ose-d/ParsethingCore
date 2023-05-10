@@ -1,98 +1,29 @@
-﻿<Window x:Class="ParsethingCore.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="ParsethingCore" Style="{DynamicResource Main}" SizeChanged="Window_SizeChanged">
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="clr-namespace:ParsethingCore.UI" x:Class="ParsethingCore.MainWindow" mc:Ignorable="d" Title="ParsethingCore" Style="{DynamicResource Window.MainWindow}">
     <WindowChrome.WindowChrome>
-        <WindowChrome ResizeBorderThickness="16"/>
+        <WindowChrome CaptionHeight="48" CornerRadius="7" ResizeBorderThickness="14"/>
     </WindowChrome.WindowChrome>
-    <Border x:Name="WindowPresenter" Background="{DynamicResource WindowPresenter.Background}" CornerRadius="16">
+    <Border Style="{DynamicResource Window.Surface}">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="21" Color="#000" Direction="270" Opacity=".22" RenderingBias="Quality" ShadowDepth="2"/>
+        </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="48"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Border x:Name="TitleBar" Background="{DynamicResource TitleBar.Background}" Padding="8,0" CornerRadius="16,16,0,0" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-                <DockPanel>
-                    <Label Content="ParsethingCore" Style="{DynamicResource WindowTitle}"/>
-                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="MinimizeAction" Content="&#xE921;" Style="{DynamicResource TitleBarAction}" Click="MinimizeAction_Click"/>
-                        <Button x:Name="MaximizeAction" Content="&#xE922;" Style="{DynamicResource TitleBarAction}" Click="MaximizeAction_Click"/>
-                        <Button x:Name="CloseAction" Content="&#xE8BB;" Style="{DynamicResource TitleBarAction}" Click="CloseAction_Click"/>
-                    </StackPanel>
-                </DockPanel>
-            </Border>
-            <Border x:Name="ToolBar" BorderBrush="{DynamicResource ToolBar.BorderBrush}" Grid.Row="1" Padding="8,4" BorderThickness="0,1">
-                <DockPanel Grid.Row="1" LastChildFill="False">
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="Add" Content="&#xE710;" Style="{DynamicResource ToolBarAction}" Click="Add_Click"/>
-                        <Button x:Name="Edit" Content="&#xE70F;" Style="{DynamicResource ToolBarAction}" Click="Edit_Click"/>
-                        <Button x:Name="Delete" Content="&#xE74D;" Style="{DynamicResource ToolBarAction}" Click="Delete_Click"/>
-                        <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
-                        <Button x:Name="Refresh" Content="&#xE72C;" Style="{DynamicResource ToolBarAction}" Click="Refresh_Click"/>
-                        <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
-                        <Button x:Name="Export" Content="&#xEDE1;" Style="{DynamicResource ToolBarAction}" Click="Export_Click"/>
-                        <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
-                        <Button x:Name="Run" Content="&#xE768;" Style="{DynamicResource ToolBarAction}" Click="Run_Click"/>
-                        <Button x:Name="Stop" Content="&#xE71A;" IsEnabled="False" Style="{DynamicResource ToolBarAction}" Click="Stop_Click"/>
-                    </StackPanel>
-                    <Grid DockPanel.Dock="Right">
-                        <TextBox x:Name="Search" Style="{DynamicResource SearchInput}" TextChanged="Search_TextChanged"/>
-                        <Label Content="&#xE721;" Style="{DynamicResource LabelBase.Icon}"/>
-                    </Grid>
-                </DockPanel>
-            </Border>
-            <Grid x:Name="Container" Grid.Row="2">
+            <ui:TitleBar x:Name="TitleBar"/>
+            <ui:CommandBar Grid.Row="1"/>
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="128"/>
+                    <ColumnDefinition MinWidth="150"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition MinWidth="128"/>
+                    <ColumnDefinition MinWidth="150"/>
                 </Grid.ColumnDefinitions>
-                <TreeView ItemContainerStyle="{DynamicResource TreeViewItemBase}" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <TreeViewItem Header="Справочники">
-                        <TreeViewItem x:Name="Components" Header="Справочник комплектующих" GotFocus="Components_GotFocus"/>
-                        <TreeViewItem x:Name="Employees" Header="Справочник сотрудников" GotFocus="Employees_GotFocus"/>
-                        <TreeViewItem x:Name="Regions" Header="Справочник регионов" GotFocus="Regions_GotFocus"/>
-                    </TreeViewItem>
-                    <TreeViewItem Header="Перечисления">
-                        <TreeViewItem Header="По комплектующим">
-                            <TreeViewItem x:Name="ComponentStates" Header="Состояния комплектующих" GotFocus="ComponentStates_GotFocus"/>
-                            <TreeViewItem x:Name="ComponentTypes" Header="Типы комплектующих" GotFocus="ComponentTypes_GotFocus"/>
-                            <TreeViewItem x:Name="Manufacturers" Header="Производители" GotFocus="Manufacturers_GotFocus"/>
-                            <TreeViewItem x:Name="Sellers" Header="Поставщики" GotFocus="Sellers_GotFocus"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="По заукпкам">
-                            <TreeViewItem x:Name="Documents" Header="Документы" GotFocus="Documents_GotFocus"/>
-                            <TreeViewItem x:Name="LegalEntities" Header="Юридические лица" GotFocus="LegalEntities_GotFocus"/>
-                            <TreeViewItem x:Name="Minopttorgs" Header="Миноптторги" GotFocus="Minopttorgs_GotFocus"/>
-                            <TreeViewItem x:Name="Preferences" Header="Преференции" GotFocus="Preferences_GotFocus"/>
-                            <TreeViewItem x:Name="ProcurementStates" Header="Состояния закупок" GotFocus="ProcurementStates_GotFocus"/>
-                            <TreeViewItem x:Name="Tags" Header="Тэги" GotFocus="Tags_GotFocus"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="По сотрудникам">
-                            <TreeViewItem x:Name="Positions" Header="Должности" GotFocus="Positions_GotFocus"/>
-                        </TreeViewItem>
-                    </TreeViewItem>
-                </TreeView>
-                <GridSplitter Background="#000" Grid.Column="1" Width="2" HorizontalAlignment="Stretch"/>
+                <ui:TreeView/>
+                <GridSplitter Style="{DynamicResource Separator}" ResizeDirection="Columns" ResizeBehavior="CurrentAndNext"/>
+                <Border x:Name="DataGridContainer" Grid.Column="2"/>
             </Grid>
-            <Border x:Name="StatusBar" BorderBrush="{DynamicResource StatusBar.BorderBrush}" Grid.Row="3" BorderThickness="0,1,0,0" CornerRadius="0,0,16,16">
-                <StatusBar Background="{x:Null}">
-                    <StatusBarItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Количество записей" Style="{DynamicResource Header}"/>
-                            <Label x:Name="EntriesCount" Style="{DynamicResource Header}"/>
-                        </StackPanel>
-                    </StatusBarItem>
-                    <StatusBarItem VerticalContentAlignment="Stretch">
-                        <GridSplitter Background="{DynamicResource GridSplitter.Background}" Width="2" IsEnabled="False"/>
-                    </StatusBarItem>
-                    <StatusBarItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Текущий Id" Style="{DynamicResource Header}"/>
-                            <Label x:Name="CurrentId" Style="{DynamicResource Header}"/>
-                        </StackPanel>
-                    </StatusBarItem>
-                </StatusBar>
-            </Border>
         </Grid>
     </Border>
 </Window>

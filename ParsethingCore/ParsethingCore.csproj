@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Fonts\Mustica Pro.otf" />
     <None Remove="Resources\Fonts\Segoe Fluent Icons.ttf" />
+    <None Remove="Resources\Fonts\SegoeUI-VF.ttf" />
     <None Remove="Resources\Images\ParsethingCore.png" />
   </ItemGroup>
 
@@ -52,7 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Fonts\Mustica Pro.otf" />
     <Resource Include="Resources\Fonts\Segoe Fluent Icons.ttf" />
     <Resource Include="Resources\Images\ParsethingCore.png" />
   </ItemGroup>
@@ -71,17 +70,20 @@
     <Using Include="LogWriterLibrary" />
     <Using Include="Microsoft.Win32" />
     <Using Include="ParsethingCore.Interfaces" />
-    <Using Include="ParsethingCore.UserControls.DataGridControls" />
+    <Using Include="ParsethingCore.UI.ListView_Custom" />
     <Using Include="ParsethingCore.Windows" />
     <Using Include="ParsethingCore.Windows.Cards" />
     <Using Include="ParsingLibrary" />
     <Using Include="System.Collections.ObjectModel" />
     <Using Include="System.Diagnostics" />
     <Using Include="System.IO" />
+    <Using Include="System.Text" />
     <Using Include="System.Windows" />
     <Using Include="System.Windows.Controls" />
     <Using Include="System.Windows.Input" />
+    <Using Include="System.Windows.Media" />
     <Using Include="System.Windows.Media.Imaging" />
+    <Using Include="System.Windows.Shapes" />
   </ItemGroup>
 
   <ItemGroup>

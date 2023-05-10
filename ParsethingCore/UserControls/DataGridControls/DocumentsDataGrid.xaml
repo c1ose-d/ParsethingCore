@@ -1,7 +1,0 @@
-﻿<UserControl x:Class="ParsethingCore.UserControls.DataGridControls.DocumentsDataGrid" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" Loaded="UserControl_Loaded">
-    <DataGrid x:Name="View" Style="{DynamicResource DataGridBase}" MouseDoubleClick="View_MouseDoubleClick" SelectionChanged="View_SelectionChanged" SizeChanged="View_SizeChanged">
-        <DataGrid.Columns>
-            <DataGridTextColumn Binding="{Binding Path=Title}" Header="Наименование"/>
-        </DataGrid.Columns>
-    </DataGrid>
-</UserControl>

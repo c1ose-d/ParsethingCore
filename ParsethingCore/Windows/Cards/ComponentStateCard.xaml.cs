@@ -9,24 +9,59 @@ public partial class ComponentStateCard : Window
         InitializeComponent();
 
         if (ComponentState != null)
-            Kind.Text = ComponentState.Kind;
+        {
+            Subtitle.Visibility = Visibility.Visible;
+            Subtitle.Text = ComponentState.Kind;
+            ComponentState_Kind.Text = ComponentState.Kind;
+
+            System_Id.Text = ComponentState.Id.ToString();
+            System_Kind.Text = ComponentState.Kind;
+        }
+        else SystemFields.Visibility = Visibility.Collapsed;
     }
 
     private ComponentState? ComponentState { get; set; }
 
-    private void Approve_Click(object sender, RoutedEventArgs e)
+    private void SideNav_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (ComponentState == null)
+        try
         {
-            ComponentState = new() { Kind = Kind.Text };
-            if (PUT.ComponentState(ComponentState))
-                DialogResult = true;
+            foreach (Grid grid in CardView.Children)
+                grid.Visibility = Visibility.Collapsed;
+            CardView.Children[SideNav.SelectedIndex].Visibility = Visibility.Visible;
         }
-        else
+        catch { }
+    }
+
+    private void ComponentState_Kind_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (ComponentState_Kind.Text == string.Empty)
+            ComponentState_Kind_Clear.Visibility = Visibility.Collapsed;
+        else ComponentState_Kind_Clear.Visibility = Visibility.Visible;
+
+        Subtitle.Text = ComponentState_Kind.Text;
+    }
+
+    private void ComponentState_Kind_Clear_Click(object sender, RoutedEventArgs e) =>
+        ComponentState_Kind.Text = string.Empty;
+
+    private void Confirm_Click(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            ComponentState.Kind = Kind.Text;
-            if (PULL.ComponentState(ComponentState))
-                DialogResult = true;
+            if (ComponentState == null)
+            {
+                ComponentState = new() { Kind = ComponentState_Kind.Text };
+                if (PUT.ComponentState(ComponentState))
+                    DialogResult = true;
+            }
+            else
+            {
+                ComponentState.Kind = ComponentState_Kind.Text;
+                if (PULL.ComponentState(ComponentState))
+                    DialogResult = true;
+            }
         }
+        catch { }
     }
 }

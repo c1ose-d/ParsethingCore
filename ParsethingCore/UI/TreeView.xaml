@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="ParsethingCore.UI.TreeView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignWidth="280" d:DesignHeight="324">
+    <TreeView x:Name="View" Style="{DynamicResource TreeView}" Loaded="View_Loaded">
+        <TreeViewItem Header="Справочники" Style="{DynamicResource TreeView.ListItem.Level1}">
+            <TreeViewItem Header="Справочник комплектующих" Style="{DynamicResource TreeView.ListItem.Level2}" GotFocus="TreeViewItem_GotFocus"/>
+            <TreeViewItem Header="Справочник сотрудников" Style="{DynamicResource TreeView.ListItem.Level2}" GotFocus="TreeViewItem_GotFocus"/>
+            <TreeViewItem Header="Справочник закупок" Style="{DynamicResource TreeView.ListItem.Level2}" GotFocus="TreeViewItem_GotFocus"/>
+            <TreeViewItem Header="Справочник регионов" Style="{DynamicResource TreeView.ListItem.Level2}" GotFocus="TreeViewItem_GotFocus"/>
+        </TreeViewItem>
+        <TreeViewItem Header="Перечисления" Style="{DynamicResource TreeView.ListItem.Level1}">
+            <TreeViewItem Header="По комплектующим" Style="{DynamicResource TreeView.ListItem.Level2}">
+                <TreeViewItem Header="Состояния комплектующих" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Типы комплектующих" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Производители" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Поставщики" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+            </TreeViewItem>
+            <TreeViewItem Header="По закупкам" Style="{DynamicResource TreeView.ListItem.Level2}">
+                <TreeViewItem Header="Документы" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Юридические лица" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Миноптторги" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Преференции" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Состояния закупок" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Тэги" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+            </TreeViewItem>
+            <TreeViewItem Header="По сотрудникам" Style="{DynamicResource TreeView.ListItem.Level2}">
+                <TreeViewItem Header="Должности" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+            </TreeViewItem>
+        </TreeViewItem>
+    </TreeView>
+</UserControl>

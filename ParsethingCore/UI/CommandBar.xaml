@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="ParsethingCore.UI.CommandBar" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignWidth="398" d:DesignHeight="46">
+    <StackPanel x:Name="Bar" Orientation="Horizontal" HorizontalAlignment="Right" Loaded="Bar_Loaded">
+        <Button x:Name="Add" Content="&#xE710;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Add_Click"/>
+        <Button x:Name="Edit" Content="&#xE70F;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Edit_Click"/>
+        <Button x:Name="Delete" Content="&#xE74D;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Delete_Click"/>
+        <GridSplitter Style="{DynamicResource Separator}"/>
+        <Button x:Name="Refresh" Content="&#xE72C;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Refresh_Click"/>
+        <Button x:Name="Export" Visibility="Collapsed" Content="&#xEDE1;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Export_Click"/>
+        <GridSplitter Style="{DynamicResource Separator}"/>
+        <Button x:Name="Run" Content="&#xE768;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Run_Click"/>
+        <Button x:Name="Stop" Content="&#xE71A;" IsEnabled="False" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Stop_Click"/>
+    </StackPanel>
+</UserControl>

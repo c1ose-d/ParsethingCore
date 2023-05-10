@@ -3,16 +3,16 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/ResourceDictionaries/Brushes.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/ButtonTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/ComboBoxItemTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/ComboBoxTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridCellTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridColumnHeaderTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/DataGridTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/LabelTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/TextBoxTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/TreeViewItemTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/ResourceDictionaries/Templates/WindowTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/BasicInput.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/CommandBar.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/GridSplitter.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/ListView.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/Primitives.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/Scrolling.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/TextFields.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/TitleBar.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/TreeView.xaml"/>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/UI/Window.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

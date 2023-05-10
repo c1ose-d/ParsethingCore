@@ -9,24 +9,59 @@ public partial class LegalEntityCard : Window
         InitializeComponent();
 
         if (LegalEntity != null)
-            LegalEntityName.Text = LegalEntity.Name;
+        {
+            Subtitle.Visibility = Visibility.Visible;
+            Subtitle.Text = LegalEntity.Name;
+            LegalEntity_Name.Text = LegalEntity.Name;
+
+            System_Id.Text = LegalEntity.Id.ToString();
+            System_Name.Text = LegalEntity.Name;
+        }
+        else SystemFields.Visibility = Visibility.Collapsed;
     }
 
     private LegalEntity? LegalEntity { get; set; }
 
-    private void Approve_Click(object sender, RoutedEventArgs e)
+    private void SideNav_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (LegalEntity == null)
+        try
         {
-            LegalEntity = new() { Name = LegalEntityName.Text };
-            if (PUT.LegalEntity(LegalEntity))
-                DialogResult = true;
+            foreach (Grid grid in CardView.Children)
+                grid.Visibility = Visibility.Collapsed;
+            CardView.Children[SideNav.SelectedIndex].Visibility = Visibility.Visible;
         }
-        else
+        catch { }
+    }
+
+    private void LegalEntity_Name_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (LegalEntity_Name.Text == string.Empty)
+            LegalEntity_Name_Clear.Visibility = Visibility.Collapsed;
+        else LegalEntity_Name_Clear.Visibility = Visibility.Visible;
+
+        Subtitle.Text = LegalEntity_Name.Text;
+    }
+
+    private void LegalEntity_Name_Clear_Click(object sender, RoutedEventArgs e) =>
+        LegalEntity_Name.Text = string.Empty;
+
+    private void Confirm_Click(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            LegalEntity.Name = LegalEntityName.Text;
-            if (PULL.LegalEntity(LegalEntity))
-                DialogResult = true;
+            if (LegalEntity == null)
+            {
+                LegalEntity = new() { Name = LegalEntity_Name.Text };
+                if (PUT.LegalEntity(LegalEntity))
+                    DialogResult = true;
+            }
+            else
+            {
+                LegalEntity.Name = LegalEntity_Name.Text;
+                if (PULL.LegalEntity(LegalEntity))
+                    DialogResult = true;
+            }
         }
+        catch { }
     }
 }
