@@ -44,27 +44,28 @@ public partial class CommandBar : UserControl
 
     private void Run_Click(object sender, RoutedEventArgs e)
     {
-        Run.IsEnabled = false;
-        Stop.IsEnabled = true;
-        Sources = new();
-        SourceCallerRun(Sources.Enable);
+        ParsingLayout parsingLayout = new();
+        if (parsingLayout.ShowDialog() == true)
+        {
+            Run.IsEnabled = false;
+            Stop.IsEnabled = true;
+            Sources = new();
+            string minPrice = parsingLayout.MinPrice.Text;
+            string maxPrice = parsingLayout.MaxPrice.Text;
+            try
+            {
+                SourcesCaller = new(() => Sources.Enable(minPrice, maxPrice));
+                SourcesCaller.Start();
+            }
+            catch (Exception ex) { LogWriter.Write(ex); }
+        }
     }
 
     private void Stop_Click(object sender, RoutedEventArgs e)
     {
         Run.IsEnabled = true;
         Stop.IsEnabled = false;
-        try { SourceCallerRun(Sources.Disable); }
+        try { SourcesCaller = new(() => Sources.Disable()); }
         catch { }
-    }
-
-    private void SourceCallerRun(ThreadStart start)
-    {
-        try
-        {
-            SourcesCaller = new(start);
-            SourcesCaller.Start();
-        }
-        catch (Exception ex) { LogWriter.Write(ex); }
     }
 }

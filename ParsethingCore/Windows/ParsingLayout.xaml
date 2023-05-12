@@ -1,0 +1,57 @@
+﻿<Window x:Class="ParsethingCore.Windows.ParsingLayout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Парсинг" WindowStartupLocation="CenterScreen" Style="{DynamicResource Window.Card}">
+    <Border Style="{DynamicResource Window.Surface}">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="2" Color="#000" Direction="315" Opacity=".15" RenderingBias="Quality" ShadowDepth="2"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Padding="12" Style="{DynamicResource Window.TitleSurface}">
+                <TextBlock Text="Парсинг" Style="{DynamicResource Title}"/>
+            </Border>
+            <Border Grid.Row="1" Padding="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Минимальная цена" Style="{DynamicResource Body}"/>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="MinPrice" Grid.ColumnSpan="2" Style="{DynamicResource TextBox}" TextChanged="MinPrice_TextChanged"/>
+                        <Button x:Name="MinPrice_Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" Click="MinPrice_Clear_Click"/>
+                    </Grid>
+                    <TextBlock Text="Максимальная цена" Grid.Row="1" Style="{DynamicResource Body}"/>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="MaxPrice" Grid.ColumnSpan="2" Style="{DynamicResource TextBox}" TextChanged="MaxPrice_TextChanged"/>
+                        <Button x:Name="MaxPrice_Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" Click="MaxPrice_Clear_Click"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Border Grid.Row="2" Style="{DynamicResource Window.ButtonSurface}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="Confirm" Content="Подтвердить" IsDefault="True" Style="{DynamicResource Button.Accent}" Click="Confirm_Click"/>
+                    <Button Grid.Column="1" Content="Отменить" IsCancel="True" Style="{DynamicResource Button.Standart}"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

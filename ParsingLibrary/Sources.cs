@@ -11,7 +11,7 @@ public class Sources
     private Regex UrlRegex { get; set; } = new(@"pageNumber=\d*", RegexOptions);
     private Regex Regex { get; set; } = new(@" *<div class=""search-registry-entry-block box-shadow-search-input"">(?<val>.*?)\n        </div>", RegexOptions);
 
-    public void Enable()
+    public void Enable(string minPrice, string maxPrice)
     {
         InitializeDriver();
         while (true)
@@ -22,7 +22,7 @@ public class Sources
                 foreach (Tag tag in tags)
                     try
                     {
-                        string url = $"https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString={tag.Keyword}&morphology=on&search-filter=Дате+размещения&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&fz223=on&af=on&priceFromGeneral=200000&priceToGeneral=9000000&currencyIdGeneral=-1&publishDateFrom={DateTime.Now.AddDays(-1).ToShortDateString()}";
+                        string url = $"https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString={tag.Keyword}&morphology=on&search-filter=Дате+размещения&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&fz223=on&af=on&priceFromGeneral={minPrice}&priceToGeneral={maxPrice}&currencyIdGeneral=-1&publishDateFrom={DateTime.Now.AddDays(-1).ToShortDateString()}";
                         Driver.Navigate().GoToUrl(url);
                         Thread.Sleep(10000);
 
