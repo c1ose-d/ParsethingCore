@@ -15,9 +15,6 @@ public partial class TreeView : UserControl
         if (DataGridContainer != null)
             switch (((TreeViewItem)sender).Header.ToString())
             {
-                case "Справочник комплектующих":
-                    DataGridContainer.Child = new ComponentsList();
-                    break;
                 case "Справочник сотрудников":
                     DataGridContainer.Child = new EmployeesList();
                     break;

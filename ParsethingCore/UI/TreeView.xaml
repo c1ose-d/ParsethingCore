@@ -1,7 +1,6 @@
 ﻿<UserControl x:Class="ParsethingCore.UI.TreeView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignWidth="280" d:DesignHeight="324">
     <TreeView x:Name="View" Style="{DynamicResource TreeView}" Loaded="View_Loaded">
         <TreeViewItem Header="Справочники" Style="{DynamicResource TreeView.ListItem.Level1}">
-            <TreeViewItem Header="Справочник комплектующих" Style="{DynamicResource TreeView.ListItem.Level2}" GotFocus="TreeViewItem_GotFocus"/>
             <TreeViewItem Header="Справочник сотрудников" Style="{DynamicResource TreeView.ListItem.Level2}" GotFocus="TreeViewItem_GotFocus"/>
             <TreeViewItem Header="Справочник закупок" Style="{DynamicResource TreeView.ListItem.Level2}" GotFocus="TreeViewItem_GotFocus"/>
             <TreeViewItem Header="Справочник регионов" Style="{DynamicResource TreeView.ListItem.Level2}" GotFocus="TreeViewItem_GotFocus"/>
