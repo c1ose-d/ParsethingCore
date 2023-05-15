@@ -1,8 +1,8 @@
 ﻿namespace ParsethingCore.Windows;
 
-public partial class ParsingLayout : Window
+public partial class ParsingFlyout : Window
 {
-    public ParsingLayout()
+    public ParsingFlyout()
     {
         InitializeComponent();
     }

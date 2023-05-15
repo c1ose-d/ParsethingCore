@@ -44,14 +44,14 @@ public partial class CommandBar : UserControl
 
     private void Run_Click(object sender, RoutedEventArgs e)
     {
-        ParsingLayout parsingLayout = new();
-        if (parsingLayout.ShowDialog() == true)
+        ParsingFlyout ParsingFlyout = new();
+        if (ParsingFlyout.ShowDialog() == true)
         {
             Run.IsEnabled = false;
             Stop.IsEnabled = true;
             Sources = new();
-            string minPrice = parsingLayout.MinPrice.Text;
-            string maxPrice = parsingLayout.MaxPrice.Text;
+            string minPrice = ParsingFlyout.MinPrice.Text;
+            string maxPrice = ParsingFlyout.MaxPrice.Text;
             try
             {
                 SourcesCaller = new(() => Sources.Enable(minPrice, maxPrice));

@@ -1,6 +1,4 @@
-﻿using DatabaseLibrary.Entities.EmployeeMuchToMany;
-
-namespace ParsingLibrary;
+﻿namespace ParsingLibrary;
 
 public class Sources
 {

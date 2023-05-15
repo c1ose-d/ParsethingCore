@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <Using Include="DatabaseLibrary.Entities.Actions" />
+    <Using Include="DatabaseLibrary.Entities.EmployeeMuchToMany" />
     <Using Include="DatabaseLibrary.Entities.NoRelationship" />
     <Using Include="DatabaseLibrary.Entities.ProcurementProperties" />
     <Using Include="DatabaseLibrary.Entities.ProcurementProperties.Platform">
