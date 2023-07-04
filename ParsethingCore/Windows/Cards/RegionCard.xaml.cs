@@ -14,10 +14,12 @@ public partial class RegionCard : Window
             Subtitle.Text = Region.Title;
             Region_Title.Text = Region.Title;
             Region_Distance.Text = Region.Distance.ToString();
+            Region_RegionCode.Text = Region.RegionCode.ToString();
 
             System_Id.Text = Region.Id.ToString();
             System_Title.Text = Region.Title;
             System_Distance.Text = Region.Distance.ToString();
+            System_RegionCode.Text = Region.RegionCode.ToString();
         }
         else SystemFields.Visibility = Visibility.Collapsed;
     }
