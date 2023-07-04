@@ -34,7 +34,7 @@ public partial class ProcurementsList : UserControl, IView
     public void Edit()
     {
         if (View.SelectedIndex != -1)
-            new ProcurementCard((Procurement)View.SelectedItem).ShowDialog(); 
+            new ProcurementCard((Procurement)View.SelectedItem).ShowDialog();
     }
 
     public void Delete()

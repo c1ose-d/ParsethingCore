@@ -11,10 +11,10 @@ public partial class TitleBar : UserControl
     }
 
     private Window MainWindow { get; set; } = null!;
-    private Border DataGridContainer { get; set; } = null!;
+    private Border ListViewContainer { get; set; } = null!;
 
     private void Surface_Loaded(object sender, RoutedEventArgs e) =>
-        DataGridContainer = (Border)Application.Current.MainWindow.FindName("DataGridContainer");
+        ListViewContainer = (Border)Application.Current.MainWindow.FindName("DataGridContainer");
 
     private void Surface_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -47,7 +47,7 @@ public partial class TitleBar : UserControl
             Clear.Visibility = Visibility.Collapsed;
         else Clear.Visibility = Visibility.Visible;
 
-        try { ((IView)DataGridContainer.Child).Search(Search.Text.ToLower()); }
+        try { ((IView)ListViewContainer.Child).Search(Search.Text.ToLower()); }
         catch { }
     }
 

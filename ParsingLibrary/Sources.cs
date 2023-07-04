@@ -1,4 +1,6 @@
-﻿namespace ParsingLibrary;
+﻿using System.Diagnostics;
+
+namespace ParsingLibrary;
 
 public class Sources
 {
@@ -114,7 +116,7 @@ public class Sources
 
     public void Disable()
     {
-        try { Driver.Quit(); }
+        try { Driver.Dispose(); }
         catch (Exception ex) { LogWriter.Write(ex); }
     }
 }

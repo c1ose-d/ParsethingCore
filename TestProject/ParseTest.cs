@@ -3,13 +3,13 @@ namespace TestProject;
 [TestClass]
 public class ParseTest
 {
-    static string Input { get; set; } = new GetRequest("https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?noticeInfoId=15158506").Input;
+    static string Input { get; set; } = new GetRequest("https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?noticeInfoId=15305793").Input;
 
     [TestMethod]
     public void GetMethodTextTest()
     {
         GetMethodText methodText = new();
-        string? excepted = "Электронный аукцион", actual = methodText.Result;
+        string? excepted = "Аукцион в электронной форме, участниками которого могут быть только субъекты малого и среднего предпринимательства", actual = methodText.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -17,7 +17,7 @@ public class ParseTest
     public void GetPlatformNameTest()
     {
         GetPlatformName platformName = new();
-        string? excepted = "ЭТП ТЭК-Торг", actual = platformName.Result;
+        string? excepted = "АКЦИОНЕРНОЕ ОБЩЕСТВО \"СБЕРБАНК-АВТОМАТИЗИРОВАННАЯ СИСТЕМА ТОРГОВ\"", actual = platformName.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -25,7 +25,7 @@ public class ParseTest
     public void GetPlatformAddressTest()
     {
         GetPlatformAddress platformAddress = new();
-        string? excepted = "http://www.tektorg.ru/", actual = platformAddress.Result;
+        string? excepted = "http://www.sberbank-ast.ru/", actual = platformAddress.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -33,7 +33,7 @@ public class ParseTest
     public void GetOrganizationPostalAddressTest()
     {
         GetOrganizationPostalAddress organizationPostalAddress = new();
-        string? excepted = "614042 Пермский край г Пермь ул Победы, 41", actual = organizationPostalAddress.Result;
+        string? excepted = "689000, АО. Чукотский, г. Анадырь, ул. Южная", actual = organizationPostalAddress.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -41,7 +41,7 @@ public class ParseTest
     public void GetLocationTest()
     {
         GetLocation location = new();
-        string? excepted = "614042 Пермский край г Пермь ул Победы, 41", actual = location.Result;
+        string? excepted = "689000, АВТОНОМНЫЙ ОКРУГ ЧУКОТСКИЙ, Г. АНАДЫРЬ, УЛ. ЮЖНАЯ, дом Д. 4", actual = location.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -49,7 +49,7 @@ public class ParseTest
     public void GetStartDateTest()
     {
         GetStartDate startDate = new();
-        DateTime? excepted = Convert.ToDateTime("13.04.2023 08:19"), actual = Convert.ToDateTime(startDate.Result);
+        DateTime? excepted = Convert.ToDateTime("14.06.2023 14:20"), actual = Convert.ToDateTime(startDate.Result);
         Assert.AreEqual(excepted, actual);
     }
 
@@ -57,7 +57,7 @@ public class ParseTest
     public void GetDeadlineTest()
     {
         GetDeadline deadline = new();
-        DateTime? excepted = Convert.ToDateTime("28.04.2023 07:00"), actual = Convert.ToDateTime(deadline.Result);
+        DateTime? excepted = Convert.ToDateTime("14.06.2023 14:20"), actual = Convert.ToDateTime(deadline.Result);
         Assert.AreEqual(excepted, actual);
     }
 
@@ -65,7 +65,7 @@ public class ParseTest
     public void GetTimeZoneOffsetTest()
     {
         GetTimeZoneOffset timeZoneOffset = new();
-        string? excepted = "МСК+2", actual = timeZoneOffset.Result;
+        string? excepted = "МСК", actual = timeZoneOffset.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -73,7 +73,7 @@ public class ParseTest
     public void GetSecuringTest()
     {
         GetSecuring securing = new();
-        string? excepted = "11 927,43 Российский рубль", actual = securing.Result;
+        string? excepted = null, actual = securing.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -81,7 +81,7 @@ public class ParseTest
     public void GetEnforcementTest()
     {
         GetEnforcement enforcement = new();
-        string? excepted = "119 274,32 Российский рубль (10 %)", actual = enforcement.Result;
+        string? excepted = null, actual = enforcement.Result;
         Assert.AreEqual(excepted, actual);
     }
 

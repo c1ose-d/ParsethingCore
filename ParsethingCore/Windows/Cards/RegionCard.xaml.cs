@@ -64,6 +64,23 @@ public partial class RegionCard : Window
     private void Region_Distance_Clear_Click(object sender, RoutedEventArgs e) =>
         Region_Distance.Text = string.Empty;
 
+    private void Region_RegionCode_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (Region_RegionCode.Text == string.Empty)
+            Region_RegionCode_Clear.Visibility = Visibility.Collapsed;
+        else Region_RegionCode_Clear.Visibility = Visibility.Visible;
+
+        StringBuilder stringBuilder = new(Region_RegionCode.Text);
+        for (int i = stringBuilder.Length - 1; i >= 0; i--)
+            if (!char.IsDigit(stringBuilder[i]))
+                stringBuilder.Remove(i, 1);
+        Region_RegionCode.Text = stringBuilder.ToString();
+        Region_RegionCode.CaretIndex = Region_RegionCode.Text.Length;
+    }
+
+    private void Region_RegionCode_Clear_Click(object sender, RoutedEventArgs e) =>
+        Region_RegionCode.Text = string.Empty;
+
     private void Confirm_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -73,7 +90,8 @@ public partial class RegionCard : Window
                 Region = new()
                 {
                     Title = Region_Title.Text,
-                    Distance = Convert.ToInt32(Region_Distance.Text)
+                    Distance = Convert.ToInt32(Region_Distance.Text),
+                    RegionCode = Convert.ToInt32(Region_RegionCode.Text)
                 };
                 if (PUT.Region(Region))
                     DialogResult = true;
@@ -82,6 +100,7 @@ public partial class RegionCard : Window
             {
                 Region.Title = Region_Title.Text;
                 Region.Distance = Convert.ToInt32(Region_Distance.Text);
+                Region.RegionCode = Convert.ToInt32(Region_RegionCode.Text);
                 if (PULL.Region(Region))
                     DialogResult = true;
             }
