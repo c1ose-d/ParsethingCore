@@ -52,10 +52,10 @@ public partial class CommandBar : UserControl
             Sources = new();
             string minPrice = parsingFlyout.MinPrice.Text;
             string maxPrice = parsingFlyout.MaxPrice.Text;
-            List<Region> regions = parsingFlyout
+            List<Region> regions = parsingFlyout.Selection.Items.Cast<Region>().ToList();
             try
             {
-                SourcesCaller = new(() => Sources.Enable(minPrice, maxPrice));
+                SourcesCaller = new(() => Sources.Enable(minPrice, maxPrice, regions));
                 SourcesCaller.Start();
             }
             catch (Exception ex) { LogWriter.Write(ex); }
