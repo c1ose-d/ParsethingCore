@@ -5,6 +5,22 @@ public partial class ParsingFlyout : Window
     public ParsingFlyout()
     {
         InitializeComponent();
+
+        List<Region>? regions = GET.View.Regions();
+        if (regions != null)
+            foreach(Region region in regions)
+                View.Items.Add(region);
+    }
+
+    private void SideNav_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            foreach (Grid grid in CardView.Children)
+                grid.Visibility = Visibility.Collapsed;
+            CardView.Children[SideNav.SelectedIndex].Visibility = Visibility.Visible;
+        }
+        catch { }
     }
 
     private void MinPrice_TextChanged(object sender, TextChangedEventArgs e)
@@ -40,6 +56,26 @@ public partial class ParsingFlyout : Window
 
     private void MaxPrice_Clear_Click(object sender, RoutedEventArgs e) =>
         MaxPrice.Text = string.Empty;
+
+    private void View_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        try
+        {
+            Selection.Items.Add((Region)View.SelectedItem);
+            View.Items.Remove((Region)View.SelectedItem);
+        }
+        catch { }
+    }
+
+    private void Selection_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        try
+        {
+            View.Items.Add((Region)Selection.SelectedItem);
+            Selection.Items.Remove((Region)Selection.SelectedItem);
+        }
+        catch { }
+    }
 
     private void Confirm_Click(object sender, RoutedEventArgs e)
     {
