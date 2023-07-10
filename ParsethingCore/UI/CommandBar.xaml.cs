@@ -1,4 +1,6 @@
-﻿namespace ParsethingCore.UI;
+﻿using DatabaseLibrary.Entities.ProcurementProperties;
+
+namespace ParsethingCore.UI;
 
 public partial class CommandBar : UserControl
 {
@@ -66,7 +68,13 @@ public partial class CommandBar : UserControl
     {
         Run.IsEnabled = true;
         Stop.IsEnabled = false;
-        try { SourcesCaller = new(() => Sources.Disable()); }
-        catch { }
+        try
+        {
+            SourcesCaller = new(() => Sources.Disable());
+            SourcesCaller.Start();
+            foreach (var process in Process.GetProcessesByName("msedgedriver"))
+                process.Kill();
+        }
+        catch (Exception ex) { LogWriter.Write(ex); }
     }
 }
