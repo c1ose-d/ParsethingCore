@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Windows;
 
 namespace ParsingLibrary;
 
@@ -13,6 +13,18 @@ public class Sources
 
     public void Enable(string minPrice, string maxPrice, List<Region> regions)
     {
+        try
+        {
+            string[] cache = File.ReadAllLines("Cache.txt");
+            if (Convert.ToDateTime(cache[0]).ToShortDateString() != DateTime.Now.ToShortDateString())
+                throw new Exception();
+        }
+        catch
+        {
+            File.Create("Cache.txt").Close();
+            File.AppendAllText("Cache.txt", $"{DateTime.Now.AddDays(-1).ToShortDateString()}\n");
+        }
+
         InitializeDriver();
 
         string regionsString = "";
@@ -64,24 +76,25 @@ public class Sources
 
                                             Source source = new(procurementCards[j].Value);
 
-                                            if (PUT.ProcurementSource(source, source.IsGetted))
-                                            {
-                                                Employee? parsethingCore = GET.Entry.Employee("PC", "PC");
-                                                Procurement? entry = GET.Entry.Procurement(source.Number);
-
-                                                if (parsethingCore != null && entry != null)
+                                            if (!source.IsCached)
+                                                if (PUT.ProcurementSource(source, source.IsGetted))
                                                 {
-                                                    PUT.History(new()
+                                                    Employee? parsethingCore = GET.Entry.Employee("PC", "PC");
+                                                    Procurement? entry = GET.Entry.Procurement(source.Number);
+
+                                                    if (parsethingCore != null && entry != null)
                                                     {
-                                                        EmployeeId = parsethingCore.Id,
-                                                        Date = DateTime.Now,
-                                                        EntityType = "Procurement",
-                                                        EntryId = entry.Id,
-                                                        Text = "Parsed."
-                                                    });
+                                                        PUT.History(new()
+                                                        {
+                                                            EmployeeId = parsethingCore.Id,
+                                                            Date = DateTime.Now,
+                                                            EntityType = "Procurement",
+                                                            EntryId = entry.Id,
+                                                            Text = "Parsed."
+                                                        });
+                                                    }
                                                 }
-                                            }
-                                            else throw new Exception();
+                                                else throw new Exception();
 
                                             ReadOnlyCollection<string> tabs = Driver.WindowHandles;
                                             if (tabs.Count > 1)
@@ -122,7 +135,11 @@ public class Sources
             driverService.HideCommandPromptWindow = true;
             Driver = new EdgeDriver(driverService, new EdgeOptions());
         }
-        catch (Exception ex) { LogWriter.Write(ex); }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Ошибка!"); 
+            LogWriter.Write(ex); 
+        }
     }
 
     public void Disable()

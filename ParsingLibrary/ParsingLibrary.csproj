@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -48,6 +48,7 @@
     <Using Include="OpenQA.Selenium" />
     <Using Include="OpenQA.Selenium.Edge" />
     <Using Include="System.Collections.ObjectModel" />
+    <Using Include="System.IO" />
     <Using Include="System.Net.Http" />
     <Using Include="System.Text.RegularExpressions" />
   </ItemGroup>

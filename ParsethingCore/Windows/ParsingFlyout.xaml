@@ -1,18 +1,18 @@
-﻿<Window x:Class="ParsethingCore.Windows.ParsingFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Парсинг" WindowStartupLocation="CenterScreen" Style="{DynamicResource Window.Card}">
+﻿<Window x:Class="ParsethingCore.Windows.ParsingFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" MinHeight="540" SizeToContent="WidthAndHeight" Title="Парсинг" WindowStartupLocation="CenterScreen" Style="{DynamicResource Window.Card}">
     <Border Style="{DynamicResource Window.Surface}">
         <Border.Effect>
             <DropShadowEffect BlurRadius="2" Color="#000" Direction="315" Opacity=".15" RenderingBias="Quality" ShadowDepth="2"/>
         </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Border Padding="12" Style="{DynamicResource Window.TitleSurface}">
                 <TextBlock Text="Парсинг" Style="{DynamicResource Title}"/>
             </Border>
-            <Border Grid.Row="1" Padding="12">
+            <Border Width="960" MinHeight="300" Grid.Row="1" Padding="12">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -31,6 +31,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
@@ -52,21 +53,36 @@
                                 <TextBox x:Name="MaxPrice" Grid.ColumnSpan="2" Style="{DynamicResource TextBox}" TextChanged="MaxPrice_TextChanged"/>
                                 <Button x:Name="MaxPrice_Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" Click="MaxPrice_Clear_Click"/>
                             </Grid>
+                            <Button x:Name="ClearConfig" Grid.Row="2" Grid.ColumnSpan="2" Margin="4,12" Content="Очистить конфигурацию" Style="{DynamicResource Button.Standart}" Click="ClearConfig_Click"/>
                         </Grid>
-                        <Grid Visibility="Collapsed" VerticalAlignment="Top">
+                        <Grid Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <ListView x:Name="View" Style="{DynamicResource ListView}" MouseDoubleClick="View_MouseDoubleClick">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Border Height="32" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="4">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="Search" Grid.ColumnSpan="2" Style="{DynamicResource Search}" TextChanged="Search_TextChanged"/>
+                                    <Button x:Name="Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" WindowChrome.IsHitTestVisibleInChrome="True" Click="Clear_Click"/>
+                                </Grid>
+                            </Border>
+                            <ListView x:Name="View" Grid.Row="1" SelectionMode="Multiple" Style="{DynamicResource ListView}" MouseDoubleClick="View_MouseDoubleClick">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}" Style="{DynamicResource ListView.Body}"/>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <ListView x:Name="Selection" Grid.Column="2" Style="{DynamicResource ListView}" MouseDoubleClick="Selection_MouseDoubleClick">
+                            <ListView x:Name="Selection" Grid.Row="1" Grid.Column="2" Style="{DynamicResource ListView}" MouseDoubleClick="Selection_MouseDoubleClick">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}" Style="{DynamicResource ListView.Body}"/>

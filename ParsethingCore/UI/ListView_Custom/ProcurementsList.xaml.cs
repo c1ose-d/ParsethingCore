@@ -24,10 +24,22 @@ public partial class ProcurementsList : UserControl, IView
 
     public void Add()
     {
-        if (View.SelectedIndex != -1 && new ApprovalFlyout(((Procurement)View.SelectedItem).Number).ShowDialog() == true)
+        if (View.SelectedIndex != -1 && View.SelectedItems.Count == 1)
         {
-            PULL.Procurement_ProcurementState((Procurement)View.SelectedItem, 21);
-            GetView();
+            if (new ApprovalFlyout(((Procurement)View.SelectedItem).Number).ShowDialog() == true)
+            {
+                PULL.Procurement_ProcurementState((Procurement)View.SelectedItem, 21);
+                GetView();
+            }
+        }
+        else if (View.SelectedIndex != -1)
+        {
+            if (new ApprovalFlyout("Список закупок").ShowDialog() == true)
+            {
+                foreach (Procurement procurement in View.SelectedItems.Cast<Procurement>().ToList())
+                    PULL.Procurement_ProcurementState(procurement, 21);
+                GetView();
+            }
         }
     }
 
@@ -39,10 +51,22 @@ public partial class ProcurementsList : UserControl, IView
 
     public void Delete()
     {
-        if (View.SelectedIndex != -1 && new DeleteFlyout(((Procurement)View.SelectedItem).Number).ShowDialog() == true)
+        if (View.SelectedIndex != -1 && View.SelectedItems.Count == 1)
         {
-            DELETE.Procurement((Procurement)View.SelectedItem);
-            GetView();
+            if (new ApprovalFlyout(((Procurement)View.SelectedItem).Number).ShowDialog() == true)
+            {
+                DELETE.Procurement((Procurement)View.SelectedItem);
+                GetView();
+            }
+        }
+        else if (View.SelectedIndex != -1)
+        {
+            if (new ApprovalFlyout("Список закупок").ShowDialog() == true)
+            {
+                foreach (Procurement procurement in View.SelectedItems.Cast<Procurement>().ToList())
+                    DELETE.Procurement(procurement);
+                GetView();
+            }
         }
     }
 
