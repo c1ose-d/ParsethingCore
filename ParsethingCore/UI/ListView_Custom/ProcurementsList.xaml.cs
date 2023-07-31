@@ -14,12 +14,13 @@ public partial class ProcurementsList : UserControl, IView
         try
         {
             if (procurements != null)
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 30; i++)
                     items.Add(procurements[i]);
         }
         catch { }
         View.ItemsSource = items;
         ((TextBox)((TitleBar)Application.Current.MainWindow.FindName("TitleBar")).FindName("Search")).Text = string.Empty;
+        Count.Content = $"Общее количество: {procurements?.Count}";
     }
 
     public void Add()
