@@ -25,7 +25,7 @@ public class Source : Procurement
                 break;
             }
 
-        if (IsCached)
+        if (!IsCached)
         {
             string? number = new GetNumber().Result;
             if (number != null)
