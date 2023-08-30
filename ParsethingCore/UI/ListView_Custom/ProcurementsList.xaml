@@ -8,7 +8,7 @@
                 <StackPanel>
                     <TextBlock Text="{Binding Number}" Style="{DynamicResource ListView.Body}"/>
                     <TextBlock Text="{Binding Object}" Style="{DynamicResource ListView.Caption}"/>
-                    <TextBlock Text="{Binding StartDate}" Style="{DynamicResource ListView.Caption}"/>
+                    <TextBlock Text="{Binding PostingDate}" Style="{DynamicResource ListView.Caption}"/>
                 </StackPanel>
             </DataTemplate>
         </ListView.ItemTemplate>

@@ -53,6 +53,7 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Text="Номер" Style="{DynamicResource Body}"/>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -78,16 +79,18 @@
                                 </StackPanel>
                                 <TextBlock Grid.Row="8" Text="Место нахождения" Style="{DynamicResource Body}"/>
                                 <TextBlock x:Name="Procurement_Location" Grid.Row="8" Grid.Column="1" Style="{DynamicResource Body}"/>
-                                <TextBlock Grid.Row="9" Text="Дата начала" Style="{DynamicResource Body}"/>
-                                <TextBlock x:Name="Procurement_StartDate" Grid.Row="9" Grid.Column="1" Style="{DynamicResource Body}"/>
-                                <TextBlock Grid.Row="10" Text="Дата окончания" Style="{DynamicResource Body}"/>
-                                <TextBlock x:Name="Procurement_Deadline" Grid.Row="10" Grid.Column="1" Style="{DynamicResource Body}"/>
-                                <TextBlock Grid.Row="11" Text="Обеспечение заявки" Style="{DynamicResource Body}"/>
-                                <TextBlock x:Name="Procurement_Securing" Grid.Row="11" Grid.Column="1" Style="{DynamicResource Body}"/>
-                                <TextBlock Grid.Row="12" Text="Обеспечение исполнения" Style="{DynamicResource Body}"/>
-                                <TextBlock x:Name="Procurement_Enforcement" Grid.Row="12" Grid.Column="1" Style="{DynamicResource Body}"/>
-                                <TextBlock Grid.Row="13" Text="Обеспечение гарантии" Style="{DynamicResource Body}"/>
-                                <TextBlock x:Name="Procurement_Warranty" Grid.Row="13" Grid.Column="1" Style="{DynamicResource Body}"/>
+                                <TextBlock Grid.Row="9" Text="Дата размещения" Style="{DynamicResource Body}"/>
+                                <TextBlock x:Name="Procurement_PostingDate" Grid.Row="9" Grid.Column="1" Style="{DynamicResource Body}"/>
+                                <TextBlock Grid.Row="10" Text="Дата начала" Style="{DynamicResource Body}"/>
+                                <TextBlock x:Name="Procurement_StartDate" Grid.Row="10" Grid.Column="1" Style="{DynamicResource Body}"/>
+                                <TextBlock Grid.Row="11" Text="Дата окончания" Style="{DynamicResource Body}"/>
+                                <TextBlock x:Name="Procurement_Deadline" Grid.Row="11" Grid.Column="1" Style="{DynamicResource Body}"/>
+                                <TextBlock Grid.Row="12" Text="Обеспечение заявки" Style="{DynamicResource Body}"/>
+                                <TextBlock x:Name="Procurement_Securing" Grid.Row="12" Grid.Column="1" Style="{DynamicResource Body}"/>
+                                <TextBlock Grid.Row="13" Text="Обеспечение исполнения" Style="{DynamicResource Body}"/>
+                                <TextBlock x:Name="Procurement_Enforcement" Grid.Row="13" Grid.Column="1" Style="{DynamicResource Body}"/>
+                                <TextBlock Grid.Row="14" Text="Обеспечение гарантии" Style="{DynamicResource Body}"/>
+                                <TextBlock x:Name="Procurement_Warranty" Grid.Row="14" Grid.Column="1" Style="{DynamicResource Body}"/>
                             </Grid>
                             <Grid Visibility="Collapsed" VerticalAlignment="Top">
                                 <Grid.ColumnDefinitions>
@@ -95,6 +98,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -132,18 +136,20 @@
                                 <TextBlock x:Name="System_PlatformId" Grid.Row="8" Grid.Column="1" Style="{DynamicResource Body.System}"/>
                                 <TextBlock Text="Location" Grid.Row="9" Style="{DynamicResource Body.System}"/>
                                 <TextBlock x:Name="System_Location" Grid.Row="9" Grid.Column="1" Style="{DynamicResource Body.System}"/>
-                                <TextBlock Text="StartDate" Grid.Row="10" Style="{DynamicResource Body.System}"/>
-                                <TextBlock x:Name="System_StartDate" Grid.Row="10" Grid.Column="1" Style="{DynamicResource Body.System}"/>
-                                <TextBlock Text="Deadline" Grid.Row="11" Style="{DynamicResource Body.System}"/>
-                                <TextBlock x:Name="System_Deadline" Grid.Row="11" Grid.Column="1" Style="{DynamicResource Body.System}"/>
-                                <TextBlock Text="TimeZoneId" Grid.Row="12" Style="{DynamicResource Body.System}"/>
-                                <TextBlock x:Name="System_TimeZoneId" Grid.Row="12" Grid.Column="1" Style="{DynamicResource Body.System}"/>
-                                <TextBlock Text="Securing" Grid.Row="13" Style="{DynamicResource Body.System}"/>
-                                <TextBlock x:Name="System_Securing" Grid.Row="13" Grid.Column="1" Style="{DynamicResource Body.System}"/>
-                                <TextBlock Text="Enforcement" Grid.Row="14" Style="{DynamicResource Body.System}"/>
-                                <TextBlock x:Name="System_Enforcement" Grid.Row="14" Grid.Column="1" Style="{DynamicResource Body.System}"/>
-                                <TextBlock Text="Warranty" Grid.Row="15" Style="{DynamicResource Body.System}"/>
-                                <TextBlock x:Name="System_Warranty" Grid.Row="15" Grid.Column="1" Style="{DynamicResource Body.System}"/>
+                                <TextBlock Text="PostingDate" Grid.Row="10" Style="{DynamicResource Body.System}"/>
+                                <TextBlock x:Name="System_PostingDate" Grid.Row="10" Grid.Column="1" Style="{DynamicResource Body.System}"/>
+                                <TextBlock Text="StartDate" Grid.Row="11" Style="{DynamicResource Body.System}"/>
+                                <TextBlock x:Name="System_StartDate" Grid.Row="11" Grid.Column="1" Style="{DynamicResource Body.System}"/>
+                                <TextBlock Text="Deadline" Grid.Row="12" Style="{DynamicResource Body.System}"/>
+                                <TextBlock x:Name="System_Deadline" Grid.Row="12" Grid.Column="1" Style="{DynamicResource Body.System}"/>
+                                <TextBlock Text="TimeZoneId" Grid.Row="13" Style="{DynamicResource Body.System}"/>
+                                <TextBlock x:Name="System_TimeZoneId" Grid.Row="13" Grid.Column="1" Style="{DynamicResource Body.System}"/>
+                                <TextBlock Text="Securing" Grid.Row="14" Style="{DynamicResource Body.System}"/>
+                                <TextBlock x:Name="System_Securing" Grid.Row="14" Grid.Column="1" Style="{DynamicResource Body.System}"/>
+                                <TextBlock Text="Enforcement" Grid.Row="15" Style="{DynamicResource Body.System}"/>
+                                <TextBlock x:Name="System_Enforcement" Grid.Row="15" Grid.Column="1" Style="{DynamicResource Body.System}"/>
+                                <TextBlock Text="Warranty" Grid.Row="16" Style="{DynamicResource Body.System}"/>
+                                <TextBlock x:Name="System_Warranty" Grid.Row="16" Grid.Column="1" Style="{DynamicResource Body.System}"/>
                             </Grid>
                         </Grid>
                     </ScrollViewer>

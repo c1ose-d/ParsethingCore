@@ -53,7 +53,7 @@
                                 <TextBox x:Name="MaxPrice" Grid.ColumnSpan="2" Style="{DynamicResource TextBox}" TextChanged="MaxPrice_TextChanged"/>
                                 <Button x:Name="MaxPrice_Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" Click="MaxPrice_Clear_Click"/>
                             </Grid>
-                            <Button x:Name="ClearConfig" Grid.Row="2" Grid.ColumnSpan="2" Margin="4,12" Content="Очистить конфигурацию" Style="{DynamicResource Button.Standart}" Click="ClearConfig_Click"/>
+                            <Button x:Name="ClearConfig" Grid.Row="2" Grid.ColumnSpan="2" Margin="4,12,0,12" Content="Очистить конфигурацию" Style="{DynamicResource Button.Standart}" Click="ClearConfig_Click"/>
                         </Grid>
                         <Grid Visibility="Collapsed">
                             <Grid.ColumnDefinitions>

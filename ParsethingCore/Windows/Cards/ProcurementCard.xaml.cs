@@ -1,6 +1,4 @@
-﻿using DatabaseLibrary.Entities.ProcurementProperties;
-
-namespace ParsethingCore.Windows.Cards;
+﻿namespace ParsethingCore.Windows.Cards;
 
 public partial class ProcurementCard : Window
 {
@@ -26,6 +24,7 @@ public partial class ProcurementCard : Window
             Procurement_Platform.Text = Procurement.Platform?.Name;
             Procurement_Platform_Address.DataContext = Procurement.Platform?.Address;
             Procurement_Location.Text = Procurement.Location;
+            Procurement_PostingDate.Text = $"{Procurement.PostingDate?.ToString()} ({Procurement.TimeZone?.Offset})";
             Procurement_StartDate.Text = $"{Procurement.StartDate?.ToString()} ({Procurement.TimeZone?.Offset})";
             Procurement_Deadline.Text = $"{Procurement.Deadline?.ToString()} ({Procurement.TimeZone?.Offset})";
             Procurement_Securing.Text = Procurement.Securing?.ToString();
@@ -42,6 +41,7 @@ public partial class ProcurementCard : Window
             System_MethodId.Text = Procurement.MethodId.ToString();
             System_PlatformId.Text = Procurement.PlatformId.ToString();
             System_Location.Text = Procurement.Location;
+            System_PostingDate.Text = Procurement.PostingDate?.ToString();
             System_StartDate.Text = Procurement.StartDate?.ToString();
             System_Deadline.Text = Procurement.Deadline?.ToString();
             System_TimeZoneId.Text = Procurement.TimeZoneId.ToString();

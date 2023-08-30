@@ -70,6 +70,10 @@ public class Source : Procurement
                         MethodId = method.Id;
                 }
 
+                if (DateTime.TryParse(new GetPostingDate().Result, out DateTime postingDate))
+                    PostingDate = postingDate;
+                else PostingDate = null;
+
                 string? platformName = new GetPlatformName().Result;
                 string? platformAddress = new GetPlatformAddress().Result;
                 if (platformName != null && platformAddress != null)
@@ -189,6 +193,13 @@ public class Source : Procurement
         public GetMethodText() : base(Input) { }
 
         public override List<Regex> Regexes { get; } = new() { new(@"Способ определения поставщика \(подрядчика, исполнителя\)</(?<space>.*?)>\n *(?<space>.*?)>(?<val>.*?)<", RegexOptions), new(@"Способ осуществления закупки</(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
+    }
+
+    private class GetPostingDate : Parse
+    {
+        public GetPostingDate() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"Размещено</(?<space>.*?)>\n *(?<space>.*?)"">\n(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetPlatformName : Parse
