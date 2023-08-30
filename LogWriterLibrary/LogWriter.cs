@@ -12,9 +12,11 @@ public static class LogWriter
 
     public static void Write(Exception exception)
     {
+        Initialize();
         string value = $"{DateTime.Now}\n{exception.Source}\n{exception.Message}\n";
         if (exception.InnerException != null)
             value += $"{exception.InnerException}\n";
         Trace.WriteLine(value);
+        Trace.Listeners.Clear();
     }
 }

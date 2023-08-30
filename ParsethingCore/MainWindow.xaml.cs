@@ -2,9 +2,5 @@
 
 public partial class MainWindow : Window
 {
-    public MainWindow()
-    {
-        LogWriter.Initialize();
-        InitializeComponent();
-    }
+    public MainWindow() { InitializeComponent(); }
 }

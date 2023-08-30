@@ -10,11 +10,6 @@ public partial class RegionsList : UserControl, IView
 
     public void GetView()
     {
-        try
-        {
-            List<Region>? regions = GET.View.Regions()?.ToList();
-        }
-        catch (Exception ex) { LogWriter.Write(ex); }
         View.ItemsSource = GET.View.Regions();
         ((TextBox)((TitleBar)Application.Current.MainWindow.FindName("TitleBar")).FindName("Search")).Text = string.Empty;
     }

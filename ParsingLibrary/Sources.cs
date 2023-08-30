@@ -61,7 +61,7 @@ public class Sources
                                     Element.Click();
                                     Thread.Sleep(10000);
                                 }
-                                catch (Exception ex) { LogWriter.Write(ex); }
+                                catch { }
 
                                 if (Input != null)
                                 {
