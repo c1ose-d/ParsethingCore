@@ -178,7 +178,7 @@ public class Source : Procurement
     {
         public GetInitialPrice() : base(ProcurementCard) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Начальная цена(?<space>.*?)value"">(?<val>.*,..?) ", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"<span\s+class=""cardMainInfo__content cost"">\s*([\d\s]+,\d{2})\s*", RegexOptions) };
     }
 
     private class GetOrganizationName : Parse

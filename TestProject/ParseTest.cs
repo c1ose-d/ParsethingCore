@@ -1,15 +1,23 @@
-namespace TestProject;
+п»їnamespace TestProject;
 
 [TestClass]
 public class ParseTest
 {
-    static string Input { get; set; } = new GetRequest("https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?noticeInfoId=15305793").Input;
+    static string Input { get; set; } = new GetRequest("https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0134300005224000031").Input;
 
     [TestMethod]
     public void GetMethodTextTest()
     {
         GetMethodText methodText = new();
-        string? excepted = "Аукцион в электронной форме, участниками которого могут быть только субъекты малого и среднего предпринимательства", actual = methodText.Result;
+        string? excepted = "Р­Р»РµРєС‚СЂРѕРЅРЅС‹Р№ Р°СѓРєС†РёРѕРЅ", actual = methodText.Result;
+        Assert.AreEqual(excepted, actual);
+    }
+
+    [TestMethod]
+    public void GetInitialPriceTest()
+    {
+        GetInitialPrice initialPrice = new();
+        string? excepted = "619В 554,00", actual = initialPrice.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -17,7 +25,7 @@ public class ParseTest
     public void GetPlatformNameTest()
     {
         GetPlatformName platformName = new();
-        string? excepted = "АКЦИОНЕРНОЕ ОБЩЕСТВО \"СБЕРБАНК-АВТОМАТИЗИРОВАННАЯ СИСТЕМА ТОРГОВ\"", actual = platformName.Result;
+        string? excepted = "Р РўРЎ-С‚РµРЅРґРµСЂ", actual = platformName.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -25,7 +33,7 @@ public class ParseTest
     public void GetPlatformAddressTest()
     {
         GetPlatformAddress platformAddress = new();
-        string? excepted = "http://www.sberbank-ast.ru/", actual = platformAddress.Result;
+        string? excepted = "http://www.rts-tender.ru", actual = platformAddress.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -33,7 +41,7 @@ public class ParseTest
     public void GetOrganizationPostalAddressTest()
     {
         GetOrganizationPostalAddress organizationPostalAddress = new();
-        string? excepted = "689000, АО. Чукотский, г. Анадырь, ул. Южная", actual = organizationPostalAddress.Result;
+        string? excepted = "Р РѕСЃСЃРёР№СЃРєР°СЏ Р¤РµРґРµСЂР°С†РёСЏ, 665653, РСЂРєСѓС‚СЃРєР°СЏ РѕР±Р», РќРёР¶РЅРµРёР»РёРјСЃРєРёР№ СЂ-РЅ, Р–РµР»РµР·РЅРѕРіРѕСЂСЃРє-РР»РёРјСЃРєРёР№ Рі, РљР’-Р› 8, Р”.20/-, -", actual = organizationPostalAddress.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -41,7 +49,7 @@ public class ParseTest
     public void GetLocationTest()
     {
         GetLocation location = new();
-        string? excepted = "689000, АВТОНОМНЫЙ ОКРУГ ЧУКОТСКИЙ, Г. АНАДЫРЬ, УЛ. ЮЖНАЯ, дом Д. 4", actual = location.Result;
+        string? excepted = "Р РѕСЃСЃРёР№СЃРєР°СЏ Р¤РµРґРµСЂР°С†РёСЏ, 665653, РСЂРєСѓС‚СЃРєР°СЏ РѕР±Р», РќРёР¶РЅРµРёР»РёРјСЃРєРёР№ СЂ-РЅ, Р–РµР»РµР·РЅРѕРіРѕСЂСЃРє-РР»РёРјСЃРєРёР№ Рі, РљР’-Р› 8, Р”.20/-, -", actual = location.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -49,7 +57,7 @@ public class ParseTest
     public void GetStartDateTest()
     {
         GetStartDate startDate = new();
-        DateTime? excepted = Convert.ToDateTime("14.06.2023 14:20"), actual = Convert.ToDateTime(startDate.Result);
+        DateTime? excepted = Convert.ToDateTime("20.03.2024 12:11"), actual = Convert.ToDateTime(startDate.Result);
         Assert.AreEqual(excepted, actual);
     }
 
@@ -57,7 +65,7 @@ public class ParseTest
     public void GetDeadlineTest()
     {
         GetDeadline deadline = new();
-        DateTime? excepted = Convert.ToDateTime("14.06.2023 14:20"), actual = Convert.ToDateTime(deadline.Result);
+        DateTime? excepted = Convert.ToDateTime("28.03.2024 10:00"), actual = Convert.ToDateTime(deadline.Result);
         Assert.AreEqual(excepted, actual);
     }
 
@@ -65,7 +73,7 @@ public class ParseTest
     public void GetTimeZoneOffsetTest()
     {
         GetTimeZoneOffset timeZoneOffset = new();
-        string? excepted = "МСК", actual = timeZoneOffset.Result;
+        string? excepted = "РњРЎРљ+5", actual = timeZoneOffset.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -81,7 +89,7 @@ public class ParseTest
     public void GetEnforcementTest()
     {
         GetEnforcement enforcement = new();
-        string? excepted = null, actual = enforcement.Result;
+        string? excepted = "7 %", actual = enforcement.Result;
         Assert.AreEqual(excepted, actual);
     }
 
@@ -97,76 +105,84 @@ public class ParseTest
     {
         public GetMethodText() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Способ определения поставщика \(подрядчика, исполнителя\)</(?<space>.*?)>\n *(?<space>.*?)>(?<val>.*?)<", RegexOptions), new(@"Способ осуществления закупки</(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"РЎРїРѕСЃРѕР± РѕРїСЂРµРґРµР»РµРЅРёСЏ РїРѕСЃС‚Р°РІС‰РёРєР° \(РїРѕРґСЂСЏРґС‡РёРєР°, РёСЃРїРѕР»РЅРёС‚РµР»СЏ\)</(?<space>.*?)>\n *(?<space>.*?)>(?<val>.*?)<", RegexOptions), new(@"Г‘ГЇГ®Г±Г®ГЎ Г®Г±ГіГ№ГҐГ±ГІГўГ«ГҐГ­ГЁГї Г§Г ГЄГіГЇГЄГЁ</(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
+    }
+
+    private class GetInitialPrice : Parse
+    {
+        public GetInitialPrice() : base(Input) { }
+
+        public override List<Regex> Regexes { get; } = new() { new(@"<span\s+class=""cardMainInfo__content cost"">\s*([\d\s]+,\d{2})\s*", RegexOptions) };
+
     }
 
     private class GetPlatformName : Parse
     {
         public GetPlatformName() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Наименование электронной площадки(?<space>.*?)>\n(?<space>.*?)>(?<val>.*?)</", RegexOptions), new(@"Наименование электронной площадки(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"РќР°РёРјРµРЅРѕРІР°РЅРёРµ СЌР»РµРєС‚СЂРѕРЅРЅРѕР№ РїР»РѕС‰Р°РґРєРё(?<space>.*?)>\n(?<space>.*?)>(?<val>.*?)</", RegexOptions), new(@"ГЌГ ГЁГ¬ГҐГ­Г®ГўГ Г­ГЁГҐ ГЅГ«ГҐГЄГІГ°Г®Г­Г­Г®Г© ГЇГ«Г®Г№Г Г¤ГЄГЁ(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetPlatformAddress : Parse
     {
         public GetPlatformAddress() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Адрес электронной площадки(?<space>.*?)</span>(?<space>.*?)href=""(?<val>.*?)""", RegexOptions), new(@"Адрес электронной площадки(?<space>.*?)>\n(?<space>.*?)>\n(?<space>.*?)href=""(?<val>.*?)""", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"РђРґСЂРµСЃ СЌР»РµРєС‚СЂРѕРЅРЅРѕР№ РїР»РѕС‰Р°РґРєРё(?<space>.*?)</span>(?<space>.*?)href=""(?<val>.*?)""", RegexOptions), new(@"ГЂГ¤Г°ГҐГ± ГЅГ«ГҐГЄГІГ°Г®Г­Г­Г®Г© ГЇГ«Г®Г№Г Г¤ГЄГЁ(?<space>.*?)>\n(?<space>.*?)>\n(?<space>.*?)href=""(?<val>.*?)""", RegexOptions) };
     }
 
     private class GetOrganizationPostalAddress : Parse
     {
         public GetOrganizationPostalAddress() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Почтовый адрес(?<space>.*?)>\n(?<space>.*?)\n *(?<val>.*?)\n", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"РџРѕС‡С‚РѕРІС‹Р№ Р°РґСЂРµСЃ(?<space>.*?)>\n(?<space>.*?)\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetLocation : Parse
     {
         public GetLocation() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Место нахождения(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"РњРµСЃС‚Рѕ РЅР°С…РѕР¶РґРµРЅРёСЏ(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetStartDate : Parse
     {
         public GetStartDate() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"начала(?<space>.*?)>\n(?<space>.*?)\n *(?<val>..\...\..... ..:..)", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"РЅР°С‡Р°Р»Р°(?<space>.*?)>\n(?<space>.*?)\n *(?<val>..\...\..... ..:..)", RegexOptions) };
     }
 
     private class GetDeadline : Parse
     {
         public GetDeadline() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"окончания(?<space>.*?)>\n(?<space>.*?)\n *(?<val>..\...\..... ..:..)", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"РѕРєРѕРЅС‡Р°РЅРёСЏ(?<space>.*?)>\n(?<space>.*?)\n *(?<val>..\...\..... ..:..)", RegexOptions) };
     }
 
     private class GetTimeZoneOffset : Parse
     {
         public GetTimeZoneOffset() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@" (?<val>МСК.*?) ", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@" (?<val>РњРЎРљ.*?) ", RegexOptions) };
     }
 
     private class GetSecuring : Parse
     {
         public GetSecuring() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения заявки</(?<space>.*?)>\n *<(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"Р Р°Р·РјРµСЂ РѕР±РµСЃРїРµС‡РµРЅРёСЏ Р·Р°СЏРІРєРё</(?<space>.*?)>\n *<(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 
     private class GetEnforcement : Parse
     {
         public GetEnforcement() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения исполнения контракта</(?<space>.*?)>\s*<(?<space>.*?)>\n(?<val>.*?)</(?<space>.*?)>", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"Р Р°Р·РјРµСЂ РѕР±РµСЃРїРµС‡РµРЅРёСЏ РёСЃРїРѕР»РЅРµРЅРёСЏ РєРѕРЅС‚СЂР°РєС‚Р°</(?<space>.*?)>\s*<(?<space>.*?)>\n(?<val>.*?)</(?<space>.*?)>", RegexOptions) };
     }
 
     private class GetWarranty : Parse
     {
         public GetWarranty() : base(Input) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения гарантийных обязательств</(?<space>.*?)>\n *<(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"Р Р°Р·РјРµСЂ РѕР±РµСЃРїРµС‡РµРЅРёСЏ РіР°СЂР°РЅС‚РёР№РЅС‹С… РѕР±СЏР·Р°С‚РµР»СЊСЃС‚РІ</(?<space>.*?)>\n *<(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
     }
 }
