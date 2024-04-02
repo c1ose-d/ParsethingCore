@@ -72,8 +72,6 @@ public partial class CommandBar : UserControl
         {
             SourcesCaller = new(() => Sources.Disable());
             SourcesCaller.Start();
-            foreach (var process in Process.GetProcessesByName("msedgedriver"))
-                process.Kill();
         }
         catch (Exception ex) { LogWriter.Write(ex); }
     }

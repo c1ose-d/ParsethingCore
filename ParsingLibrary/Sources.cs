@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 
 namespace ParsingLibrary;
 
@@ -17,7 +18,9 @@ public class Sources
         {
             string[] cache = File.ReadAllLines("Cache.txt");
             if (Convert.ToDateTime(cache[0]).ToShortDateString() != DateTime.Now.ToShortDateString())
+            {
                 throw new Exception();
+            }
         }
         catch
         {
@@ -32,7 +35,9 @@ public class Sources
         {
             regionsString += regions[0].RegionCode;
             for (int i = 1; i < regions.Count; i++)
+            {
                 regionsString += $"%2C{regions[i].RegionCode}";
+            }
         }
 
         while (true)
@@ -40,7 +45,9 @@ public class Sources
             List<Tag>? tags = GET.View.Tags();
 
             if (tags != null)
+            {
                 foreach (Tag tag in tags)
+                {
                     try
                     {
                         string url = $"https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString={tag.Keyword}&morphology=on&sortBy=UPDATE_DATE&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&af=on&priceContractAdvantages44IdNameHidden=%7B%7D&priceContractAdvantages94IdNameHidden=%7B%7D&priceFromGeneral={minPrice}&priceToGeneral={maxPrice}&currencyIdGeneral=-1&publishDateFrom={DateTime.Now.AddDays(-1).ToShortDateString()}&customerPlace={regionsString}&customerPlaceCodes=%2C&selectedSubjectsIdNameHidden=%7B%7D&okdpGroupIdsIdNameHidden=%7B%7D&koksIdsIdNameHidden=%7B%7D&OrderPlacementSmallBusinessSubject=on&OrderPlacementRnpData=on&OrderPlacementExecutionRequirement=on&orderPlacement94_0=0&orderPlacement94_1=0&orderPlacement94_2=0&contractPriceCurrencyId=-1&budgetLevelIdNameHidden=%7B%7D&nonBudgetTypesIdNameHidden=%7B%7D&gws=%D0%92%D1%8B%D0%B1%D0%B5%D1%80%D0%B8%D1%82%D0%B5+%D1%82%D0%B8%D0%BF+%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B8";
@@ -48,6 +55,7 @@ public class Sources
                         Thread.Sleep(10000);
 
                         for (int i = 1; i <= 20; i++)
+                        {
                             try
                             {
                                 GetRequest request = new(UrlRegex.Replace(url, $"pageNumber={i}"));
@@ -75,6 +83,7 @@ public class Sources
                                             Source source = new(procurementCards[j].Value);
 
                                             if (!source.IsCached)
+                                            {
                                                 if (PUT.ProcurementSource(source, source.IsGetted))
                                                 {
                                                     Employee? parsethingCore = GET.Entry.Employee("PC", "PC");
@@ -82,7 +91,7 @@ public class Sources
 
                                                     if (parsethingCore != null && entry != null)
                                                     {
-                                                        PUT.History(new()
+                                                        _ = PUT.History(new()
                                                         {
                                                             EmployeeId = parsethingCore.Id,
                                                             Date = DateTime.Now,
@@ -92,7 +101,11 @@ public class Sources
                                                         });
                                                     }
                                                 }
-                                                else throw new Exception();
+                                                else
+                                                {
+                                                    throw new Exception();
+                                                }
+                                            }
 
                                             ReadOnlyCollection<string> tabs = Driver.WindowHandles;
                                             if (tabs.Count > 1)
@@ -116,12 +129,15 @@ public class Sources
                                 catch { break; }
                             }
                             catch { }
+                        }
                     }
                     catch (Exception ex)
                     {
                         Disable();
                         LogWriter.Write(ex);
                     }
+                }
+            }
         }
     }
 
@@ -135,14 +151,21 @@ public class Sources
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Ошибка!"); 
-            LogWriter.Write(ex); 
+            _ = MessageBox.Show("Ошибка!");
+            LogWriter.Write(ex);
         }
     }
 
     public void Disable()
     {
-        try { Driver.Quit(); }
+        try
+        {
+            foreach (Process process in Process.GetProcessesByName("msedgedriver"))
+            {
+                process.Kill();
+                Thread.Sleep(5000);
+            }
+        }
         catch (Exception ex) { LogWriter.Write(ex); }
     }
 }
