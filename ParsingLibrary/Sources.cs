@@ -58,66 +58,46 @@ public class Sources
                         {
                             try
                             {
-                                GetRequest request = new(UrlRegex.Replace(url, $"pageNumber={i}"));
-                                Input = request.Input;
+                                Input = Driver.PageSource;
 
-                                try
+                                do
                                 {
-                                    Element = Driver.FindElement(By.ClassName("btn-close"));
-                                    Element.Click();
-                                    Thread.Sleep(10000);
-                                }
-                                catch { }
-
-                                if (Input != null)
-                                {
-                                    ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__header-mid__number"));
-                                    MatchCollection procurementCards = Regex.Matches(Input);
-                                    for (int j = 0; j < procurementCards.Count; j++)
+                                    DateTime dateTime = DateTime.Now;
+                                    try
                                     {
-                                        try
-                                        {
-                                            elements[j].Click();
-                                            Thread.Sleep(5000);
-
-                                            Source source = new(procurementCards[j].Value);
-
-                                            if (!source.IsCached)
-                                            {
-                                                if (PUT.ProcurementSource(source, source.IsGetted))
-                                                {
-                                                    Employee? parsethingCore = GET.Entry.Employee("PC", "PC");
-                                                    Procurement? entry = GET.Entry.Procurement(source.Number);
-
-                                                    if (parsethingCore != null && entry != null)
-                                                    {
-                                                        _ = PUT.History(new()
-                                                        {
-                                                            EmployeeId = parsethingCore.Id,
-                                                            Date = DateTime.Now,
-                                                            EntityType = "Procurement",
-                                                            EntryId = entry.Id,
-                                                            Text = "Parsed."
-                                                        });
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    throw new Exception();
-                                                }
-                                            }
-
-                                            ReadOnlyCollection<string> tabs = Driver.WindowHandles;
-                                            if (tabs.Count > 1)
-                                            {
-                                                _ = Driver.SwitchTo().Window(tabs[1]);
-                                                Driver.Close();
-                                                _ = Driver.SwitchTo().Window(tabs[0]);
-                                            }
-                                            Thread.Sleep(5000);
-                                        }
-                                        catch { }
+                                        Element = Driver.FindElement(By.ClassName("btn-close"));
+                                        Element.Click();
+                                        Thread.Sleep(1000);
+                                        break;
                                     }
+                                    catch { }
+                                    if (DateTime.Now -  dateTime > TimeSpan.FromSeconds(10))
+                                    {
+                                        break;
+                                    }
+                                }
+                                while (true);
+
+                                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__header-mid__number"));
+                                MatchCollection procurementCards = Regex.Matches(Input);
+                                for (int j = 0; j < procurementCards.Count; j++)
+                                {
+
+                                    try
+                                    {
+                                        elements[j].Click();
+                                        Thread.Sleep(5000);
+
+                                        ReadOnlyCollection<string> tabs = Driver.WindowHandles;
+                                        _ = Driver.SwitchTo().Window(tabs[1]);
+
+                                        Source source = new(Driver.PageSource);
+
+                                        Driver.Close();
+                                        _ = Driver.SwitchTo().Window(tabs[0]);
+                                        Thread.Sleep(5000);
+                                    }
+                                    catch { }
                                 }
 
                                 try

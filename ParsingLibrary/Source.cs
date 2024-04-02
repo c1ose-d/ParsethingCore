@@ -19,17 +19,21 @@ public class Source : Procurement
 
         string[] cache = File.ReadAllLines("Cache.txt");
         foreach (string s in cache)
+        {
             if (s == RequestUri)
             {
                 IsCached = true;
                 break;
             }
+        }
 
         if (!IsCached)
         {
             string? number = new GetNumber().Result;
             if (number != null)
+            {
                 Number ??= number;
+            }
 
             string? lawNumber = new GetLawNumber().Result;
             if (lawNumber != null)
@@ -37,20 +41,22 @@ public class Source : Procurement
                 Law? law = GET.Entry.Law(lawNumber);
                 if (law == null)
                 {
-                    PUT.Law(new() { Number = lawNumber });
+                    _ = PUT.Law(new() { Number = lawNumber });
                     law = GET.Entry.Law(lawNumber);
                 }
                 if (law != null)
+                {
                     LawId = law.Id;
+                }
             }
 
             string? obj = new GetObject().Result;
             if (obj != null)
+            {
                 Object = obj;
+            }
 
-            if (decimal.TryParse(new GetInitialPrice().Result, out decimal initialPrice))
-                InitialPrice = initialPrice;
-            else InitialPrice = 0;
+            InitialPrice = decimal.TryParse(new GetInitialPrice().Result, out decimal initialPrice) ? initialPrice : 0;
 
             string? organizationName = new GetOrganizationName().Result;
 
@@ -63,16 +69,16 @@ public class Source : Procurement
                     Method? method = GET.Entry.Method(methodText);
                     if (method == null)
                     {
-                        PUT.Method(new() { Text = methodText });
+                        _ = PUT.Method(new() { Text = methodText });
                         method = GET.Entry.Method(methodText);
                     }
                     if (method != null)
+                    {
                         MethodId = method.Id;
+                    }
                 }
 
-                if (DateTime.TryParse(new GetPostingDate().Result, out DateTime postingDate))
-                    PostingDate = postingDate;
-                else PostingDate = null;
+                PostingDate = DateTime.TryParse(new GetPostingDate().Result, out DateTime postingDate) ? postingDate : null;
 
                 string? platformName = new GetPlatformName().Result;
                 string? platformAddress = new GetPlatformAddress().Result;
@@ -81,38 +87,37 @@ public class Source : Procurement
                     Platform? platform = GET.Entry.Platform(platformName, platformAddress);
                     if (platform == null)
                     {
-                        PUT.Platform(new() { Name = platformName, Address = platformAddress });
+                        _ = PUT.Platform(new() { Name = platformName, Address = platformAddress });
                         platform = GET.Entry.Platform(platformName, platformAddress);
                     }
                     if (platform != null)
+                    {
                         PlatformId = platform.Id;
+                    }
                 }
 
                 string? organizationPostalAddress = new GetOrganizationPostalAddress().Result;
                 if (organizationName != null)
                 {
-                    Organization? organization;
-                    if (organizationPostalAddress != null)
-                        organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
-                    else organization = GET.Entry.Organization(organizationName);
+                    Organization? organization = organizationPostalAddress != null
+                        ? GET.Entry.Organization(organizationName, organizationPostalAddress)
+                        : GET.Entry.Organization(organizationName);
                     if (organization == null)
                     {
-                        PUT.Organization(new() { Name = organizationName, PostalAddress = organizationPostalAddress });
+                        _ = PUT.Organization(new() { Name = organizationName, PostalAddress = organizationPostalAddress });
                         organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
                     }
                     if (organization != null)
+                    {
                         OrganizationId = organization.Id;
+                    }
                 }
 
                 Location = new GetLocation().Result;
 
-                if (DateTime.TryParse(new GetStartDate().Result, out DateTime startDate))
-                    StartDate = startDate;
-                else StartDate = null;
+                StartDate = DateTime.TryParse(new GetStartDate().Result, out DateTime startDate) ? startDate : null;
 
-                if (DateTime.TryParse(new GetDeadline().Result, out DateTime deadline))
-                    Deadline = deadline;
-                else Deadline = null;
+                Deadline = DateTime.TryParse(new GetDeadline().Result, out DateTime deadline) ? deadline : null;
 
                 string? timeZoneOffset = new GetTimeZoneOffset().Result;
                 if (timeZoneOffset != null)
@@ -120,11 +125,13 @@ public class Source : Procurement
                     TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
                     if (timeZone == null)
                     {
-                        PUT.TimeZone(new() { Offset = timeZoneOffset });
+                        _ = PUT.TimeZone(new() { Offset = timeZoneOffset });
                         timeZone = GET.Entry.TimeZone(timeZoneOffset);
                     }
                     if (timeZone != null)
+                    {
                         TimeZoneId = timeZone.Id;
+                    }
                 }
 
                 Securing = new GetSecuring().Result;
@@ -137,7 +144,9 @@ public class Source : Procurement
             }
         }
         else
+        {
             File.AppendAllText("Cache.txt", $"{RequestUri}\n");
+        }
     }
 
     private void GetInput()
@@ -178,7 +187,7 @@ public class Source : Procurement
     {
         public GetInitialPrice() : base(ProcurementCard) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"<span\s+class=""cardMainInfo__content cost"">\s*([\d\s]+,\d{2})\s*", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"Начальная цена(?<space>.*?)cost"">(?<val>.*,..?) &#8381;", RegexOptions), new(@"Начальная цена(?<space>.*?)value"">(?<val>.*,..?)&nbsp;&#8381;", RegexOptions) };
     }
 
     private class GetOrganizationName : Parse
