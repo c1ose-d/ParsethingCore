@@ -1,6 +1,4 @@
-﻿using DatabaseLibrary.Entities.ProcurementProperties;
-
-namespace ParsethingCore.UI;
+﻿namespace ParsethingCore.UI;
 
 public partial class CommandBar : UserControl
 {

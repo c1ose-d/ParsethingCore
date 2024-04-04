@@ -60,6 +60,7 @@ public class Sources
                             {
                                 Input = Driver.PageSource;
 
+                                int counter = 1;
                                 do
                                 {
                                     DateTime dateTime = DateTime.Now;
@@ -70,8 +71,11 @@ public class Sources
                                         Thread.Sleep(1000);
                                         break;
                                     }
-                                    catch { }
-                                    if (DateTime.Now -  dateTime > TimeSpan.FromSeconds(10))
+                                    catch
+                                    {
+                                        counter += 1; ;
+                                    }
+                                    if (counter == 10)
                                     {
                                         break;
                                     }
@@ -91,7 +95,11 @@ public class Sources
                                         ReadOnlyCollection<string> tabs = Driver.WindowHandles;
                                         _ = Driver.SwitchTo().Window(tabs[1]);
 
-                                        Source source = new(Driver.PageSource);
+                                        Source source = new(Driver.PageSource, Driver.Url);
+                                        if(!PUT.ProcurementSource(source, source.IsGetted))
+                                        {
+                                            MessageBox.Show("хуйня!");
+                                        }
 
                                         Driver.Close();
                                         _ = Driver.SwitchTo().Window(tabs[0]);

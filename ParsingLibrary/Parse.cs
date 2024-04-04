@@ -7,9 +7,11 @@ public class Parse
         foreach (Regex regex in Regexes)
             try
             {
+                string[] res = regex.Split(input);
                 Result = regex.Split(input)[^2];
                 foreach (KeyValuePair<string, string> replacement in Replacements)
                     Result = Result.Replace(replacement.Key, replacement.Value);
+                File.AppendAllText("test.txt", Result);
                 if (Result != string.Empty)
                 {
                     RemoveWhitespace();
@@ -24,20 +26,17 @@ public class Parse
     public string? Result { get; set; } = null;
     public static RegexOptions RegexOptions { get; } = RegexOptions.Compiled | RegexOptions.Singleline;
     public virtual List<Regex> Regexes { get; } = null!;
-    private Dictionary<string, string> Replacements { get; } = new() { { "«", "\"" }, { "»", "\"" }, { "&nbsp;", " " }, { "&#8381;", "Российский рубль" }, { "&#034;", "\"" }, { "\n", "" }, { "&ndash;", "—" }, { "&laquo;", "\"" }, { "&raquo;", "\"" }, { "&quot;", "\"" }, { "&mdash;", "—" }, { "( ", "(" }, { " )", ")" }, { "<span class='highlightColor'>", "" }, { "</span>", "" } };
+    private Dictionary<string, string> Replacements { get; } = new() { { "«", "\"" }, { "»", "\"" }, { "&nbsp;", " " }, { "&#8381;", "Российский рубль" }, { "₽", "Российский рубль" }, { "&#034;", "\"" }, { "\n", "" }, { "\r", "" }, { "&ndash;", "—" }, { "&laquo;", "\"" }, { "&raquo;", "\"" }, { "&quot;", "\"" }, { "&mdash;", "—" }, { "( ", "(" }, { " )", ")" }, { "<span class='highlightColor'>", "" }, { "</span>", "" }, { "div>", "" }, { "<div class=\"registry-entry__body-value\">", "" }, { "<div class=\"common-text__value  \">", "" }, { "<div class=\"data-block__value\">", "" }, { "<div class=\"common-text__value\">", "" }, { "</a>", "" }, { "span> <span class=\"cardMainInfo__content\">", "" } };
 
     private void RemoveWhitespace()
     {
         if (Result != null)
         {
-            Regex whitespace = new(@"(\s\s)+");
-            Regex whitespaceBetween = new(@"\S(\s\s)+\S");
-            Regex whitespacePreview = new(@"^\s+");
-            if (whitespaceBetween.IsMatch(Result))
-                Result = whitespace.Replace(Result, " ");
-            Result = whitespace.Replace(Result, "");
-            Result = whitespacePreview.Replace(Result, "");
+            Result = Result.Trim();
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
         }
     }
-
 }
