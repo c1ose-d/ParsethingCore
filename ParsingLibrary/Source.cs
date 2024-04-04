@@ -63,6 +63,15 @@ public class Source : Procurement
             string? methodText = new GetMethodText().Result?.Split(" <")[0];
             if (methodText != null)
             {
+                if (methodText != "223-ФЗ" && methodText.Contains("223-ФЗ"))
+                {
+                    methodText = "223-ФЗ";
+                }
+                else if (methodText != "44-ФЗ" && methodText.Contains("44-ФЗ"))
+                {
+                    methodText = "44-ФЗ";
+                }
+
                 Method? method = GET.Entry.Method(methodText);
                 if (method == null)
                 {
@@ -119,7 +128,7 @@ public class Source : Procurement
             string? timeZoneOffset = new GetTimeZoneOffset().Result;
             if (timeZoneOffset != null)
             {
-                DatabaseLibrary.Entities.ProcurementProperties.TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
+                TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
                 if (timeZone == null)
                 {
                     _ = PUT.TimeZone(new() { Offset = timeZoneOffset });
