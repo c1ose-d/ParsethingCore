@@ -58,7 +58,7 @@ public partial class CommandBar : UserControl
                 SourcesCaller = new(() => Sources.Enable(minPrice, maxPrice, regions));
                 SourcesCaller.Start();
             }
-            catch (Exception ex) { LogWriter.Write(ex); }
+            catch {  }
         }
     }
 
@@ -71,6 +71,6 @@ public partial class CommandBar : UserControl
             SourcesCaller = new(() => Sources.Disable());
             SourcesCaller.Start();
         }
-        catch (Exception ex) { LogWriter.Write(ex); }
+        catch {  }
     }
 }

@@ -96,10 +96,7 @@ public class Sources
                                         _ = Driver.SwitchTo().Window(tabs[1]);
 
                                         Source source = new(Driver.PageSource, Driver.Url);
-                                        if(!PUT.ProcurementSource(source, source.IsGetted))
-                                        {
-                                            MessageBox.Show("хуйня!");
-                                        }
+                                        PUT.ProcurementSource(source, source.IsGetted);
 
                                         Driver.Close();
                                         _ = Driver.SwitchTo().Window(tabs[0]);
@@ -119,10 +116,9 @@ public class Sources
                             catch { }
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         Disable();
-                        LogWriter.Write(ex);
                     }
                 }
             }
@@ -137,10 +133,10 @@ public class Sources
             driverService.HideCommandPromptWindow = true;
             Driver = new EdgeDriver(driverService, new EdgeOptions());
         }
-        catch (Exception ex)
+        catch
         {
             _ = MessageBox.Show("Ошибка!");
-            LogWriter.Write(ex);
+
         }
     }
 
@@ -154,6 +150,6 @@ public class Sources
                 Thread.Sleep(5000);
             }
         }
-        catch (Exception ex) { LogWriter.Write(ex); }
+        catch { }
     }
 }

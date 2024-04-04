@@ -35,7 +35,7 @@ public class Source : Procurement
                 Number ??= number;
             }
 
-            string? lawNumber = new GetLawNumber().Result + "-ФЗ";
+            string? lawNumber = new GetLawNumber().Result?.Replace(">", "") + "-ФЗ";
             if (lawNumber != null)
             {
                 Law? law = GET.Entry.Law(lawNumber);
@@ -60,7 +60,7 @@ public class Source : Procurement
 
             string? organizationName = new GetOrganizationName().Result?.Split("> ")[^1];
 
-            string? methodText = new GetMethodText().Result;
+            string? methodText = new GetMethodText().Result?.Split(" <")[0];
             if (methodText != null)
             {
                 Method? method = GET.Entry.Method(methodText);
@@ -75,9 +75,9 @@ public class Source : Procurement
                 }
             }
 
-            PostingDate = DateTime.TryParse(new GetPostingDate().Result?.Split(" </")[0], out DateTime postingDate) ? postingDate : null;
+            PostingDate = DateTime.TryParse(new GetPostingDate().Result?.Split(" <")[0], out DateTime postingDate) ? postingDate : null;
 
-            string? platformName = new GetPlatformName().Result;
+            string? platformName = new GetPlatformName().Result?.Split(" <")[0]; ;
             string? platformAddress = new GetPlatformAddress().Result;
             if (platformName != null && platformAddress != null)
             {
@@ -110,16 +110,16 @@ public class Source : Procurement
                 }
             }
 
-            Location = new GetLocation().Result;
+            Location = new GetLocation().Result?.Split(" <")[0];
 
-            StartDate = DateTime.TryParse(new GetStartDate().Result, out DateTime startDate) ? startDate : null;
+            StartDate = DateTime.TryParse(new GetStartDate().Result?.Split(" <")[0], out DateTime startDate) ? startDate : null;
 
-            Deadline = DateTime.TryParse(new GetDeadline().Result, out DateTime deadline) ? deadline : null;
+            Deadline = DateTime.TryParse(new GetDeadline().Result?.Split(" <")[0], out DateTime deadline) ? deadline : null;
 
             string? timeZoneOffset = new GetTimeZoneOffset().Result;
             if (timeZoneOffset != null)
             {
-                TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
+                DatabaseLibrary.Entities.ProcurementProperties.TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
                 if (timeZone == null)
                 {
                     _ = PUT.TimeZone(new() { Offset = timeZoneOffset });
@@ -131,11 +131,11 @@ public class Source : Procurement
                 }
             }
 
-            Securing = new GetSecuring().Result;
+            Securing = new GetSecuring().Result?.Split(" <")[0];
 
-            Enforcement = new GetEnforcement().Result;
+            Enforcement = new GetEnforcement().Result?.Split(" <")[0];
 
-            Warranty = new GetWarranty().Result;
+            Warranty = new GetWarranty().Result?.Split(" <")[0];
 
             IsGetted = true;
         }
@@ -156,7 +156,7 @@ public class Source : Procurement
     {
         public GetLawNumber() : base(ProcurementCard) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"registry-entry__header-top__title"">(?<val>.*?)-ФЗ", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"registry-entry__header-top__title"">(?<val>.*?)-ФЗ", RegexOptions), new(@"cardMainInfo__title d-flex text-truncate""(?<val>.*?)-ФЗ", RegexOptions) };
     }
 
     private class GetObject : Parse
@@ -170,14 +170,14 @@ public class Source : Procurement
     {
         public GetInitialPrice() : base(ProcurementCard) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"price-block__value"">(?<val>.*?)</div>", RegexOptions), new(@"cardMainInfo__content cost"">(?<val>.*,..?)&nbsp;&#8381;", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"price-block__value"">(?<val>.*?)</div>", RegexOptions), new(@"cardMainInfo__content cost"">(?<val>.*?)</span>", RegexOptions) };
     }
 
     private class GetOrganizationName : Parse
     {
         public GetOrganizationName() : base(ProcurementCard) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Заказчик</(?<val>.*?)</a>", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"Заказчик<br>(?<val>.*?)</a>", RegexOptions), new(@"Заказчик</(?<val>.*?)</a>", RegexOptions) };
     }
 
     private class GetMethodText : Parse
@@ -226,14 +226,14 @@ public class Source : Procurement
     {
         public GetStartDate() : base(ProcurementCard) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Дата начала срока подачи заявок</(?<val>.*?)</div>", RegexOptions), new(@"Дата и время начала срока подачи заявок</(?<val>.*?) <span class=", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"Дата начала срока подачи заявок</(?<val>.*?)</div>", RegexOptions), new(@"Дата и время начала срока подачи заявок</(?<val>.*?)</span>", RegexOptions) };
     }
 
     private class GetDeadline : Parse
     {
         public GetDeadline() : base(ProcurementCard) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Дата и время окончания срока подачи заявок \(по местному времени заказчика\)</(?<val>.*?)</div>", RegexOptions), new(@"Дата и время окончания срока подачи заявок</(?<val>.*?) <span class=", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"Дата и время окончания срока подачи заявок \(по местному времени заказчика\)</(?<val>.*?)</div>", RegexOptions), new(@"Дата и время окончания срока подачи заявок</(?<val>.*?)</span>", RegexOptions) };
     }
 
     private class GetTimeZoneOffset : Parse
