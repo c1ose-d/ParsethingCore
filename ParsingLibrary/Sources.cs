@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using ParsethingCore.Windows;
+using System.Diagnostics;
 using System.Windows;
 
 namespace ParsingLibrary;
@@ -86,7 +87,6 @@ public class Sources
                                 MatchCollection procurementCards = Regex.Matches(Input);
                                 for (int j = 0; j < procurementCards.Count; j++)
                                 {
-
                                     try
                                     {
                                         elements[j].Click();
@@ -96,7 +96,10 @@ public class Sources
                                         _ = Driver.SwitchTo().Window(tabs[1]);
 
                                         Source source = new(Driver.PageSource, Driver.Url);
-                                        PUT.ProcurementSource(source, source.IsGetted);
+                                        if (!PUT.ProcurementSource(source, source.IsGetted))
+                                        {
+                                            MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
+                                        }
 
                                         Driver.Close();
                                         _ = Driver.SwitchTo().Window(tabs[0]);
