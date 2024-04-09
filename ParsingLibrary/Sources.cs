@@ -1,5 +1,4 @@
-﻿using ParsethingCore.Windows;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 
 namespace ParsingLibrary;
@@ -10,7 +9,6 @@ public class Sources
     private IWebElement Element { get; set; } = null!;
     private string Input { get; set; } = string.Empty;
     private static RegexOptions RegexOptions { get; } = RegexOptions.Compiled | RegexOptions.Singleline;
-    private Regex UrlRegex { get; set; } = new(@"pageNumber=\d*", RegexOptions);
     private Regex Regex { get; set; } = new(@" *<div class=""search-registry-entry-block box-shadow-search-input"">(?<val>.*?)\n        </div>", RegexOptions);
 
     public void Enable(string minPrice, string maxPrice, List<Region> regions)
@@ -98,7 +96,7 @@ public class Sources
                                         Source source = new(Driver.PageSource, Driver.Url);
                                         if (!PUT.ProcurementSource(source, source.IsGetted))
                                         {
-                                            MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
+                                            _ = MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
                                         }
 
                                         Driver.Close();
