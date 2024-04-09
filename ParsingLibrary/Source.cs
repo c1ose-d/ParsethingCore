@@ -58,7 +58,7 @@ public class Source : Procurement
 
             InitialPrice = decimal.TryParse(new GetInitialPrice().Result?.Replace(" Российский рубль", ""), out decimal initialPrice) ? initialPrice : 0;
 
-            string? organizationName = new GetOrganizationName().Result?.Split("> ")[^1];
+            string? organizationName = new GetOrganizationName().Result?.Split(">")[^1].Trim();
 
             string? methodText = new GetMethodText().Result?.Split(" <")[0];
             if (methodText != null)
@@ -186,7 +186,7 @@ public class Source : Procurement
     {
         public GetOrganizationName() : base(ProcurementCard) { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Заказчик<br>(?<val>.*?)</a>", RegexOptions), new(@"Заказчик</(?<val>.*?)</a>", RegexOptions) };
+        public override List<Regex> Regexes { get; } = new() { new(@"Заказчик<br>(?<val>.*?)</a>", RegexOptions), new(@"Заказчик</(?<val>.*?)</a>", RegexOptions), new(@"Организация, осуществляющая размещение\r\n(?<val>.*?)</a>", RegexOptions) };
     }
 
     private class GetMethodText : Parse
