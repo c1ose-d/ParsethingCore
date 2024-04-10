@@ -103,6 +103,21 @@ public class Sources
                                                 {
                                                     _ = MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
                                                 }
+                                                else
+                                                {
+                                                    Procurement? procurement = GET.Entry.Procurement(source.Number);
+                                                    if (procurement != null)
+                                                    {
+                                                        PUT.History(new History
+                                                        {
+                                                            EmployeeId = 14,
+                                                            Date = DateTime.Now,
+                                                            EntityType = "Procurement",
+                                                            EntryId = procurement.Id,
+                                                            Text = "Parsed"
+                                                        });
+                                                    }
+                                                }
                                             }
                                         }
                                         Thread.Sleep(5000);
