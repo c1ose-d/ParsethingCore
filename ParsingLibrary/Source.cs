@@ -102,7 +102,7 @@ public class Source : Procurement
                 }
             }
 
-            string? organizationPostalAddress = new GetOrganizationPostalAddress().Result;
+            string? organizationPostalAddress = new GetOrganizationPostalAddress().Result?.Split("<")[0].Trim();
             if (organizationName != null)
             {
                 Organization? organization = organizationPostalAddress != null

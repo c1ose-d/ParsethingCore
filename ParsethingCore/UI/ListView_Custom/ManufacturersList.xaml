@@ -3,7 +3,7 @@
         <ListView.ItemTemplate>
             <DataTemplate>
                 <StackPanel>
-                    <TextBlock Text="{Binding Name}" Style="{DynamicResource ListView.Body}"/>
+                    <TextBlock Text="{Binding ManufacturerName}" Style="{DynamicResource ListView.Body}"/>
                 </StackPanel>
             </DataTemplate>
         </ListView.ItemTemplate>

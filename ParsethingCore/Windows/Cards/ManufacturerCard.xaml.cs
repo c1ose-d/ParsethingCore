@@ -11,11 +11,11 @@ public partial class ManufacturerCard : Window
         if (Manufacturer != null)
         {
             Subtitle.Visibility = Visibility.Visible;
-            Subtitle.Text = Manufacturer.Name;
-            Manufacturer_Name.Text = Manufacturer.Name;
+            Subtitle.Text = Manufacturer.ManufacturerName;
+            Manufacturer_Name.Text = Manufacturer.ManufacturerName;
 
             System_Id.Text = Manufacturer.Id.ToString();
-            System_Name.Text = Manufacturer.Name;
+            System_Name.Text = Manufacturer.ManufacturerName;
         }
         else SystemFields.Visibility = Visibility.Collapsed;
     }
@@ -51,13 +51,13 @@ public partial class ManufacturerCard : Window
         {
             if (Manufacturer == null)
             {
-                Manufacturer = new() { Name = Manufacturer_Name.Text };
+                Manufacturer = new() { ManufacturerName = Manufacturer_Name.Text };
                 if (PUT.Manufacturer(Manufacturer))
                     DialogResult = true;
             }
             else
             {
-                Manufacturer.Name = Manufacturer_Name.Text;
+                Manufacturer.ManufacturerName = Manufacturer_Name.Text;
                 if (PULL.Manufacturer(Manufacturer))
                     DialogResult = true;
             }

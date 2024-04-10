@@ -1,8 +1,8 @@
 ﻿namespace ParsethingCore.UI.ListView_Custom;
 
-public partial class ManufacturersList : UserControl, IView
+public partial class TagExceptionsList : UserControl, IView
 {
-    public ManufacturersList()
+    public TagExceptionsList()
     {
         InitializeComponent();
         GetView();
@@ -10,21 +10,21 @@ public partial class ManufacturersList : UserControl, IView
 
     public void GetView()
     {
-        View.ItemsSource = GET.View.Manufacturers();
+        View.ItemsSource = GET.View.TagExceptions();
         ((TextBox)((TitleBar)Application.Current.MainWindow.FindName("TitleBar")).FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
     {
-        if (new ManufacturerCard().ShowDialog() == true)
+        if (new TagExceptionCard().ShowDialog() == true)
             GetView();
     }
 
     public void Delete()
     {
-        if (View.SelectedIndex != -1 && new DeleteFlyout(((Manufacturer)View.SelectedItem).ManufacturerName).ShowDialog() == true)
+        if (View.SelectedIndex != -1 && new DeleteFlyout(((TagException)View.SelectedItem).Keyword).ShowDialog() == true)
         {
-            DELETE.Manufacturer((Manufacturer)View.SelectedItem);
+            DELETE.TagException((TagException)View.SelectedItem);
             GetView();
         }
     }
@@ -33,7 +33,7 @@ public partial class ManufacturersList : UserControl, IView
     {
         if (View.SelectedIndex != -1)
         {
-            new ManufacturerCard((Manufacturer)View.SelectedItem).ShowDialog();
+            new TagExceptionCard((TagException)View.SelectedItem).ShowDialog();
             GetView();
         }
     }
@@ -42,8 +42,8 @@ public partial class ManufacturersList : UserControl, IView
 
     public void Search(string searchString)
     {
-        View.ItemsSource = GET.View.Manufacturers()?
-            .Where(e => e.ManufacturerName.ToLower().Contains(searchString))
+        View.ItemsSource = GET.View.TagExceptions()?
+            .Where(e => e.Keyword.ToLower().Contains(searchString))
             .ToList();
     }
 
@@ -51,7 +51,7 @@ public partial class ManufacturersList : UserControl, IView
     {
         if (View.SelectedIndex != -1)
         {
-            new ManufacturerCard((Manufacturer)View.SelectedItem).ShowDialog();
+            new TagExceptionCard((TagException)View.SelectedItem).ShowDialog();
             GetView();
         }
     }

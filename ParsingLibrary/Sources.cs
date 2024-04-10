@@ -42,6 +42,7 @@ public class Sources
         while (true)
         {
             List<Tag>? tags = GET.View.Tags();
+            List<TagException>? tagExceptions = GET.View.TagExceptions();
 
             if (tags != null)
             {
@@ -94,10 +95,17 @@ public class Sources
                                         _ = Driver.SwitchTo().Window(tabs[1]);
 
                                         Source source = new(Driver.PageSource, Driver.Url);
-                                        if (!PUT.ProcurementSource(source, source.IsGetted))
+                                        foreach (TagException tagException in tagExceptions ?? new List<TagException>() { new() { Keyword = "" } })
                                         {
-                                            _ = MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
+                                            if (!source.Object.ToLower().Contains(tagException.Keyword))
+                                            {
+                                                if (!PUT.ProcurementSource(source, source.IsGetted))
+                                                {
+                                                    _ = MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
+                                                }
+                                            }
                                         }
+                                        Thread.Sleep(5000);
 
                                         Driver.Close();
                                         _ = Driver.SwitchTo().Window(tabs[0]);

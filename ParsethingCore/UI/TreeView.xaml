@@ -19,6 +19,7 @@
                 <TreeViewItem Header="Преференции" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
                 <TreeViewItem Header="Состояния закупок" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
                 <TreeViewItem Header="Тэги" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Тэги-исключения" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
             </TreeViewItem>
             <TreeViewItem Header="По сотрудникам" Style="{DynamicResource TreeView.ListItem.Level2}">
                 <TreeViewItem Header="Должности" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>

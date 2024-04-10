@@ -54,6 +54,9 @@ public partial class TreeView : UserControl
                 case "Тэги":
                     DataGridContainer.Child = new TagsList();
                     break;
+                case "Тэги-исключения":
+                    DataGridContainer.Child = new TagExceptionsList();
+                    break;
                 case "Должности":
                     DataGridContainer.Child = new PositionsList();
                     break;
