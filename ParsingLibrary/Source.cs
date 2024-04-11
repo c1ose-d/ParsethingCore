@@ -63,11 +63,11 @@ public class Source : Procurement
             string? methodText = new GetMethodText().Result?.Split(" <")[0];
             if (methodText != null)
             {
-                if (methodText != "223-ФЗ" && methodText.Contains("223-ФЗ"))
+                if (methodText != "223-ФЗ" && methodText.Contains("223"))
                 {
                     methodText = "223-ФЗ";
                 }
-                else if (methodText != "44-ФЗ" && methodText.Contains("44-ФЗ"))
+                else if (methodText != "44-ФЗ" && methodText.Contains("44"))
                 {
                     methodText = "44-ФЗ";
                 }

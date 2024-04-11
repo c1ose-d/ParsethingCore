@@ -126,18 +126,18 @@ public class Sources
                                         _ = Driver.SwitchTo().Window(tabs[0]);
                                         Thread.Sleep(5000);
                                     }
-                                    catch { }
+                                    catch (Exception ex) { MessageBox.Show(ex.Message); }
                                 }
 
                                 try
                                 {
-                                    Element = Driver.FindElement(By.ClassName("paginator-button"));
+                                    Element = Driver.FindElement(By.ClassName("paginator-button-next"));
                                     Element.Click();
                                     Thread.Sleep(5000);
                                 }
                                 catch { break; }
                             }
-                            catch { }
+                            catch (Exception ex) { MessageBox.Show(ex.Message); }
                         }
                     }
                     catch
