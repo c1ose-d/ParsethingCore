@@ -33,8 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExportLibrary\ExportLibrary.csproj" />
-    <ProjectReference Include="..\LogWriterLibrary\LogWriterLibrary.csproj" />
     <ProjectReference Include="..\ParsingLibrary\ParsingLibrary.csproj" />
   </ItemGroup>
 
@@ -66,8 +64,6 @@
     <Using Include="DatabaseLibrary.Entities.PreferenceMuchToMany" />
     <Using Include="DatabaseLibrary.Entities.ProcurementProperties" />
     <Using Include="DatabaseLibrary.Queries" />
-    <Using Include="ExportLibrary" />
-    <Using Include="LogWriterLibrary" />
     <Using Include="Microsoft.Win32" />
     <Using Include="ParsethingCore.Interfaces" />
     <Using Include="ParsethingCore.UI.ListView_Custom" />

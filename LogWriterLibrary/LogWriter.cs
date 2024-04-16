@@ -2,7 +2,7 @@ namespace LogWriterLibrary;
 
 public static class LogWriter
 {
-    public static void Initialize()
+    /*public static void Initialize()
     {
         FileInfo trace = new("Log.txt");
         trace.Create().Close();
@@ -18,5 +18,5 @@ public static class LogWriter
             value += $"{exception.InnerException}\n";
         Trace.WriteLine(value);
         Trace.Listeners.Clear();
-    }
+    }*/
 }

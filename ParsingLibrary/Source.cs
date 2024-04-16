@@ -2,274 +2,662 @@
 
 public class Source : Procurement
 {
-    public Source(string procurementCard, string requestUri)
+    public Source(EdgeDriver driver)
     {
-        ProcurementCard = procurementCard;
-        RequestUri = requestUri;
+        Driver = driver;
+        RequestUri = driver.Url;
         Initialize();
     }
 
-    private static string ProcurementCard { get; set; } = null!;
+    private static EdgeDriver Driver { get; set; } = null!;
     public bool IsGetted { get; set; } = false;
     public bool IsCached { get; set; } = false;
 
+    private static Dictionary<string, string> Replacements { get; } = new() { { "«", "\"" }, { "»", "\"" }, { "&nbsp;", " " }, { "&#8381;", "Российский рубль" }, { "₽", "Российский рубль" }, { "&#034;", "\"" } };
+
     private void Initialize()
     {
-        File.Create("test.txt").Close();
+        File.Create("Parse.txt").Close();
+        Console.Clear();
 
-        string[] cache = File.ReadAllLines("Cache.txt");
-        foreach (string s in cache)
+        Console.WriteLine(new GetNumber().Result);
+        Console.WriteLine(new GetLawNumber().Result);
+        Console.WriteLine(new GetObject().Result);
+        Console.WriteLine(Convert.ToDecimal(new GetInitialPrice().Result));
+        Console.WriteLine(new GetOrganizationName().Result);
+        Console.WriteLine(new GetMethodText().Result);
+        Console.WriteLine(Convert.ToDateTime(new GetPostingDate().Result));
+        Console.WriteLine(new GetPlatformName().Result);
+        Console.WriteLine(new GetPlatformAddress().Result);
+        Console.WriteLine(new GetOrganizationPostalAddress().Result);
+        Console.WriteLine(new GetLocation().Result);
+        Console.WriteLine(Convert.ToDateTime(new GetStartDate().Result));
+        Console.WriteLine(Convert.ToDateTime(new GetDeadline().Result));
+        Console.WriteLine(new GetTimeZoneOffset().Result);
+        Console.WriteLine(new GetSecuring().Result);
+        Console.WriteLine(new GetEnforcement().Result);
+        Console.WriteLine(new GetWarranty().Result);
+
+        Number = new GetNumber().Result;
+
+        string lawNumber = new GetLawNumber().Result;
+        Law? law = GET.Entry.Law(lawNumber);
+        if (law != null)
         {
-            if (s == RequestUri)
-            {
-                IsCached = true;
-                break;
-            }
-        }
-
-        if (!IsCached)
-        {
-            string? number = new GetNumber().Result;
-            if (number != null)
-            {
-                Number ??= number;
-            }
-
-            string? lawNumber = new GetLawNumber().Result?.Replace(">", "") + "-ФЗ";
-            if (lawNumber != null)
-            {
-                Law? law = GET.Entry.Law(lawNumber);
-                if (law == null)
-                {
-                    _ = PUT.Law(new() { Number = lawNumber });
-                    law = GET.Entry.Law(lawNumber);
-                }
-                if (law != null)
-                {
-                    LawId = law.Id;
-                }
-            }
-
-            string? obj = new GetObject().Result;
-            if (obj != null)
-            {
-                Object = obj;
-            }
-
-            InitialPrice = decimal.TryParse(new GetInitialPrice().Result?.Replace(" Российский рубль", ""), out decimal initialPrice) ? initialPrice : 0;
-
-            string? organizationName = new GetOrganizationName().Result?.Split(">")[^1].Trim();
-
-            string? methodText = new GetMethodText().Result?.Split(" <")[0];
-            if (methodText != null)
-            {
-                if (methodText != "223-ФЗ" && methodText.Contains("223"))
-                {
-                    methodText = "223-ФЗ";
-                }
-                else if (methodText != "44-ФЗ" && methodText.Contains("44"))
-                {
-                    methodText = "44-ФЗ";
-                }
-
-                Method? method = GET.Entry.Method(methodText);
-                if (method == null)
-                {
-                    _ = PUT.Method(new() { Text = methodText });
-                    method = GET.Entry.Method(methodText);
-                }
-                if (method != null)
-                {
-                    MethodId = method.Id;
-                }
-            }
-
-            PostingDate = DateTime.TryParse(new GetPostingDate().Result?.Split(" <")[0], out DateTime postingDate) ? postingDate : null;
-
-            string? platformName = new GetPlatformName().Result?.Split(" <")[0]; ;
-            string? platformAddress = new GetPlatformAddress().Result;
-            if (platformName != null && platformAddress != null)
-            {
-                Platform? platform = GET.Entry.Platform(platformName, platformAddress);
-                if (platform == null)
-                {
-                    _ = PUT.Platform(new() { Name = platformName, Address = platformAddress });
-                    platform = GET.Entry.Platform(platformName, platformAddress);
-                }
-                if (platform != null)
-                {
-                    PlatformId = platform.Id;
-                }
-            }
-
-            string? organizationPostalAddress = new GetOrganizationPostalAddress().Result?.Split("<")[0].Trim();
-            if (organizationName != null)
-            {
-                Organization? organization = organizationPostalAddress != null
-                    ? GET.Entry.Organization(organizationName, organizationPostalAddress)
-                    : GET.Entry.Organization(organizationName);
-                if (organization == null)
-                {
-                    _ = PUT.Organization(new() { Name = organizationName, PostalAddress = organizationPostalAddress });
-                    organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
-                }
-                if (organization != null)
-                {
-                    OrganizationId = organization.Id;
-                }
-            }
-
-            Location = new GetLocation().Result?.Split(" <")[0];
-
-            StartDate = DateTime.TryParse(new GetStartDate().Result?.Split(" <")[0], out DateTime startDate) ? startDate : null;
-
-            Deadline = DateTime.TryParse(new GetDeadline().Result?.Split(" <")[0], out DateTime deadline) ? deadline : null;
-
-            string? timeZoneOffset = new GetTimeZoneOffset().Result;
-            if (timeZoneOffset != null)
-            {
-                TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
-                if (timeZone == null)
-                {
-                    _ = PUT.TimeZone(new() { Offset = timeZoneOffset });
-                    timeZone = GET.Entry.TimeZone(timeZoneOffset);
-                }
-                if (timeZone != null)
-                {
-                    TimeZoneId = timeZone.Id;
-                }
-            }
-
-            Securing = new GetSecuring().Result?.Split(" <")[0];
-
-            Enforcement = new GetEnforcement().Result?.Split(" <")[0];
-
-            Warranty = new GetWarranty().Result?.Split(" <")[0];
-
-            IsGetted = true;
+            LawId = law.Id;
         }
         else
         {
-            File.AppendAllText("Cache.txt", $"{RequestUri}\n");
+            PUT.Law(new()
+            {
+                Number = lawNumber
+            });
+            law = GET.Entry.Law(lawNumber);
+            LawId = law != null ? law.Id : 0;
         }
+
+        Object = new GetObject().Result;
+
+        InitialPrice = Convert.ToDecimal(new GetInitialPrice().Result);
+
+        string organizationName = new GetOrganizationName().Result;
+        string organizationPostalAddress = new GetOrganizationPostalAddress().Result;
+        Organization? organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
+        if (organization != null)
+        {
+            OrganizationId = organization.Id;
+        }
+        else
+        {
+            PUT.Organization(new()
+            {
+                Name = organizationName,
+                PostalAddress = organizationPostalAddress
+            });
+            organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
+            OrganizationId = organization != null ? organization.Id : 0;
+        }
+
+        string methodText = new GetMethodText().Result;
+        Method? method = GET.Entry.Method(methodText);
+        if (method != null)
+        {
+            MethodId = method.Id;
+        }
+        else
+        {
+            PUT.Method(new()
+            {
+                Text = methodText
+            });
+            method = GET.Entry.Method(methodText);
+            MethodId = method != null ? method.Id : 0;
+        }
+
+        PostingDate = Convert.ToDateTime(new GetPostingDate().Result);
+
+        string platformName = new GetPlatformName().Result;
+        string platformAddress = new GetPlatformAddress().Result;
+        Platform? platform = GET.Entry.Platform(platformName, platformAddress);
+        if (platform != null)
+        {
+            PlatformId = platform.Id;
+        }
+        else
+        {
+            PUT.Platform(new()
+            {
+                Name = platformName,
+                Address = platformAddress
+            });
+            platform = GET.Entry.Platform(platformName, platformAddress);
+            PlatformId = platform != null ? platform.Id : 0;
+        }
+
+        Location = new GetLocation().Result;
+
+        StartDate = Convert.ToDateTime(new GetStartDate().Result);
+
+        Deadline = Convert.ToDateTime(new GetDeadline().Result);
+
+        string timeZoneOffset = new GetTimeZoneOffset().Result;
+        TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
+        if (timeZone != null)
+        {
+            TimeZoneId = timeZone.Id;
+        }
+        else
+        {
+            PUT.TimeZone(new()
+            {
+                Offset = timeZoneOffset
+            });
+            timeZone = GET.Entry.TimeZone(timeZoneOffset);
+            TimeZoneId = timeZone != null ? timeZone.Id : 0;
+        }
+
+        Securing = new GetSecuring().Result;
+        Enforcement = new GetEnforcement().Result;
+        Warranty = new GetWarranty().Result;
     }
 
-    private class GetNumber : Parse
+    private class GetNumber
     {
-        public GetNumber() : base(ProcurementCard) { }
+        public GetNumber()
+        {
+            try
+            {
+                IWebElement element = Driver.FindElement(By.ClassName("registry-entry__header-mid__number"));
+                Result = element.Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@">№ (?<val>.*?)\n", RegexOptions) };
+            try
+            {
+                IWebElement element = Driver.FindElement(By.ClassName("cardMainInfo__purchaseLink"));
+                Result = element.Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split(" ")[1].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetLawNumber : Parse
+    private class GetLawNumber
     {
-        public GetLawNumber() : base(ProcurementCard) { }
+        public GetLawNumber()
+        {
+            try
+            {
+                IWebElement element = Driver.FindElement(By.ClassName("registry-entry__header-top__title"));
+                Result = element.Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"registry-entry__header-top__title"">(?<val>.*?)-ФЗ", RegexOptions), new(@"cardMainInfo__title d-flex text-truncate""(?<val>.*?)-ФЗ", RegexOptions) };
+            try
+            {
+                IWebElement element = Driver.FindElement(By.ClassName("cardMainInfo__title"));
+                Result = element.Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split(" ")[0].Split("\n")[0].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetObject : Parse
+    private class GetObject
     {
-        public GetObject() : base(ProcurementCard) { }
+        public GetObject()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__body-block"));
+                Result = elements.Where(x => x.Text.Contains("Объект закупки")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Объект закупки</(?<val>.*?)</div>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("cardMainInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Объект закупки")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetInitialPrice : Parse
+    private class GetInitialPrice
     {
-        public GetInitialPrice() : base(ProcurementCard) { }
+        public GetInitialPrice()
+        {
+            try
+            {
+                IWebElement element = Driver.FindElement(By.ClassName("price-block__value"));
+                Result = element.Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"price-block__value"">(?<val>.*?)</div>", RegexOptions), new(@"cardMainInfo__content cost"">(?<val>.*?)</span>", RegexOptions) };
+            try
+            {
+                IWebElement element = Driver.FindElement(By.ClassName("cost"));
+                Result = element.Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Replace("Российский рубль", "").Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetOrganizationName : Parse
+    private class GetOrganizationName
     {
-        public GetOrganizationName() : base(ProcurementCard) { }
+        public GetOrganizationName()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__body-block"));
+                Result = elements.Where(x => x.Text.Contains("Заказчик") || x.Text.Contains("Организация, осуществляющая размещение")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Заказчик<br>(?<val>.*?)</a>", RegexOptions), new(@"Заказчик</(?<val>.*?)</a>", RegexOptions), new(@"Организация, осуществляющая размещение\r\n(?<val>.*?)</a>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("cardMainInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Заказчик") || x.Text.Contains("Организация, осуществляющая размещение")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetMethodText : Parse
+    private class GetMethodText
     {
-        public GetMethodText() : base(ProcurementCard) { }
+        public GetMethodText()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Способ определения поставщика (подрядчика, исполнителя)") || x.Text.Contains("Способ осуществления закупки")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Способ определения поставщика \(подрядчика, исполнителя\)</(?<val>.*?)</div>", RegexOptions), new(@"Способ осуществления закупки</(?<val>.*?)</div>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Способ определения поставщика (подрядчика, исполнителя)") || x.Text.Contains("Способ осуществления закупки")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetPostingDate : Parse
+    private class GetPostingDate
     {
-        public GetPostingDate() : base(ProcurementCard) { }
+        public GetPostingDate()
+        {
+            try
+            {
+                IWebElement element = Driver.FindElement(By.ClassName("data-block__value"));
+                Result = element.Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Размещено</(?<val>.*?)\n</div>", RegexOptions), new(@"Размещено</(?<val>.*?)\n</span>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("cardMainInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Размещено")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            if (Result.Contains("\n"))
+            {
+                Result = Result.Split("\n")[1];
+            }
+            Result = Result.Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetPlatformName : Parse
+    private class GetPlatformName
     {
-        public GetPlatformName() : base(ProcurementCard) { }
+        public GetPlatformName()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Наименование электронной площадки в информационно-телекоммуникационной сети «Интернет»")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Наименование электронной площадки в информационно-телекоммуникационной сети «Интернет»</(?<val>.*?)</div>", RegexOptions), new(@"Наименование электронной площадки(?<space>.*?)>\n(?<space>.*?)>\n *(?<val>.*?)\n", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Наименование электронной площадки в информационно-телекоммуникационной сети «Интернет»")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetPlatformAddress : Parse
+    private class GetPlatformAddress
     {
-        public GetPlatformAddress() : base(ProcurementCard) { }
+        public GetPlatformAddress()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Адрес электронной площадки в информационно-телекоммуникационной сети «Интернет»")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Адрес электронной площадки(?<space>.*?)</span>(?<space>.*?)href=""(?<val>.*?)""", RegexOptions), new(@"Адрес электронной площадки(?<space>.*?)>\n(?<space>.*?)>\n(?<space>.*?)href=""(?<val>.*?)""", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Адрес электронной площадки в информационно-телекоммуникационной сети «Интернет»")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Trim();
+            if (!Result.Contains("http"))
+            {
+                Result = "https://" + Result;
+            }
+            else if (!Result.Contains("https"))
+            {
+                Result = Result.Replace("http", "https");
+            }
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetOrganizationPostalAddress : Parse
+    private class GetOrganizationPostalAddress
     {
-        public GetOrganizationPostalAddress() : base(ProcurementCard) { }
+        public GetOrganizationPostalAddress()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Почтовый адрес")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Почтовый адрес</(?<val>.*?)</div>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Почтовый адрес")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetLocation : Parse
+    private class GetLocation
     {
-        public GetLocation() : base(ProcurementCard) { }
+        public GetLocation()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Место нахождения")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Место нахождения</(?<val>.*?)</div>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Место нахождения")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetStartDate : Parse
+    private class GetStartDate
     {
-        public GetStartDate() : base(ProcurementCard) { }
+        public GetStartDate()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Дата начала срока подачи заявок") || x.Text.Contains("Дата и время начала срока подачи заявок")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Дата начала срока подачи заявок</(?<val>.*?)</div>", RegexOptions), new(@"Дата и время начала срока подачи заявок</(?<val>.*?)</span>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Дата начала срока подачи заявок") || x.Text.Contains("Дата и время начала срока подачи заявок")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Split("(")[0].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetDeadline : Parse
+    private class GetDeadline
     {
-        public GetDeadline() : base(ProcurementCard) { }
+        public GetDeadline()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Дата и время окончания срока подачи заявок (по местному времени заказчика)") || x.Text.Contains("Дата и время окончания срока подачи заявок")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Дата и время окончания срока подачи заявок \(по местному времени заказчика\)</(?<val>.*?)</div>", RegexOptions), new(@"Дата и время окончания срока подачи заявок</(?<val>.*?)</span>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Дата и время окончания срока подачи заявок (по местному времени заказчика)") || x.Text.Contains("Дата и время окончания срока подачи заявок")).Single().Text;
+            }
+            catch { }
+
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split("\n")[1].Split("(")[0].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetTimeZoneOffset : Parse
+    private class GetTimeZoneOffset
     {
-        public GetTimeZoneOffset() : base(ProcurementCard) { }
+        public GetTimeZoneOffset()
+        {
+            IWebElement element = Driver.FindElement(By.ClassName("time-zone__value"));
+            Result = element.Text;
 
-        public override List<Regex> Regexes { get; } = new() { new(@" (?<val>МСК.*?) ", RegexOptions) };
+            foreach (KeyValuePair<string, string> replacement in Replacements)
+                Result = Result.Replace(replacement.Key, replacement.Value);
+            while (Result.Contains("  "))
+            {
+                Result = Result.Replace("  ", " ");
+            }
+            Result = Result.Split(" ")[1].Trim();
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetSecuring : Parse
+    private class GetSecuring
     {
-        public GetSecuring() : base(ProcurementCard) { }
+        public GetSecuring()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения заявки")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения заявки</(?<val>.*?)</div>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения заявки")).Single().Text;
+            }
+            catch { }
+
+            if (Result != null)
+            {
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
+            }
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetEnforcement : Parse
+    private class GetEnforcement
     {
-        public GetEnforcement() : base(ProcurementCard) { }
+        public GetEnforcement()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения исполнения контракта")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения исполнения контракта</(?<val>.*?)</div>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения исполнения контракта")).Single().Text;
+            }
+            catch { }
+
+            if (Result != null)
+            {
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
+            }
+        }
+
+        public string Result { get; set; } = null!;
     }
 
-    private class GetWarranty : Parse
+    private class GetWarranty
     {
-        public GetWarranty() : base(ProcurementCard) { }
+        public GetWarranty()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения гарантийных обязательств")).Single().Text;
+            }
+            catch { }
 
-        public override List<Regex> Regexes { get; } = new() { new(@"Размер обеспечения гарантийных обязательств</(?<val>.*?)</div>", RegexOptions) };
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения гарантийных обязательств")).Single().Text;
+            }
+            catch { }
+
+            if (Result != null)
+            {
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
+            }
+        }
+
+        public string Result { get; set; } = null!;
     }
 }

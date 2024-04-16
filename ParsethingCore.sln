@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParsethingCore", "Parsethin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParsingLibrary", "ParsingLibrary\ParsingLibrary.csproj", "{1C3992BC-E7C1-4137-B58F-43C0BD6EC533}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogWriterLibrary", "LogWriterLibrary\LogWriterLibrary.csproj", "{83479779-C98D-4720-B7A3-F0E969FF90EE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportLibrary", "ExportLibrary\ExportLibrary.csproj", "{CA1B0688-6392-44A2-8F87-D91FDABA7303}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,14 +21,6 @@ Global
 		{1C3992BC-E7C1-4137-B58F-43C0BD6EC533}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C3992BC-E7C1-4137-B58F-43C0BD6EC533}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C3992BC-E7C1-4137-B58F-43C0BD6EC533}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83479779-C98D-4720-B7A3-F0E969FF90EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83479779-C98D-4720-B7A3-F0E969FF90EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83479779-C98D-4720-B7A3-F0E969FF90EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83479779-C98D-4720-B7A3-F0E969FF90EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA1B0688-6392-44A2-8F87-D91FDABA7303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA1B0688-6392-44A2-8F87-D91FDABA7303}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA1B0688-6392-44A2-8F87-D91FDABA7303}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA1B0688-6392-44A2-8F87-D91FDABA7303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

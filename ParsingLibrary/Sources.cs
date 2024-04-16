@@ -94,7 +94,7 @@ public class Sources
                                         ReadOnlyCollection<string> tabs = Driver.WindowHandles;
                                         _ = Driver.SwitchTo().Window(tabs[1]);
 
-                                        Source source = new(Driver.PageSource, Driver.Url);
+                                        Source source = new(Driver);
                                         foreach (TagException tagException in tagExceptions ?? new List<TagException>() { new() { Keyword = "" } })
                                         {
                                             if (!source.Object.ToLower().Contains(tagException.Keyword))
@@ -126,7 +126,7 @@ public class Sources
                                         _ = Driver.SwitchTo().Window(tabs[0]);
                                         Thread.Sleep(5000);
                                     }
-                                    catch (Exception ex) { MessageBox.Show(ex.Message); }
+                                    catch { }
                                 }
 
                                 try
@@ -137,7 +137,7 @@ public class Sources
                                 }
                                 catch { break; }
                             }
-                            catch (Exception ex) { MessageBox.Show(ex.Message); }
+                            catch { }
                         }
                     }
                     catch
