@@ -17,27 +17,6 @@ public class Source : Procurement
 
     private void Initialize()
     {
-        File.Create("Parse.txt").Close();
-        Console.Clear();
-
-        Console.WriteLine(new GetNumber().Result);
-        Console.WriteLine(new GetLawNumber().Result);
-        Console.WriteLine(new GetObject().Result);
-        Console.WriteLine(Convert.ToDecimal(new GetInitialPrice().Result));
-        Console.WriteLine(new GetOrganizationName().Result);
-        Console.WriteLine(new GetMethodText().Result);
-        Console.WriteLine(Convert.ToDateTime(new GetPostingDate().Result));
-        Console.WriteLine(new GetPlatformName().Result);
-        Console.WriteLine(new GetPlatformAddress().Result);
-        Console.WriteLine(new GetOrganizationPostalAddress().Result);
-        Console.WriteLine(new GetLocation().Result);
-        Console.WriteLine(Convert.ToDateTime(new GetStartDate().Result));
-        Console.WriteLine(Convert.ToDateTime(new GetDeadline().Result));
-        Console.WriteLine(new GetTimeZoneOffset().Result);
-        Console.WriteLine(new GetSecuring().Result);
-        Console.WriteLine(new GetEnforcement().Result);
-        Console.WriteLine(new GetWarranty().Result);
-
         Number = new GetNumber().Result;
 
         string lawNumber = new GetLawNumber().Result;
