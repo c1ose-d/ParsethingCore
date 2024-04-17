@@ -120,6 +120,18 @@ public class Source : Procurement
         Enforcement = new GetEnforcement().Result;
 
         Warranty = new GetWarranty().Result;
+
+        List<Region>? regions = GET.View.Regions();
+        if (regions != null)
+        {
+            foreach (Region region in regions)
+            {
+                if (Location.ToLower().Contains(region.Title.ToLower()))
+                {
+                    RegionId = region.Id;
+                }
+            }
+        }
     }
 
     private class GetNumber
