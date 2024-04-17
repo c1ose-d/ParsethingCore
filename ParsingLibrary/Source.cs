@@ -13,7 +13,7 @@ public class Source : Procurement
     public bool IsGetted { get; set; } = false;
     public bool IsCached { get; set; } = false;
 
-    private static Dictionary<string, string> Replacements { get; } = new() { { "«", "\"" }, { "»", "\"" }, { "&nbsp;", " " }, { "&#8381;", "Российский рубль" }, { "₽", "Российский рубль" }, { "&#034;", "\"" } };
+    private static Dictionary<string, string> Replacements { get; } = new() { { "«", "\"" }, { "»", "\"" }, { "&nbsp;", " " }, { "&#8381;", "Российский рубль" }, { "₽", "Российский рубль" }, { "&#034;", "\"" }, { "( ", "(" }, { " )", "" } };
 
     private void Initialize()
     {
@@ -116,7 +116,9 @@ public class Source : Procurement
         }
 
         Securing = new GetSecuring().Result;
+
         Enforcement = new GetEnforcement().Result;
+
         Warranty = new GetWarranty().Result;
     }
 
