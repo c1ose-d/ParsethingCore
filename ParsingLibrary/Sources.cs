@@ -8,6 +8,8 @@ public class Sources
     private EdgeDriver Driver { get; set; } = null!;
     private IWebElement Element { get; set; } = null!;
 
+    private bool IsWorking { get; set; } = true;
+
     public void Enable(string minPrice, string maxPrice, List<Region> regions)
     {
         InitializeDriver();
@@ -22,7 +24,7 @@ public class Sources
             }
         }
 
-        while (true)
+        while (IsWorking)
         {
             List<Tag>? tags = GET.View.Tags();
             List<TagException>? tagExceptions = GET.View.TagExceptions();
@@ -106,11 +108,7 @@ public class Sources
                                         _ = Driver.SwitchTo().Window(tabs[0]);
                                         Thread.Sleep(5000);
                                     }
-                                    catch (Exception ex)
-                                    {
-                                        Disable();
-                                        _ = MessageBox.Show($"Во время работы драйвера произошла ошибка. Необходимо перезапустить драйвер\n{ex.Message}", "Ошибка в работе драйвера");
-                                    }
+                                    catch { }
                                 }
 
                                 try
@@ -119,11 +117,7 @@ public class Sources
                                     Element.Click();
                                     Thread.Sleep(5000);
                                 }
-                                catch (Exception ex)
-                                {
-                                    _ = MessageBox.Show($"Во время работы драйвера произошла ошибка. Необходимо перезапустить драйвер\n{ex.Message}", "Ошибка в работе драйвера");
-                                    break;
-                                }
+                                catch { }
                             }
                             catch { }
                         }
@@ -132,6 +126,8 @@ public class Sources
                     {
                         Disable();
                         _ = MessageBox.Show($"Во время работы драйвера произошла ошибка. Необходимо перезапустить драйвер\n{ex.Message}", "Ошибка в работе драйвера");
+                        IsWorking = false;
+                        break;
                     }
                 }
             }
