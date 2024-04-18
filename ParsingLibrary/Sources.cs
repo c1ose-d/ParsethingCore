@@ -7,26 +7,9 @@ public class Sources
 {
     private EdgeDriver Driver { get; set; } = null!;
     private IWebElement Element { get; set; } = null!;
-    private string Input { get; set; } = string.Empty;
-    private static RegexOptions RegexOptions { get; } = RegexOptions.Compiled | RegexOptions.Singleline;
-    private Regex Regex { get; set; } = new(@" *<div class=""search-registry-entry-block box-shadow-search-input"">(?<val>.*?)\n        </div>", RegexOptions);
 
     public void Enable(string minPrice, string maxPrice, List<Region> regions)
     {
-        try
-        {
-            string[] cache = File.ReadAllLines("Cache.txt");
-            if (Convert.ToDateTime(cache[0]).ToShortDateString() != DateTime.Now.ToShortDateString())
-            {
-                throw new Exception();
-            }
-        }
-        catch
-        {
-            File.Create("Cache.txt").Close();
-            File.AppendAllText("Cache.txt", $"{DateTime.Now.AddDays(-1).ToShortDateString()}\n");
-        }
-
         InitializeDriver();
 
         string regionsString = "";
@@ -58,8 +41,6 @@ public class Sources
                         {
                             try
                             {
-                                Input = Driver.PageSource;
-
                                 int counter = 1;
                                 do
                                 {
@@ -83,8 +64,7 @@ public class Sources
                                 while (true);
 
                                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__header-mid__number"));
-                                MatchCollection procurementCards = Regex.Matches(Input);
-                                for (int j = 0; j < procurementCards.Count; j++)
+                                for (int j = 0; j < elements.Count; j++)
                                 {
                                     try
                                     {
@@ -97,9 +77,9 @@ public class Sources
                                         Source source = new(Driver);
                                         foreach (TagException tagException in tagExceptions ?? new List<TagException>() { new() { Keyword = "" } })
                                         {
-                                            if (!source.Object.ToLower().Contains(tagException.Keyword))
+                                            if (!source.Object.ToLower().Contains(tagException.Keyword.ToLower()))
                                             {
-                                                if (!PUT.ProcurementSource(source, source.IsGetted))
+                                                if (!PUT.ProcurementSource(source, false))
                                                 {
                                                     _ = MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
                                                 }
@@ -108,7 +88,7 @@ public class Sources
                                                     Procurement? procurement = GET.Entry.Procurement(source.Number);
                                                     if (procurement != null)
                                                     {
-                                                        PUT.History(new History
+                                                        _ = PUT.History(new History
                                                         {
                                                             EmployeeId = 14,
                                                             Date = DateTime.Now,

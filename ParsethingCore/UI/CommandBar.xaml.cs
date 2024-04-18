@@ -36,12 +36,6 @@ public partial class CommandBar : UserControl
         catch { }
     }
 
-    private void Export_Click(object sender, RoutedEventArgs e)
-    {
-        try { ((IView)DataGridContainer.Child).Export(); }
-        catch { }
-    }
-
     private void Run_Click(object sender, RoutedEventArgs e)
     {
         ParsingFlyout parsingFlyout = new();

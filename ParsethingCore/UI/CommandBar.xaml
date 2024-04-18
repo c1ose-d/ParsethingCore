@@ -5,7 +5,6 @@
         <Button x:Name="Delete" Content="&#xE74D;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Delete_Click"/>
         <GridSplitter Style="{DynamicResource Separator}"/>
         <Button x:Name="Refresh" Content="&#xE72C;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Refresh_Click"/>
-        <Button x:Name="Export" Visibility="Collapsed" Content="&#xEDE1;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Export_Click"/>
         <GridSplitter Style="{DynamicResource Separator}"/>
         <Button x:Name="Run" Content="&#xE768;" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Run_Click"/>
         <Button x:Name="Stop" Content="&#xE71A;" IsEnabled="False" Style="{DynamicResource CommandBar.CommandBarButton.IconOnly}" Click="Stop_Click"/>

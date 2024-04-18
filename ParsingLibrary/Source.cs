@@ -10,8 +10,6 @@ public class Source : Procurement
     }
 
     private static EdgeDriver Driver { get; set; } = null!;
-    public bool IsGetted { get; set; } = false;
-    public bool IsCached { get; set; } = false;
 
     private static Dictionary<string, string> Replacements { get; } = new() { { "«", "\"" }, { "»", "\"" }, { "&nbsp;", " " }, { "&#8381;", "Российский рубль" }, { "₽", "Российский рубль" }, { "&#034;", "\"" }, { "( ", "(" }, { " )", "" } };
 
@@ -27,7 +25,7 @@ public class Source : Procurement
         }
         else
         {
-            PUT.Law(new()
+            _ = PUT.Law(new()
             {
                 Number = lawNumber
             });
@@ -48,7 +46,7 @@ public class Source : Procurement
         }
         else
         {
-            PUT.Organization(new()
+            _ = PUT.Organization(new()
             {
                 Name = organizationName,
                 PostalAddress = organizationPostalAddress
@@ -65,7 +63,7 @@ public class Source : Procurement
         }
         else
         {
-            PUT.Method(new()
+            _ = PUT.Method(new()
             {
                 Text = methodText
             });
@@ -84,7 +82,7 @@ public class Source : Procurement
         }
         else
         {
-            PUT.Platform(new()
+            _ = PUT.Platform(new()
             {
                 Name = platformName,
                 Address = platformAddress
@@ -107,7 +105,7 @@ public class Source : Procurement
         }
         else
         {
-            PUT.TimeZone(new()
+            _ = PUT.TimeZone(new()
             {
                 Offset = timeZoneOffset
             });
@@ -153,7 +151,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -183,7 +184,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -213,7 +217,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -243,7 +250,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -273,7 +283,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -303,7 +316,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -333,7 +349,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -367,7 +386,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -397,7 +419,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -435,7 +460,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -465,7 +493,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -495,7 +526,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -525,7 +559,10 @@ public class Source : Procurement
             catch { }
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -544,7 +581,10 @@ public class Source : Procurement
             Result = element.Text;
 
             foreach (KeyValuePair<string, string> replacement in Replacements)
+            {
                 Result = Result.Replace(replacement.Key, replacement.Value);
+            }
+
             while (Result.Contains("  "))
             {
                 Result = Result.Replace("  ", " ");
@@ -576,7 +616,10 @@ public class Source : Procurement
             if (Result != null)
             {
                 foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
                     Result = Result.Replace(replacement.Key, replacement.Value);
+                }
+
                 while (Result.Contains("  "))
                 {
                     Result = Result.Replace("  ", " ");
@@ -609,7 +652,10 @@ public class Source : Procurement
             if (Result != null)
             {
                 foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
                     Result = Result.Replace(replacement.Key, replacement.Value);
+                }
+
                 while (Result.Contains("  "))
                 {
                     Result = Result.Replace("  ", " ");
@@ -642,7 +688,10 @@ public class Source : Procurement
             if (Result != null)
             {
                 foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
                     Result = Result.Replace(replacement.Key, replacement.Value);
+                }
+
                 while (Result.Contains("  "))
                 {
                     Result = Result.Replace("  ", " ");
