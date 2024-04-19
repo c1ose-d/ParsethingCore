@@ -71,7 +71,7 @@ public class Sources
                                     try
                                     {
                                         elements[j].Click();
-                                        Thread.Sleep(5000);
+                                        Thread.Sleep(10000);
 
                                         ReadOnlyCollection<string> tabs = Driver.WindowHandles;
                                         _ = Driver.SwitchTo().Window(tabs[1]);
@@ -102,11 +102,11 @@ public class Sources
                                                 }
                                             }
                                         }
-                                        Thread.Sleep(5000);
+                                        Thread.Sleep(10000);
 
                                         Driver.Close();
                                         _ = Driver.SwitchTo().Window(tabs[0]);
-                                        Thread.Sleep(5000);
+                                        Thread.Sleep(10000);
                                     }
                                     catch { }
                                 }
@@ -115,17 +115,16 @@ public class Sources
                                 {
                                     Element = Driver.FindElement(By.ClassName("paginator-button-next"));
                                     Element.Click();
-                                    Thread.Sleep(5000);
+                                    Thread.Sleep(10000);
                                 }
                                 catch { }
                             }
                             catch { }
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         Disable();
-                        _ = MessageBox.Show($"Во время работы драйвера произошла ошибка. Необходимо перезапустить драйвер\n{ex.Message}", "Ошибка в работе драйвера");
                         IsWorking = false;
                         break;
                     }
