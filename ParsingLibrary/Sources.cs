@@ -154,6 +154,10 @@ public class Sources
     {
         try
         {
+            Driver.Close();
+            Thread.Sleep(5000);
+            Driver.Quit();
+            Thread.Sleep(5000);
             foreach (Process process in Process.GetProcessesByName("msedgedriver"))
             {
                 process.Kill();
