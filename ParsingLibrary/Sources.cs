@@ -37,7 +37,7 @@ public class Sources
                     {
                         string url = $"https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString={tag.Keyword}&morphology=on&sortBy=UPDATE_DATE&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&af=on&priceContractAdvantages44IdNameHidden=%7B%7D&priceContractAdvantages94IdNameHidden=%7B%7D&priceFromGeneral={minPrice}&priceToGeneral={maxPrice}&currencyIdGeneral=-1&publishDateFrom={DateTime.Now.AddDays(-1).ToShortDateString()}&customerPlace={regionsString}&customerPlaceCodes=%2C&selectedSubjectsIdNameHidden=%7B%7D&okdpGroupIdsIdNameHidden=%7B%7D&koksIdsIdNameHidden=%7B%7D&OrderPlacementSmallBusinessSubject=on&OrderPlacementRnpData=on&OrderPlacementExecutionRequirement=on&orderPlacement94_0=0&orderPlacement94_1=0&orderPlacement94_2=0&contractPriceCurrencyId=-1&budgetLevelIdNameHidden=%7B%7D&nonBudgetTypesIdNameHidden=%7B%7D&gws=%D0%92%D1%8B%D0%B1%D0%B5%D1%80%D0%B8%D1%82%D0%B5+%D1%82%D0%B8%D0%BF+%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B8";
                         Driver.Navigate().GoToUrl(url);
-                        Thread.Sleep(10000);
+                        Thread.Sleep(3000);
 
                         for (int i = 1; i <= 20; i++)
                         {
@@ -56,9 +56,9 @@ public class Sources
                                     }
                                     catch
                                     {
-                                        counter += 1; ;
+                                        counter += 1;
                                     }
-                                    if (counter == 10)
+                                    if (counter == 3)
                                     {
                                         break;
                                     }
@@ -71,7 +71,7 @@ public class Sources
                                     try
                                     {
                                         elements[j].Click();
-                                        Thread.Sleep(10000);
+                                        Thread.Sleep(3000);
 
                                         ReadOnlyCollection<string> tabs = Driver.WindowHandles;
                                         _ = Driver.SwitchTo().Window(tabs[1]);
@@ -102,11 +102,11 @@ public class Sources
                                                 }
                                             }
                                         }
-                                        Thread.Sleep(10000);
+                                        Thread.Sleep(3000);
 
                                         Driver.Close();
                                         _ = Driver.SwitchTo().Window(tabs[0]);
-                                        Thread.Sleep(10000);
+                                        Thread.Sleep(3000);
                                     }
                                     catch { }
                                 }
@@ -115,7 +115,7 @@ public class Sources
                                 {
                                     Element = Driver.FindElement(By.ClassName("paginator-button-next"));
                                     Element.Click();
-                                    Thread.Sleep(10000);
+                                    Thread.Sleep(3000);
                                 }
                                 catch { }
                             }
@@ -139,7 +139,9 @@ public class Sources
         {
             EdgeDriverService driverService = EdgeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
-            Driver = new EdgeDriver(driverService, new EdgeOptions());
+            EdgeOptions edgeOptions = new();
+            edgeOptions.AddArgument("--headless=new");
+            Driver = new EdgeDriver(driverService, edgeOptions);
         }
         catch
         {

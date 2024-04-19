@@ -15,80 +15,100 @@ public class Source : Procurement
 
     private void Initialize()
     {
-        Number = new GetNumber().Result;
-
-        string lawNumber = new GetLawNumber().Result;
-        Law? law = GET.Entry.Law(lawNumber);
-        if (law != null)
+        string? number = new GetNumber().Result;
+        if (number != null)
         {
-            LawId = law.Id;
+            Number = number;
         }
-        else
+
+        string? lawNumber = new GetLawNumber().Result;
+        if (lawNumber != null)
         {
-            _ = PUT.Law(new()
+            Law? law = GET.Entry.Law(lawNumber);
+            if (law != null)
             {
-                Number = lawNumber
-            });
-            law = GET.Entry.Law(lawNumber);
-            LawId = law != null ? law.Id : 0;
+                LawId = law.Id;
+            }
+            else
+            {
+                _ = PUT.Law(new()
+                {
+                    Number = lawNumber
+                });
+                law = GET.Entry.Law(lawNumber);
+                LawId = law != null ? law.Id : 0;
+            }
         }
 
-        Object = new GetObject().Result;
+        string? obj = new GetObject().Result;
+        if (obj != null)
+        {
+            Object = obj;
+        }
 
         InitialPrice = Convert.ToDecimal(new GetInitialPrice().Result);
 
-        string organizationName = new GetOrganizationName().Result;
-        string organizationPostalAddress = new GetOrganizationPostalAddress().Result;
-        Organization? organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
-        if (organization != null)
+        string? organizationName = new GetOrganizationName().Result;
+        string? organizationPostalAddress = new GetOrganizationPostalAddress().Result;
+        if (organizationName != null && organizationPostalAddress != null)
         {
-            OrganizationId = organization.Id;
-        }
-        else
-        {
-            _ = PUT.Organization(new()
+            Organization? organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
+            if (organization != null)
             {
-                Name = organizationName,
-                PostalAddress = organizationPostalAddress
-            });
-            organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
-            OrganizationId = organization != null ? organization.Id : 0;
+                OrganizationId = organization.Id;
+            }
+            else
+            {
+                _ = PUT.Organization(new()
+                {
+                    Name = organizationName,
+                    PostalAddress = organizationPostalAddress
+                });
+                organization = GET.Entry.Organization(organizationName, organizationPostalAddress);
+                OrganizationId = organization != null ? organization.Id : 0;
+            }
         }
 
-        string methodText = new GetMethodText().Result;
-        Method? method = GET.Entry.Method(methodText);
-        if (method != null)
+        string? methodText = new GetMethodText().Result;
+        if (methodText != null)
         {
-            MethodId = method.Id;
-        }
-        else
-        {
-            _ = PUT.Method(new()
+            Method? method = GET.Entry.Method(methodText);
+            if (method != null)
             {
-                Text = methodText
-            });
-            method = GET.Entry.Method(methodText);
-            MethodId = method != null ? method.Id : 0;
+                MethodId = method.Id;
+            }
+            else
+            {
+                _ = PUT.Method(new()
+                {
+                    Text = methodText
+                });
+                method = GET.Entry.Method(methodText);
+                MethodId = method != null ? method.Id : 0;
+            }
         }
 
         PostingDate = Convert.ToDateTime(new GetPostingDate().Result);
 
-        string platformName = new GetPlatformName().Result;
-        string platformAddress = new GetPlatformAddress().Result;
-        Platform? platform = GET.Entry.Platform(platformName, platformAddress);
-        if (platform != null)
+        string? platformName = new GetPlatformName().Result;
+        string? platformAddress = new GetPlatformAddress().Result;
+        if (platformName != null && platformAddress != null)
         {
-            PlatformId = platform.Id;
-        }
-        else
-        {
-            _ = PUT.Platform(new()
+            Platform? platform = GET.Entry.Platform(platformName, platformAddress);
+            if (platform != null)
             {
-                Name = platformName,
-                Address = platformAddress
-            });
-            platform = GET.Entry.Platform(platformName, platformAddress);
-            PlatformId = platform != null ? platform.Id : 0;
+                PlatformId = platform.Id;
+            }
+            else
+            {
+                _ = PUT.Platform(new()
+                {
+                    Name = platformName,
+                    Address = platformAddress
+                });
+                platform = GET.Entry.Platform(platformName, platformAddress);
+                PlatformId = platform != null ? platform.Id : 0;
+            }
         }
 
         Location = new GetLocation().Result;
@@ -97,20 +117,23 @@ public class Source : Procurement
 
         Deadline = Convert.ToDateTime(new GetDeadline().Result);
 
-        string timeZoneOffset = new GetTimeZoneOffset().Result;
-        TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
-        if (timeZone != null)
+        string? timeZoneOffset = new GetTimeZoneOffset().Result;
+        if (timeZoneOffset != null)
         {
-            TimeZoneId = timeZone.Id;
-        }
-        else
-        {
-            _ = PUT.TimeZone(new()
+            TimeZone? timeZone = GET.Entry.TimeZone(timeZoneOffset);
+            if (timeZone != null)
             {
-                Offset = timeZoneOffset
-            });
-            timeZone = GET.Entry.TimeZone(timeZoneOffset);
-            TimeZoneId = timeZone != null ? timeZone.Id : 0;
+                TimeZoneId = timeZone.Id;
+            }
+            else
+            {
+                _ = PUT.TimeZone(new()
+                {
+                    Offset = timeZoneOffset
+                });
+                timeZone = GET.Entry.TimeZone(timeZoneOffset);
+                TimeZoneId = timeZone != null ? timeZone.Id : 0;
+            }
         }
 
         Securing = new GetSecuring().Result;
@@ -119,14 +142,17 @@ public class Source : Procurement
 
         Warranty = new GetWarranty().Result;
 
-        List<Region>? regions = GET.View.Regions();
-        if (regions != null)
+        if (Location != null)
         {
-            foreach (Region region in regions)
+            List<Region>? regions = GET.View.Regions();
+            if (regions != null)
             {
-                if (Location.ToLower().Contains(region.Title.ToLower()))
+                foreach (Region region in regions)
                 {
-                    RegionId = region.Id;
+                    if (Location.Contains(region.Title, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        RegionId = region.Id;
+                    }
                 }
             }
         }
@@ -150,19 +176,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split(" ")[1].Trim();
             }
-            Result = Result.Split(" ")[1].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetLawNumber
@@ -183,19 +212,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split(" ")[0].Split("\n")[0].Trim();
             }
-            Result = Result.Split(" ")[0].Split("\n")[0].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetObject
@@ -216,19 +248,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
             }
-            Result = Result.Split("\n")[1].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetInitialPrice
@@ -249,19 +284,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Replace("Российский рубль", "").Trim();
             }
-            Result = Result.Replace("Российский рубль", "").Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetOrganizationName
@@ -282,19 +320,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
             }
-            Result = Result.Split("\n")[1].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetMethodText
@@ -315,19 +356,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
             }
-            Result = Result.Split("\n")[1].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetPostingDate
@@ -348,23 +392,26 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                if (Result.Contains('\n'))
+                {
+                    Result = Result.Split("\n")[1];
+                }
+                Result = Result.Trim();
             }
-            if (Result.Contains("\n"))
-            {
-                Result = Result.Split("\n")[1];
-            }
-            Result = Result.Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetPlatformName
@@ -385,19 +432,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
             }
-            Result = Result.Split("\n")[1].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetPlatformAddress
@@ -418,27 +468,30 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
-            }
-            Result = Result.Split("\n")[1].Trim();
-            if (!Result.Contains("http"))
-            {
-                Result = "https://" + Result;
-            }
-            else if (!Result.Contains("https"))
-            {
-                Result = Result.Replace("http", "https");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
+                if (!Result.Contains("http"))
+                {
+                    Result = "https://" + Result;
+                }
+                else if (!Result.Contains("https"))
+                {
+                    Result = Result.Replace("http", "https");
+                }
             }
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetOrganizationPostalAddress
@@ -459,19 +512,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
             }
-            Result = Result.Split("\n")[1].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetLocation
@@ -492,19 +548,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
             }
-            Result = Result.Split("\n")[1].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetStartDate
@@ -525,19 +584,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Split("(")[0].Trim();
             }
-            Result = Result.Split("\n")[1].Split("(")[0].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetDeadline
@@ -558,19 +620,22 @@ public class Source : Procurement
             }
             catch { }
 
-            foreach (KeyValuePair<string, string> replacement in Replacements)
+            if (Result != null)
             {
-                Result = Result.Replace(replacement.Key, replacement.Value);
-            }
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
 
-            while (Result.Contains("  "))
-            {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Split("(")[0].Trim();
             }
-            Result = Result.Split("\n")[1].Split("(")[0].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetTimeZoneOffset
@@ -585,14 +650,17 @@ public class Source : Procurement
                 Result = Result.Replace(replacement.Key, replacement.Value);
             }
 
-            while (Result.Contains("  "))
+            if (Result != null)
             {
-                Result = Result.Replace("  ", " ");
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split(" ")[1].Trim();
             }
-            Result = Result.Split(" ")[1].Trim();
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetSecuring
@@ -628,7 +696,7 @@ public class Source : Procurement
             }
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetEnforcement
@@ -664,7 +732,7 @@ public class Source : Procurement
             }
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 
     private class GetWarranty
@@ -700,6 +768,6 @@ public class Source : Procurement
             }
         }
 
-        public string Result { get; set; } = null!;
+        public string? Result { get; set; }
     }
 }
