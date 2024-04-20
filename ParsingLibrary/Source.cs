@@ -113,7 +113,15 @@ public class Source : Procurement
 
         Location = new GetLocation().Result;
 
-        StartDate = Convert.ToDateTime(new GetStartDate().Result);
+        string? startDate = new GetStartDate().Result;
+        if (startDate != null)
+        {
+            StartDate = Convert.ToDateTime(startDate);
+        }
+        else
+        {
+            StartDate = DateTime.Now;
+        }
 
         Deadline = Convert.ToDateTime(new GetDeadline().Result);
 
@@ -237,14 +245,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__body-block"));
-                Result = elements.Where(x => x.Text.Contains("Объект закупки\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Объект закупки\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("cardMainInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Объект закупки\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Объект закупки\r\n")).First().Text;
             }
             catch { }
 
@@ -309,14 +317,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__body-block"));
-                Result = elements.Where(x => x.Text.Contains("Заказчик") || x.Text.Contains("Организация, осуществляющая размещение\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Заказчик") || x.Text.Contains("Организация, осуществляющая размещение\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("cardMainInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Заказчик") || x.Text.Contains("Организация, осуществляющая размещение\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Заказчик") || x.Text.Contains("Организация, осуществляющая размещение\r\n")).First().Text;
             }
             catch { }
 
@@ -345,14 +353,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Способ определения поставщика (подрядчика, исполнителя)") || x.Text.Contains("Способ осуществления закупки\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Способ определения поставщика (подрядчика, исполнителя)") || x.Text.Contains("Способ осуществления закупки\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Способ определения поставщика (подрядчика, исполнителя)") || x.Text.Contains("Способ осуществления закупки\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Способ определения поставщика (подрядчика, исполнителя)") || x.Text.Contains("Способ осуществления закупки\r\n")).First().Text;
             }
             catch { }
 
@@ -388,7 +396,7 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("cardMainInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Размещено\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Размещено\r\n")).First().Text;
             }
             catch { }
 
@@ -421,14 +429,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Наименование электронной площадки в информационно-телекоммуникационной сети «Интернет»\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Наименование электронной площадки в информационно-телекоммуникационной сети «Интернет»\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Наименование электронной площадки в информационно-телекоммуникационной сети «Интернет»\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Наименование электронной площадки в информационно-телекоммуникационной сети «Интернет»\r\n")).First().Text;
             }
             catch { }
 
@@ -457,14 +465,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Адрес электронной площадки в информационно-телекоммуникационной сети «Интернет»\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Адрес электронной площадки в информационно-телекоммуникационной сети «Интернет»\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Адрес электронной площадки в информационно-телекоммуникационной сети «Интернет»\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Адрес электронной площадки в информационно-телекоммуникационной сети «Интернет»\r\n")).First().Text;
             }
             catch { }
 
@@ -501,14 +509,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Почтовый адрес\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Почтовый адрес\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Почтовый адрес\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Почтовый адрес\r\n")).First().Text;
             }
             catch { }
 
@@ -537,14 +545,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Место нахождения\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Место нахождения\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Место нахождения\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Место нахождения\r\n")).First().Text;
             }
             catch { }
 
@@ -573,14 +581,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Дата начала срока подачи заявок") || x.Text.Contains("Дата и время начала срока подачи заявок\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Дата начала срока подачи заявок") || x.Text.Contains("Дата и время начала срока подачи заявок\r\n") || x.Text.Contains("Дата проведения процедуры подачи предложений о цене контракта либо о сумме цен единиц товара, работы, услуги")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Дата начала срока подачи заявок") || x.Text.Contains("Дата и время начала срока подачи заявок\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Дата начала срока подачи заявок") || x.Text.Contains("Дата и время начала срока подачи заявок\r\n") || x.Text.Contains("Дата проведения процедуры подачи предложений о цене контракта либо о сумме цен единиц товара, работы, услуги")).First().Text;
             }
             catch { }
 
@@ -609,14 +617,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Дата и время окончания срока подачи заявок (по местному времени заказчика)") || x.Text.Contains("Дата и время окончания срока подачи заявок\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Дата и время окончания срока подачи заявок (по местному времени заказчика)") || x.Text.Contains("Дата и время окончания срока подачи заявок\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Дата и время окончания срока подачи заявок (по местному времени заказчика)") || x.Text.Contains("Дата и время окончания срока подачи заявок\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Дата и время окончания срока подачи заявок (по местному времени заказчика)") || x.Text.Contains("Дата и время окончания срока подачи заявок\r\n")).First().Text;
             }
             catch { }
 
@@ -670,14 +678,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Размер обеспечения заявки\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения заявки\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Размер обеспечения заявки\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения заявки\r\n")).First().Text;
             }
             catch { }
 
@@ -706,14 +714,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Размер обеспечения исполнения контракта\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения исполнения контракта\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Размер обеспечения исполнения контракта\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения исполнения контракта\r\n")).First().Text;
             }
             catch { }
 
@@ -742,14 +750,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Размер обеспечения гарантийных обязательств\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения гарантийных обязательств\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Размер обеспечения гарантийных обязательств\r\n")).Single().Text;
+                Result = elements.Where(x => x.Text.Contains("Размер обеспечения гарантийных обязательств\r\n")).First().Text;
             }
             catch { }
 
