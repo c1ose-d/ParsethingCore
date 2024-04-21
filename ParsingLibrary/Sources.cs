@@ -81,24 +81,9 @@ public class Sources
                                         {
                                             if (!source.Object.ToLower().Contains(tagException.Keyword.ToLower()))
                                             {
-                                                if (!PUT.ProcurementSource(source, false))
+                                                if (!PUT.ProcurementSource(source))
                                                 {
                                                     _ = MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
-                                                }
-                                                else
-                                                {
-                                                    Procurement? procurement = GET.Entry.Procurement(source.Number);
-                                                    if (procurement != null)
-                                                    {
-                                                        _ = PUT.History(new History
-                                                        {
-                                                            EmployeeId = 14,
-                                                            Date = DateTime.Now,
-                                                            EntityType = "Procurement",
-                                                            EntryId = procurement.Id,
-                                                            Text = "Parsed"
-                                                        });
-                                                    }
                                                 }
                                             }
                                         }
@@ -117,7 +102,10 @@ public class Sources
                                     Element.Click();
                                     Thread.Sleep(3000);
                                 }
-                                catch { }
+                                catch
+                                {
+                                    break;
+                                }
                             }
                             catch { }
                         }

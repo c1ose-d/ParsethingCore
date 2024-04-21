@@ -11,7 +11,7 @@ public class Source : Procurement
 
     private static EdgeDriver Driver { get; set; } = null!;
 
-    private static Dictionary<string, string> Replacements { get; } = new() { { "«", "\"" }, { "»", "\"" }, { "&nbsp;", " " }, { "&#8381;", "Российский рубль" }, { "₽", "Российский рубль" }, { "&#034;", "\"" }, { "( ", "(" }, { " )", "" } };
+    private static Dictionary<string, string> Replacements { get; } = new() { { "«", "\"" }, { "»", "\"" }, { "&nbsp;", " " }, { "&#8381;", "Российский рубль" }, { "₽", "Российский рубль" }, { "&#034;", "\"" }, { "( ", "(" }, { " )", "" }, { "–", "—" } };
 
     private void Initialize()
     {
