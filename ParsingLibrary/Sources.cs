@@ -87,7 +87,6 @@ public class Sources
                                                 }
                                             }
                                         }
-                                        Thread.Sleep(3000);
 
                                         Driver.Close();
                                         _ = Driver.SwitchTo().Window(tabs[0]);
