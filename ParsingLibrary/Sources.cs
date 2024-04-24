@@ -68,13 +68,28 @@ public class Sources
                                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("registry-entry__header-mid__number"));
                                 for (int j = 0; j < elements.Count; j++)
                                 {
+                                    ReadOnlyCollection<string> tabs;
                                     try
                                     {
-                                        elements[j].Click();
-                                        Thread.Sleep(3000);
+                                        try
+                                        {
+                                            elements[j].Click();
+                                            Thread.Sleep(3000);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха1");
+                                        }
+                                        tabs = Driver.WindowHandles;
 
-                                        ReadOnlyCollection<string> tabs = Driver.WindowHandles;
-                                        _ = Driver.SwitchTo().Window(tabs[1]);
+                                        try
+                                        {
+                                            _ = Driver.SwitchTo().Window(tabs[1]);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха2");
+                                        }
 
                                         Source source = new(Driver);
                                         foreach (TagException tagException in tagExceptions ?? new List<TagException>() { new() { Keyword = "" } })
@@ -87,12 +102,16 @@ public class Sources
                                                 }
                                             }
                                         }
-
-                                        Driver.Close();
-                                        _ = Driver.SwitchTo().Window(tabs[0]);
-                                        Thread.Sleep(3000);
                                     }
-                                    catch { }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха4");
+                                    }
+
+                                    tabs = Driver.WindowHandles;
+                                    Driver.Close();
+                                    _ = Driver.SwitchTo().Window(tabs[0]);
+                                    Thread.Sleep(3000);
                                 }
 
                                 try
@@ -106,7 +125,10 @@ public class Sources
                                     break;
                                 }
                             }
-                            catch { }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха3");
+                            }
                         }
                     }
                     catch
@@ -127,7 +149,7 @@ public class Sources
             EdgeDriverService driverService = EdgeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
             EdgeOptions edgeOptions = new();
-            edgeOptions.AddArgument("--headless=new");
+            //edgeOptions.AddArgument("--headless=new");
             Driver = new EdgeDriver(driverService, edgeOptions);
         }
         catch
