@@ -88,7 +88,7 @@ public class Sources
                                         }
                                         catch (Exception ex)
                                         {
-                                            MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха2");
+                                            MessageBox.Show($"{Driver.Url}\n{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха2");
                                         }
 
                                         Source source = new(Driver);
@@ -105,7 +105,7 @@ public class Sources
                                     }
                                     catch (Exception ex)
                                     {
-                                        MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха4");
+                                        MessageBox.Show($"{Driver.Url}\n{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха4");
                                     }
 
                                     tabs = Driver.WindowHandles;
@@ -127,7 +127,7 @@ public class Sources
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха3");
+                                MessageBox.Show($"{Driver.Url}\n{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха3");
                             }
                         }
                     }
