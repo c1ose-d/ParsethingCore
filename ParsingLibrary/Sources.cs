@@ -76,20 +76,14 @@ public class Sources
                                             elements[j].Click();
                                             Thread.Sleep(3000);
                                         }
-                                        catch (Exception ex)
-                                        {
-                                            MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха1");
-                                        }
+                                        catch { }
                                         tabs = Driver.WindowHandles;
 
                                         try
                                         {
                                             _ = Driver.SwitchTo().Window(tabs[1]);
                                         }
-                                        catch (Exception ex)
-                                        {
-                                            MessageBox.Show($"{Driver.Url}\n{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха2");
-                                        }
+                                        catch { }
 
                                         Source source = new(Driver);
                                         foreach (TagException tagException in tagExceptions ?? new List<TagException>() { new() { Keyword = "" } })
@@ -103,10 +97,7 @@ public class Sources
                                             }
                                         }
                                     }
-                                    catch (Exception ex)
-                                    {
-                                        MessageBox.Show($"{Driver.Url}\n{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха4");
-                                    }
+                                    catch { }
 
                                     tabs = Driver.WindowHandles;
                                     Driver.Close();
@@ -125,10 +116,7 @@ public class Sources
                                     break;
                                 }
                             }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show($"{Driver.Url}\n{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}", "Плоха3");
-                            }
+                            catch { }
                         }
                     }
                     catch
