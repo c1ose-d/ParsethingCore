@@ -90,10 +90,13 @@ public class Sources
                                         {
                                             if (!source.Object.ToLower().Contains(tagException.Keyword.ToLower()))
                                             {
-                                                if (!PUT.ProcurementSource(source))
+                                                int tryCounter = 0;
+                                                do
                                                 {
-                                                    _ = MessageBox.Show($"RequestUri\t{source.RequestUri}\nNumber\t{source.Number}\nLawId\t{source.LawId}\nObject\t{source.Object}\nInitialPrice\t{source.InitialPrice}\nOrganizationId\t{source.OrganizationId}", "Закупка не может быть считана");
+                                                    Thread.Sleep(1000);
+                                                    tryCounter++;
                                                 }
+                                                while (PUT.ProcurementSource(source) || tryCounter < 5);
                                             }
                                         }
                                     }
