@@ -30,6 +30,9 @@ public partial class TreeView : UserControl
                 case "Типы комплектующих":
                     DataGridContainer.Child = new ComponentTypesList();
                     break;
+                case "Заголовки комплектующих":
+                    DataGridContainer.Child = new ComponentHeadersList();
+                    break;
                 case "Производители":
                     DataGridContainer.Child = new ManufacturersList();
                     break;

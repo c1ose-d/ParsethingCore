@@ -51,6 +51,109 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="CheckBox" TargetType="{x:Type CheckBox}">
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Button.Standart.FocusRect}"/>
+        <Setter Property="Background" Value="{DynamicResource Light.FillColor.ControlAlt.Secondary}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Light.StrokeColor.ControlStrongStroke.Default}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Light.FillColor.Text.Primary}"/>
+        <Setter Property="FontFamily" Value="Segoe UI Variable Static Display"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="CheckBoxBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Width="20" Height="20" VerticalAlignment="Center" CornerRadius="3">
+                            <TextBlock x:Name="Glyph" Foreground="{DynamicResource Light.FillColor.TextOnAccent.Primary}" FontFamily="Segoe Fluent Icons" Text="&#xF78C;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Visibility="Hidden"/>
+                        </Border>
+                        <ContentPresenter x:Name="ContentPresenter" Margin="8,0,0,0" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="Glyph" Value="Visible"/>
+                            <Setter Property="Background" Value="{DynamicResource Light.FillColor.Accent.Secondary}"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="Glyph" Value="Hidden"/>
+                            <Setter Property="Background" Value="{DynamicResource Light.FillColor.ControlAlt.Secondary}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource Light.StrokeColor.ControlStrongStroke.Default}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="CheckBoxBorder" Value="{DynamicResource Light.FillColor.ControlAlt.Tertiary}"/>
+                                <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{DynamicResource Light.StrokeColor.ControlStrongStroke.Default}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="CheckBoxBorder" Value="{DynamicResource Light.FillColor.Accent.Secondary}"/>
+                                <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="Transparent"/>
+                                <Setter Property="Foreground" TargetName="Glyph" Value="{DynamicResource Light.FillColor.TextOnAccent.Secondary}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="CheckBoxBorder" Value="{DynamicResource Light.FillColor.ControlAlt.Quarternary}"/>
+                                <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{DynamicResource Light.StrokeColor.ControlStrongStroke.Disabled}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True"/>
+                                <Condition Property="IsChecked" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="CheckBoxBorder" Value="{DynamicResource Light.FillColor.Accent.Tertiary}"/>
+                                <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="Transparent"/>
+                                <Setter Property="Foreground" TargetName="Glyph" Value="{DynamicResource Light.FillColor.TextOnAccent.Primary}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="CheckBoxBorder" Value="{DynamicResource Light.FillColor.ControlAlt.Disabled}"/>
+                                <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{DynamicResource Light.StrokeColor.ControlStrongStroke.Disabled}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                                <Condition Property="IsChecked" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="CheckBoxBorder" Value="{DynamicResource Light.FillColor.Accent.Disabled}"/>
+                                <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="Transparent"/>
+                                <Setter Property="Foreground" TargetName="Glyph" Value="{DynamicResource Light.FillColor.TextOnAccent.Disabled}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="Button.Image" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource Light.FillColor.Subtle.Transparent}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Light.Elevation.Control.Border}"/>
@@ -182,7 +285,7 @@
     </Style>
     <Style x:Key="ComboBox.Chevron" TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="ClickMode" Value="Press"/>

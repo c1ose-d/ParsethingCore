@@ -28,6 +28,7 @@ public partial class EmployeeCard : Window
                 Bytes = Convert.FromBase64String(Employee.Photo);
                 SetPhoto();
             }
+            Employee_IsAvailable.IsChecked = Employee.IsAvailable;
             System_Id.Text = Employee.Id.ToString();
             System_FullName.Text = Employee.FullName;
             System_UserName.Text = Employee.UserName;
@@ -36,6 +37,7 @@ public partial class EmployeeCard : Window
             if (Employee.Photo != null)
                 System_Photo.Text = Employee.Photo.ToString();
             else System_Photo.Text = "NULL";
+            System_IsAvailable.Text = Employee.IsAvailable.ToString();
         }
         else SystemFields.Visibility = Visibility.Collapsed;
     }
@@ -117,7 +119,8 @@ public partial class EmployeeCard : Window
                     UserName = Employee_UserName.Text,
                     Password = Employee_Password.Text,
                     PositionId = ((Position)Employee_Position.SelectedItem).Id,
-                    Photo = String
+                    Photo = String,
+                    IsAvailable = Employee_IsAvailable.IsChecked
                 };
                 if (PUT.Employee(Employee))
                     DialogResult = true;
@@ -129,6 +132,7 @@ public partial class EmployeeCard : Window
                 Employee.Password = Employee_Password.Text;
                 Employee.PositionId = ((Position)Employee_Position.SelectedItem).Id;
                 Employee.Photo = String;
+                Employee.IsAvailable = Employee_IsAvailable.IsChecked;
                 if (PULL.Employee(Employee))
                     DialogResult = true;
             }

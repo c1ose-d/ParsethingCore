@@ -9,6 +9,7 @@
             <TreeViewItem Header="По комплектующим" Style="{DynamicResource TreeView.ListItem.Level2}">
                 <TreeViewItem Header="Состояния комплектующих" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
                 <TreeViewItem Header="Типы комплектующих" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
+                <TreeViewItem Header="Заголовки комплектующих" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
                 <TreeViewItem Header="Производители" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
                 <TreeViewItem Header="Поставщики" Style="{DynamicResource TreeView.ListItem.Level3}" GotFocus="TreeViewItem_GotFocus"/>
             </TreeViewItem>

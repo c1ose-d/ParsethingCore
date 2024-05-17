@@ -88,6 +88,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="UI\ListView_Custom\ComponentHeadersList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Cards\ComponentHeaderCard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\Cards\TagExceptionCard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

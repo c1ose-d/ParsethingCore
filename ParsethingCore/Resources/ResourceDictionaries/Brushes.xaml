@@ -60,4 +60,10 @@
     <SolidColorBrush x:Key="Light.StrokeColor.FocusStroke.Inner" Color="#FFF"/>
     <SolidColorBrush x:Key="Light.StrokeColor.FocusStroke.Outer" Color="#000" Opacity=".8956"/>
     <SolidColorBrush x:Key="Light.StrokeColor.SurfaceStroke" Color="#757575"/>
+    <SolidColorBrush x:Key="Light.FillColor.ControlAlt.Secondary" Color="#06000000"/>
+    <SolidColorBrush x:Key="Light.FillColor.ControlAlt.Tertiary" Color="#0E000000"/>
+    <SolidColorBrush x:Key="Light.FillColor.ControlAlt.Quarternary" Color="#17000000"/>
+    <SolidColorBrush x:Key="Light.FillColor.ControlAlt.Disabled" Color="#00FFFFFF"/>
+    <SolidColorBrush x:Key="Light.StrokeColor.ControlStrongStroke.Default" Color="#9A000000"/>
+    <SolidColorBrush x:Key="Light.StrokeColor.ControlStrongStroke.Disabled" Color="#37000000"/>
 </ResourceDictionary>

@@ -43,6 +43,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock Text="ФИО" Style="{DynamicResource Body}"/>
                             <Grid Grid.Column="1">
@@ -73,6 +74,8 @@
                                 <TextBox x:Name="Employee_Password" Grid.ColumnSpan="2" Style="{DynamicResource TextBox}" TextChanged="Employee_Password_TextChanged"/>
                                 <Button x:Name="Employee_Password_Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" Click="Employee_Password_Clear_Click"/>
                             </Grid>
+                            <TextBlock Text="Активность" Grid.Row="4" Style="{DynamicResource Body}"/>
+                            <CheckBox x:Name="Employee_IsAvailable" Grid.Row="4" Grid.Column="1" Style="{DynamicResource CheckBox}" IsChecked="True"/>
                         </Grid>
                         <Grid Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
@@ -95,6 +98,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock Text="Id" Style="{DynamicResource Body.System}"/>
                             <TextBlock x:Name="System_Id" Grid.Column="1" Style="{DynamicResource Body.System}"/>
@@ -108,6 +112,8 @@
                             <TextBlock x:Name="System_PositionId" Grid.Row="4" Grid.Column="1" Style="{DynamicResource Body.System}"/>
                             <TextBlock Grid.Row="5" Text="Photo" Style="{DynamicResource Body.System}"/>
                             <TextBlock x:Name="System_Photo" Grid.Row="5" Grid.Column="1" Style="{DynamicResource Body.System}"/>
+                            <TextBlock Grid.Row="6" Text="Photo" Style="{DynamicResource Body.System}"/>
+                            <TextBlock x:Name="System_IsAvailable" Grid.Row="6" Grid.Column="1" Style="{DynamicResource Body.System}"/>
                         </Grid>
                     </Grid>
                 </Grid>

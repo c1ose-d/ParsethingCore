@@ -42,11 +42,23 @@ public partial class EmployeesList : UserControl, IView
 
     public void Search(string searchString)
     {
-        View.ItemsSource = GET.View.Employees()?
-            .Where(e => e.FullName.ToLower().Contains(searchString) ||
-            e.Position != null && e.Position.Kind.ToLower().Contains(searchString) ||
-            e.UserName.ToLower().Contains(searchString))
-            .ToList();
+        if (CheckVisibility.IsChecked == true)
+        {
+            View.ItemsSource = GET.View.Employees()?
+                .Where(e => (e.FullName.ToLower().Contains(searchString) ||
+                e.Position != null && e.Position.Kind.ToLower().Contains(searchString) ||
+                e.UserName.ToLower().Contains(searchString)) &&
+                e.IsAvailable == true)
+                .ToList();
+        }
+        else
+        {
+            View.ItemsSource = GET.View.Employees()?
+                .Where(e => e.FullName.ToLower().Contains(searchString) ||
+                e.Position != null && e.Position.Kind.ToLower().Contains(searchString) ||
+                e.UserName.ToLower().Contains(searchString))
+                .ToList();
+        }
     }
 
     private void View_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -56,5 +68,37 @@ public partial class EmployeesList : UserControl, IView
             new EmployeeCard((Employee)View.SelectedItem).ShowDialog();
             GetView();
         }
+    }
+
+    private void CheckVisibility_Checked(object sender, RoutedEventArgs e)
+    {
+        if (CheckVisibility.IsChecked == true)
+        {
+            View.ItemsSource = GET.View.Employees()?
+                .Where(e => e.IsAvailable == true)
+                .ToList();
+        }
+        else
+        {
+            View.ItemsSource = GET.View.Employees()?
+                .ToList();
+        }
+        ((TextBox)((TitleBar)Application.Current.MainWindow.FindName("TitleBar")).FindName("Search")).Text = string.Empty;
+    }
+
+    private void CheckVisibility_Unchecked(object sender, RoutedEventArgs e)
+    {
+        if (CheckVisibility.IsChecked == true)
+        {
+            View.ItemsSource = GET.View.Employees()?
+                .Where(e => e.IsAvailable == true)
+                .ToList();
+        }
+        else
+        {
+            View.ItemsSource = GET.View.Employees()?
+                .ToList();
+        }
+        ((TextBox)((TitleBar)Application.Current.MainWindow.FindName("TitleBar")).FindName("Search")).Text = string.Empty;
     }
 }
