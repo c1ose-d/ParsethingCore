@@ -114,14 +114,7 @@ public class Source : Procurement
         Location = new GetLocation().Result;
 
         string? startDate = new GetStartDate().Result;
-        if (startDate != null)
-        {
-            StartDate = Convert.ToDateTime(startDate);
-        }
-        else
-        {
-            StartDate = DateTime.Now;
-        }
+        StartDate = startDate != null ? Convert.ToDateTime(startDate) : StartDate = DateTime.Now;
 
         Deadline = Convert.ToDateTime(new GetDeadline().Result);
 
@@ -164,6 +157,9 @@ public class Source : Procurement
                 }
             }
         }
+
+        string? resultDate = new GetResultDate().Result;
+        ResultDate = resultDate != null ? Convert.ToDateTime(resultDate) : null;
     }
 
     private class GetNumber
@@ -664,7 +660,7 @@ public class Source : Procurement
                 {
                     Result = Result.Replace("  ", " ");
                 }
-                Result = Result.Split(" ")[1].Trim();
+                Result = Regex.Match(Result, @"МСК(\+||-)*\d*").Value;
             }
         }
 
@@ -758,6 +754,42 @@ public class Source : Procurement
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
                 Result = elements.Where(x => x.Text.Contains("Размер обеспечения гарантийных обязательств\r\n")).First().Text;
+            }
+            catch { }
+
+            if (Result != null)
+            {
+                foreach (KeyValuePair<string, string> replacement in Replacements)
+                {
+                    Result = Result.Replace(replacement.Key, replacement.Value);
+                }
+
+                while (Result.Contains("  "))
+                {
+                    Result = Result.Replace("  ", " ");
+                }
+                Result = Result.Split("\n")[1].Trim();
+            }
+        }
+
+        public string? Result { get; set; }
+    }
+
+    private class GetResultDate
+    {
+        public GetResultDate()
+        {
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
+                Result = elements.Where(x => x.Text.Contains("Дата подведения итогов определения поставщика (подрядчика, исполнителя)\r\n")).First().Text;
+            }
+            catch { }
+
+            try
+            {
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
+                Result = elements.Where(x => x.Text.Contains("Дата подведения итогов определения поставщика (подрядчика, исполнителя)\r\n")).First().Text;
             }
             catch { }
 
