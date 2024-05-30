@@ -86,18 +86,26 @@ public class Sources
                                         catch { }
 
                                         Source source = new(Driver);
-                                        foreach (TagException tagException in tagExceptions ?? new List<TagException>() { new() { Keyword = "" } })
+                                        bool isPuttable = true;
+                                        if (tagExceptions != null)
                                         {
-                                            if (!source.Object.ToLower().Contains(tagException.Keyword.ToLower()))
+                                            foreach (TagException tagException in tagExceptions)
                                             {
-                                                int tryCounter = 0;
-                                                do
+                                                if (source.Object.Contains(tagException.Keyword, StringComparison.CurrentCultureIgnoreCase))
                                                 {
-                                                    Thread.Sleep(1000);
-                                                    tryCounter++;
+                                                    isPuttable = false;
                                                 }
-                                                while (PUT.ProcurementSource(source) || tryCounter < 5);
                                             }
+                                        }
+                                        if (isPuttable)
+                                        {
+                                            int tryCounter = 0;
+                                            do
+                                            {
+                                                Thread.Sleep(1000);
+                                                tryCounter++;
+                                            }
+                                            while (!PUT.ProcurementSource(source) || tryCounter < 5);
                                         }
                                     }
                                     catch { }
@@ -143,9 +151,9 @@ public class Sources
             //edgeOptions.AddArgument("--headless=new");
             Driver = new EdgeDriver(driverService, edgeOptions);
         }
-        catch
+        catch (Exception e)
         {
-            _ = MessageBox.Show("Ошибка!");
+            _ = MessageBox.Show(e.Message);
 
         }
     }

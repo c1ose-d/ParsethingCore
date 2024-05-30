@@ -120,7 +120,7 @@ public partial class EmployeeCard : Window
                     Password = Employee_Password.Text,
                     PositionId = ((Position)Employee_Position.SelectedItem).Id,
                     Photo = String,
-                    IsAvailable = Employee_IsAvailable.IsChecked
+                    IsAvailable = Employee_IsAvailable.IsChecked != null && Employee_IsAvailable.IsChecked.Value
                 };
                 if (PUT.Employee(Employee))
                     DialogResult = true;
@@ -132,7 +132,7 @@ public partial class EmployeeCard : Window
                 Employee.Password = Employee_Password.Text;
                 Employee.PositionId = ((Position)Employee_Position.SelectedItem).Id;
                 Employee.Photo = String;
-                Employee.IsAvailable = Employee_IsAvailable.IsChecked;
+                Employee.IsAvailable = Employee_IsAvailable.IsChecked != null && Employee_IsAvailable.IsChecked.Value;
                 if (PULL.Employee(Employee))
                     DialogResult = true;
             }
