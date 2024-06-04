@@ -782,14 +782,14 @@ public class Source : Procurement
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("col-9"));
-                Result = elements.Where(x => x.Text.Contains("Дата подведения итогов определения поставщика (подрядчика, исполнителя)\r\n")).First().Text;
+                Result = elements.Where(x => x.Text.Contains("Дата подведения итогов определения поставщика (подрядчика, исполнителя)\r\n") || x.Text.Contains("Дата подведения итогов\r\n")).First().Text;
             }
             catch { }
 
             try
             {
                 ReadOnlyCollection<IWebElement> elements = Driver.FindElements(By.ClassName("blockInfo__section"));
-                Result = elements.Where(x => x.Text.Contains("Дата подведения итогов определения поставщика (подрядчика, исполнителя)\r\n")).First().Text;
+                Result = elements.Where(x => x.Text.Contains("Дата подведения итогов определения поставщика (подрядчика, исполнителя)\r\n") || x.Text.Contains("Дата подведения итогов\r\n")).First().Text;
             }
             catch { }
 
