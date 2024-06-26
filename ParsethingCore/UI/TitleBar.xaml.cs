@@ -38,15 +38,18 @@ public partial class TitleBar : UserControl
         }
     }
 
-    private void Close_Click(object sender, RoutedEventArgs e) =>
-        Process.GetCurrentProcess().Kill();
-
     private void Search_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (Search.Text == string.Empty)
             Clear.Visibility = Visibility.Collapsed;
         else Clear.Visibility = Visibility.Visible;
+    }
 
+    private void Close_Click(object sender, RoutedEventArgs e) =>
+        Process.GetCurrentProcess().Kill();
+
+    private void Execute_Click(object sender, RoutedEventArgs e)
+    {
         try { ((IView)ListViewContainer.Child).Search(Search.Text.ToLower()); }
         catch { }
     }

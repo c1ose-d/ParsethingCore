@@ -1,4 +1,10 @@
-﻿namespace ParsingLibrary;
+﻿using DatabaseLibrary.Entities.NoRelationship;
+using System;
+using System.Diagnostics;
+using System.Security.Policy;
+using System.Windows;
+
+namespace ParsingLibrary;
 
 public class Source : Procurement
 {
@@ -7,6 +13,63 @@ public class Source : Procurement
         Driver = driver;
         RequestUri = driver.Url;
         Initialize();
+    }
+
+    public Source(string requestUrl)
+    {
+        try
+        {
+            EdgeDriverService driverService = EdgeDriverService.CreateDefaultService();
+            driverService.HideCommandPromptWindow = true;
+            EdgeOptions edgeOptions = new();
+            //edgeOptions.AddArgument("--headless=new");
+            Driver = new EdgeDriver(driverService, edgeOptions);
+        }
+        catch (Exception e)
+        {
+            _ = MessageBox.Show(e.Message);
+        }
+
+        RequestUri = requestUrl;
+        Driver.Navigate().GoToUrl(RequestUri);
+        Initialize();
+
+        bool isPuttable = true;
+        List<TagException>? tagExceptions = GET.View.TagExceptions();
+        if (tagExceptions != null)
+        {
+            foreach (TagException tagException in tagExceptions)
+            {
+                if (Object.Contains(tagException.Keyword, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    isPuttable = false;
+                }
+            }
+        }
+        if (isPuttable)
+        {
+            int tryCounter = 0;
+            do
+            {
+                Thread.Sleep(1000);
+                tryCounter++;
+            }
+            while (!PUT.ProcurementSource(this) || tryCounter < 5);
+        }
+
+        try
+        {
+            Driver.Close();
+            Thread.Sleep(5000);
+            Driver.Quit();
+            Thread.Sleep(5000);
+            foreach (Process process in Process.GetProcessesByName("msedgedriver"))
+            {
+                process.Kill();
+                Thread.Sleep(5000);
+            }
+        }
+        catch { }
     }
 
     private static EdgeDriver Driver { get; set; } = null!;

@@ -2,15 +2,19 @@
 
 public partial class CommandBar : UserControl
 {
-    public CommandBar() =>
+    public CommandBar()
+    {
         InitializeComponent();
+    }
 
     private Sources Sources { get; set; } = null!;
     private Thread SourcesCaller { get; set; } = null!;
     private Border DataGridContainer { get; set; } = null!;
 
-    private void Bar_Loaded(object sender, RoutedEventArgs e) =>
+    private void Bar_Loaded(object sender, RoutedEventArgs e)
+    {
         DataGridContainer = (Border)Application.Current.MainWindow.FindName("DataGridContainer");
+    }
 
     private void Add_Click(object sender, RoutedEventArgs e)
     {
@@ -52,7 +56,33 @@ public partial class CommandBar : UserControl
                 SourcesCaller = new(() => Sources.Enable(minPrice, maxPrice, regions));
                 SourcesCaller.Start();
             }
-            catch {  }
+            catch { }
+        }
+    }
+
+    private void RunOnce_Click(object sender, RoutedEventArgs e)
+    {
+        ParsingOnceFlyout parsingOnceFlyout = new();
+        if (parsingOnceFlyout.ShowDialog() == true)
+        {
+            try
+            {
+                _ = new Source(parsingOnceFlyout.RequestUriInput.Text);
+            }
+            catch
+            {
+                _ = new MessageFlyout("Ошибка", "Введена неверная ссылка").ShowDialog();
+            }
+
+            try
+            {
+                foreach (Process process in Process.GetProcessesByName("msedgedriver"))
+                {
+                    process.Kill();
+                    Thread.Sleep(5000);
+                }
+            }
+            catch { }
         }
     }
 
@@ -65,6 +95,6 @@ public partial class CommandBar : UserControl
             SourcesCaller = new(() => Sources.Disable());
             SourcesCaller.Start();
         }
-        catch {  }
+        catch { }
     }
 }

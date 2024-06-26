@@ -19,9 +19,11 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="Search" Grid.ColumnSpan="2" Style="{DynamicResource Search}" TextChanged="Search_TextChanged"/>
+                    <TextBox x:Name="Search" Grid.ColumnSpan="2" Style="{DynamicResource Search}" TextChanged="Search_TextChanged" />
                     <Button x:Name="Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" WindowChrome.IsHitTestVisibleInChrome="True" Click="Clear_Click"/>
+                    <Button x:Name="Execute" Grid.Column="2" Content="Поиск" Style="{DynamicResource Button.Accent}" WindowChrome.IsHitTestVisibleInChrome="True" MinWidth="60" Margin="4,0" Click="Execute_Click" />
                 </Grid>
             </Border>
         </DockPanel>
