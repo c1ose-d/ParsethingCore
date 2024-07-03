@@ -65,24 +65,27 @@ public partial class CommandBar : UserControl
         ParsingOnceFlyout parsingOnceFlyout = new();
         if (parsingOnceFlyout.ShowDialog() == true)
         {
-            try
+            new Thread(() =>
             {
-                _ = new Source(parsingOnceFlyout.RequestUriInput.Text);
-            }
-            catch
-            {
-                _ = new MessageFlyout("Ошибка", "Введена неверная ссылка").ShowDialog();
-            }
-
-            try
-            {
-                foreach (Process process in Process.GetProcessesByName("msedgedriver"))
+                try
                 {
-                    process.Kill();
-                    Thread.Sleep(5000);
+                    _ = new Source(parsingOnceFlyout.RequestUriInput.Text);
                 }
-            }
-            catch { }
+                catch
+                {
+                    _ = new MessageFlyout("Ошибка", "Введена неверная ссылка").ShowDialog();
+                }
+
+                try
+                {
+                    foreach (Process process in Process.GetProcessesByName("msedgedriver"))
+                    {
+                        process.Kill();
+                        Thread.Sleep(5000);
+                    }
+                }
+                catch { }
+            }).Start();
         }
     }
 
