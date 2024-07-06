@@ -45,8 +45,15 @@ public partial class TitleBar : UserControl
         else Clear.Visibility = Visibility.Visible;
     }
 
-    private void Close_Click(object sender, RoutedEventArgs e) =>
+    private void Close_Click(object sender, RoutedEventArgs e)
+    {
+        foreach (Process process in Process.GetProcessesByName("msedgedriver"))
+        {
+            process.Kill();
+            Thread.Sleep(5000);
+        }
         Process.GetCurrentProcess().Kill();
+    }
 
     private void Execute_Click(object sender, RoutedEventArgs e)
     {

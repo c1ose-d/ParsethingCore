@@ -65,16 +65,10 @@ public partial class CommandBar : UserControl
         ParsingOnceFlyout parsingOnceFlyout = new();
         if (parsingOnceFlyout.ShowDialog() == true)
         {
+            string requestUri = parsingOnceFlyout.RequestUriInput.Text;
             new Thread(() =>
             {
-                try
-                {
-                    _ = new Source(parsingOnceFlyout.RequestUriInput.Text);
-                }
-                catch
-                {
-                    _ = new MessageFlyout("Ошибка", "Введена неверная ссылка").ShowDialog();
-                }
+                Source source = new(requestUri.Trim());
 
                 try
                 {

@@ -1,10 +1,4 @@
-﻿using DatabaseLibrary.Entities.NoRelationship;
-using System;
-using System.Diagnostics;
-using System.Security.Policy;
-using System.Windows;
-
-namespace ParsingLibrary;
+﻿namespace ParsingLibrary;
 
 public class Source : Procurement
 {
@@ -22,7 +16,7 @@ public class Source : Procurement
             EdgeDriverService driverService = EdgeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
             EdgeOptions edgeOptions = new();
-            //edgeOptions.AddArgument("--headless=new");
+            edgeOptions.AddArgument("--headless=new");
             Driver = new EdgeDriver(driverService, edgeOptions);
         }
         catch (Exception e)
@@ -31,43 +25,42 @@ public class Source : Procurement
         }
 
         RequestUri = requestUrl;
-        Driver.Navigate().GoToUrl(RequestUri);
-        Initialize();
-
-        bool isPuttable = true;
-        List<TagException>? tagExceptions = GET.View.TagExceptions();
-        if (tagExceptions != null)
-        {
-            foreach (TagException tagException in tagExceptions)
-            {
-                if (Object.Contains(tagException.Keyword, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    isPuttable = false;
-                }
-            }
-        }
-        if (isPuttable)
-        {
-            int tryCounter = 0;
-            do
-            {
-                Thread.Sleep(1000);
-                tryCounter++;
-            }
-            while (!PUT.ProcurementSource(this) || tryCounter < 5);
-        }
-
         try
         {
-            Driver.Close();
-            Thread.Sleep(5000);
-            Driver.Quit();
-            Thread.Sleep(5000);
-            foreach (Process process in Process.GetProcessesByName("msedgedriver"))
+            Driver.Navigate().GoToUrl(RequestUri);
+            Initialize();
+
+            bool isPuttable = true;
+            List<TagException>? tagExceptions = GET.View.TagExceptions();
+            if (tagExceptions != null)
             {
-                process.Kill();
+                foreach (TagException tagException in tagExceptions)
+                {
+                    if (Object.Contains(tagException.Keyword, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        isPuttable = false;
+                    }
+                }
+            }
+            if (isPuttable)
+            {
+                int tryCounter = 0;
+                do
+                {
+                    Thread.Sleep(1000);
+                    tryCounter++;
+                }
+                while (!PUT.ProcurementSource(this) || tryCounter < 5);
+            }
+
+            try
+            {
+                Driver.Close();
+                Thread.Sleep(5000);
+                Driver.Quit();
                 Thread.Sleep(5000);
             }
+            catch { }
         }
         catch { }
     }
