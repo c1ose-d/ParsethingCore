@@ -1,8 +1,8 @@
 ﻿namespace ParsethingCore.UI.ListView_Custom;
 
-public partial class ComponentTypesList : UserControl, IView
+public partial class PredefinedComponentsList : UserControl, IView
 {
-    public ComponentTypesList()
+    public PredefinedComponentsList()
     {
         InitializeComponent();
         GetView();
@@ -10,21 +10,21 @@ public partial class ComponentTypesList : UserControl, IView
 
     public void GetView()
     {
-        View.ItemsSource = GET.View.ComponentTypes();
+        View.ItemsSource = GET.View.PredefinedComponents();
         ((TextBox)((TitleBar)Application.Current.MainWindow.FindName("TitleBar")).FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
     {
-        if (new ComponentTypeCard().ShowDialog() == true)
+        if (new PredefinedComponentCard().ShowDialog() == true)
             GetView();
     }
 
     public void Delete()
     {
-        if (View.SelectedIndex != -1 && new DeleteFlyout(((ComponentType)View.SelectedItem).Kind).ShowDialog() == true)
+        if (View.SelectedIndex != -1 && new DeleteFlyout(((PredefinedComponent)View.SelectedItem).ComponentName!).ShowDialog() == true)
         {
-            DELETE.ComponentType((ComponentType)View.SelectedItem);
+            DELETE.PredefinedComponent((PredefinedComponent)View.SelectedItem);
             GetView();
         }
     }
@@ -33,15 +33,15 @@ public partial class ComponentTypesList : UserControl, IView
     {
         if (View.SelectedIndex != -1)
         {
-            new ComponentTypeCard((ComponentType)View.SelectedItem).ShowDialog();
+            new PredefinedComponentCard((PredefinedComponent)View.SelectedItem).ShowDialog();
             GetView();
         }
     }
 
     public void Search(string searchString)
     {
-        View.ItemsSource = GET.View.ComponentTypes()?
-            .Where(e => e.Kind.ToLower().Contains(searchString))
+        View.ItemsSource = GET.View.PredefinedComponents()?
+            .Where(e => e.ComponentName!.ToLower().Contains(searchString))
             .ToList();
     }
 
@@ -49,7 +49,7 @@ public partial class ComponentTypesList : UserControl, IView
     {
         if (View.SelectedIndex != -1)
         {
-            new ComponentTypeCard((ComponentType)View.SelectedItem).ShowDialog();
+            new PredefinedComponentCard((PredefinedComponent)View.SelectedItem).ShowDialog();
             GetView();
         }
     }

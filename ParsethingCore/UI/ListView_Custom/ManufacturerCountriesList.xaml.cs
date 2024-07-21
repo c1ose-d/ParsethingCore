@@ -1,8 +1,8 @@
 ﻿namespace ParsethingCore.UI.ListView_Custom;
 
-public partial class ComponentTypesList : UserControl, IView
+public partial class ManufacturerCountriesList : UserControl, IView
 {
-    public ComponentTypesList()
+    public ManufacturerCountriesList()
     {
         InitializeComponent();
         GetView();
@@ -10,21 +10,21 @@ public partial class ComponentTypesList : UserControl, IView
 
     public void GetView()
     {
-        View.ItemsSource = GET.View.ComponentTypes();
+        View.ItemsSource = GET.View.ManufacturerCountries();
         ((TextBox)((TitleBar)Application.Current.MainWindow.FindName("TitleBar")).FindName("Search")).Text = string.Empty;
     }
 
     public void Add()
     {
-        if (new ComponentTypeCard().ShowDialog() == true)
+        if (new ManufacturerCountryCard().ShowDialog() == true)
             GetView();
     }
 
     public void Delete()
     {
-        if (View.SelectedIndex != -1 && new DeleteFlyout(((ComponentType)View.SelectedItem).Kind).ShowDialog() == true)
+        if (View.SelectedIndex != -1 && new DeleteFlyout(((ComponentHeaderType)View.SelectedItem).Kind).ShowDialog() == true)
         {
-            DELETE.ComponentType((ComponentType)View.SelectedItem);
+            DELETE.ManufacturerCountry((ManufacturerCountry)View.SelectedItem);
             GetView();
         }
     }
@@ -33,14 +33,16 @@ public partial class ComponentTypesList : UserControl, IView
     {
         if (View.SelectedIndex != -1)
         {
-            new ComponentTypeCard((ComponentType)View.SelectedItem).ShowDialog();
+            new ManufacturerCountryCard((ManufacturerCountry)View.SelectedItem).ShowDialog();
             GetView();
         }
     }
 
+    public void Export() { }
+
     public void Search(string searchString)
     {
-        View.ItemsSource = GET.View.ComponentTypes()?
+        View.ItemsSource = GET.View.ComponentHeaderTypes()?
             .Where(e => e.Kind.ToLower().Contains(searchString))
             .ToList();
     }
@@ -49,7 +51,7 @@ public partial class ComponentTypesList : UserControl, IView
     {
         if (View.SelectedIndex != -1)
         {
-            new ComponentTypeCard((ComponentType)View.SelectedItem).ShowDialog();
+            new ManufacturerCountryCard((ManufacturerCountry)View.SelectedItem).ShowDialog();
             GetView();
         }
     }

@@ -30,7 +30,16 @@ public partial class TitleBar : UserControl
         switch (MainWindow.WindowState)
         {
             case WindowState.Normal:
-                MainWindow.WindowState = WindowState.Maximized;
+                try
+                {
+                    MainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                    MainWindow.WindowState = WindowState.Maximized;
+                    MainWindow.WindowStyle = WindowStyle.None;
+                }
+                catch
+                {
+                    MainWindow.WindowState = WindowState.Maximized;
+                }
                 break;
             case WindowState.Maximized:
                 MainWindow.WindowState = WindowState.Normal;

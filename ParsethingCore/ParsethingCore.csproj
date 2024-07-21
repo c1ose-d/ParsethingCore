@@ -89,7 +89,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="UI\ListView_Custom\CitiesList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\ListView_Custom\PredefinedComponentsList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\ListView_Custom\ManufacturerCountriesList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UI\ListView_Custom\ComponentHeadersList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Cards\CityCard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Cards\PredefinedComponentCard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Cards\ManufacturerCountryCard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\Cards\ComponentHeaderCard.xaml.cs">
@@ -108,6 +126,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\ListView_Custom\ManufacturerCountriesList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

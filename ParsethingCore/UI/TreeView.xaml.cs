@@ -36,6 +36,12 @@ public partial class TreeView : UserControl
                 case "Производители":
                     DataGridContainer.Child = new ManufacturersList();
                     break;
+                case "Страны производителей":
+                    DataGridContainer.Child = new ManufacturerCountriesList();
+                    break;
+                case "Заготовленные компоненты":
+                    DataGridContainer.Child = new PredefinedComponentsList();
+                    break;
                 case "Поставщики":
                     DataGridContainer.Child = new SellersList();
                     break;
@@ -59,6 +65,9 @@ public partial class TreeView : UserControl
                     break;
                 case "Тэги-исключения":
                     DataGridContainer.Child = new TagExceptionsList();
+                    break;
+                case "Города":
+                    DataGridContainer.Child = new CitiesList();
                     break;
                 case "Должности":
                     DataGridContainer.Child = new PositionsList();

@@ -1,4 +1,4 @@
-﻿<Window x:Class="ParsethingCore.Windows.Cards.ManufacturerCard" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Карточка производителя" WindowStartupLocation="CenterScreen" Style="{DynamicResource Window.Card}">
+﻿<Window x:Class="ParsethingCore.Windows.Cards.ManufacturerCountryCard" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Карточка страны производителя" WindowStartupLocation="CenterScreen" Style="{DynamicResource Window.Card}">
     <Border Style="{DynamicResource Window.Surface}">
         <Border.Effect>
             <DropShadowEffect BlurRadius="2" Color="#000" Direction="315" Opacity=".15" RenderingBias="Quality" ShadowDepth="2"/>
@@ -15,7 +15,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Карточка производителя" Style="{DynamicResource Title}"/>
+                    <TextBlock Text="Карточка страны производителя" Style="{DynamicResource Title}"/>
                     <TextBlock x:Name="Subtitle" Grid.Column="1" Visibility="Collapsed" Style="{DynamicResource Subtitle}"/>
                 </Grid>
             </Border>
@@ -37,31 +37,15 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Наименование" Style="{DynamicResource Body}"/>
+                            <TextBlock Text="Название" Style="{DynamicResource Body}"/>
                             <Grid Grid.Column="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox x:Name="Manufacturer_Name" Grid.ColumnSpan="2" Style="{DynamicResource TextBox}" TextChanged="Manufacturer_Name_TextChanged"/>
-                                <Button x:Name="Manufacturer_Name_Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" Click="Manufacturer_Name_Clear_Click"/>
+                                <TextBox x:Name="ManufacturerCountry_Name" Grid.ColumnSpan="2" Style="{DynamicResource TextBox}" TextChanged="ManufacturerCountry_Name_TextChanged"/>
+                                <Button x:Name="ManufacturerCountry_Name_Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" Click="ManufacturerCountry_Name_Clear_Click"/>
                             </Grid>
-                            <TextBlock Grid.Row="1" Text="Полное наименование" Style="{DynamicResource Body}"/>
-                            <Grid Grid.Column="1" Grid.Row="1" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox x:Name="Manufacturer_FullName" Grid.ColumnSpan="2" Style="{DynamicResource TextBox}" TextChanged="Manufacturer_Name_TextChanged"/>
-                                <Button x:Name="Manufacturer_FullName_Clear" Grid.Column="1" Visibility="Collapsed" Content="&#xE624;" Style="{DynamicResource TextBoxButton}" Click="Manufacturer_FullName_Clear_Click"/>
-                            </Grid>
-                            <TextBlock Text="Страна" Grid.Row="2" Style="{DynamicResource Body}"/>
-                            <ComboBox x:Name="Manufacturer_Country" Grid.Row="2" Grid.Column="1" DisplayMemberPath="Name" Style="{DynamicResource ComboBox}"/>
                         </Grid>
                         <Grid Visibility="Collapsed" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
@@ -71,17 +55,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock Text="Id" Style="{DynamicResource Body.System}"/>
                             <TextBlock x:Name="System_Id" Grid.Column="1" Style="{DynamicResource Body.System}"/>
                             <TextBlock Grid.Row="1" Text="Name" Style="{DynamicResource Body.System}"/>
                             <TextBlock x:Name="System_Name" Grid.Row="1" Grid.Column="1" Style="{DynamicResource Body.System}"/>
-                            <TextBlock Grid.Row="2" Text="FullName" Style="{DynamicResource Body.System}"/>
-                            <TextBlock x:Name="System_FullName" Grid.Row="2" Grid.Column="1" Style="{DynamicResource Body.System}"/>
-                            <TextBlock Grid.Row="3" Text="Country" Style="{DynamicResource Body.System}"/>
-                            <TextBlock x:Name="System_Country" Grid.Row="3" Grid.Column="1" Style="{DynamicResource Body.System}"/>
                         </Grid>
                     </Grid>
                 </Grid>
